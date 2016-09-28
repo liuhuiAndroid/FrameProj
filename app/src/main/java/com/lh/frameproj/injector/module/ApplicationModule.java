@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.lh.frameproj.components.okhttp.AddCookiesInterceptor;
 import com.lh.frameproj.components.okhttp.ReceivedCookiesInterceptor;
-import com.orhanobut.logger.Logger;
+import com.lh.frameproj.util.log.Logger;
 import com.squareup.otto.Bus;
 
 import java.util.concurrent.TimeUnit;
@@ -56,7 +56,7 @@ public class ApplicationModule {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Logger.i(TAG,message);
+                Logger.i(message);
             }
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

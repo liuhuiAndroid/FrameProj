@@ -9,7 +9,6 @@ import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseFragment;
 import com.lh.frameproj.ui.header.RentalsSunHeaderView;
 import com.lh.frameproj.ui.main.MainComponent;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
     //  2
     @Override
     public void getBundle(Bundle bundle) {
-        Logger.i("TAG","haha ha");
+
     }
 
     //  3

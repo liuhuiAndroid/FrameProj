@@ -2,10 +2,14 @@ package com.lh.frameproj;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.lh.frameproj.injector.component.ApplicationComponent;
 import com.lh.frameproj.injector.component.DaggerApplicationComponent;
 import com.lh.frameproj.injector.module.ApplicationModule;
+import com.lh.frameproj.util.log.CrashlyticsTree;
+import com.lh.frameproj.util.log.Logger;
+import com.lh.frameproj.util.log.Settings;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -23,6 +27,18 @@ public class MyApplication extends Application {
         initComponent();
         mContext = getApplicationContext();
         new AppError().initUncaught();
+
+        Logger.initialize(
+                new Settings()
+                        .isShowMethodLink(true)
+                        .isShowThreadInfo(false)
+                        .setMethodOffset(0)
+                        .setLogPriority(BuildConfig.DEBUG ? Log.VERBOSE : Log.ASSERT)
+        );
+        if (!BuildConfig.DEBUG) {
+            // for release
+            Logger.plant(new CrashlyticsTree());
+        }
     }
 
     private void initComponent() {

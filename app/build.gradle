@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.lh.frameproj"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -49,5 +49,7 @@ dependencies {
     //ultra-pull-to-refresh
     compile 'in.srain.cube:ultra-ptr:1.0.11'
     //log
-    compile 'com.orhanobut:logger:1.15'
+//    compile 'com.orhanobut:logger:1.15'
+    compile 'com.jakewharton.timber:timber:4.1.1'
+    compile 'org.projectlombok:lombok:1.12.6'
 }
