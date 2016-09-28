@@ -10,6 +10,7 @@ import com.lh.frameproj.injector.module.ApplicationModule;
 import com.lh.frameproj.util.log.CrashlyticsTree;
 import com.lh.frameproj.util.log.Logger;
 import com.lh.frameproj.util.log.Settings;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -28,6 +29,7 @@ public class MyApplication extends Application {
         mContext = getApplicationContext();
         new AppError().initUncaught();
 
+        // 初始化日志功能
         Logger.initialize(
                 new Settings()
                         .isShowMethodLink(true)
@@ -39,6 +41,14 @@ public class MyApplication extends Application {
             // for release
             Logger.plant(new CrashlyticsTree());
         }
+
+        // 初始化LeakCanary
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     private void initComponent() {

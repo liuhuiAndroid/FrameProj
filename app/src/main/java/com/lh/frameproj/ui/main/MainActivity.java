@@ -43,7 +43,8 @@ public class MainActivity extends BaseActivity implements MainContract.View
     public void initInjector() {
         mMainComponent = DaggerMainComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule()).mainModule(new MainModule(this))
+                .activityModule(getActivityModule())
+                .mainModule(new MainModule(this))
                 .build();
         mMainComponent.inject(this);
     }

@@ -9,6 +9,7 @@ import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseFragment;
 import com.lh.frameproj.ui.header.RentalsSunHeaderView;
 import com.lh.frameproj.ui.main.MainComponent;
+import com.lh.frameproj.util.log.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,20 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
     @Override
     public void getBundle(Bundle bundle) {
 
+        for (int i = 0; i < 10; i++) {
+            //获取当前i的值
+            int selector = i;
+
+            //调用方法
+            stepNext(i);
+            //打log查看当前i的值（此步多余，实际开发请忽略）
+            Logger.e("for当前的i的值：" + i);
+        }
+
+    }
+
+    private void stepNext(int i) {
+        Logger.i("i = "+i);
     }
 
     //  3
@@ -101,6 +116,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
                 mFragment1Presenter.onThreadReceive();
             }
         });
+
     }
 
     @Override
