@@ -1,4 +1,4 @@
-package com.lh.frameproj.util.log;
+package com.android.frameproj.library.util.log;
 
 import android.support.annotation.Nullable;
 import android.util.Log;

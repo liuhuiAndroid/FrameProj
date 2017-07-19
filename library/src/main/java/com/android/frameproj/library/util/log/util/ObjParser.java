@@ -1,4 +1,4 @@
-package com.lh.frameproj.util.log.util;
+package com.android.frameproj.library.util.log.util;
 
 import android.util.Pair;
 

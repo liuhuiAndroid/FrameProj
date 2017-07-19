@@ -1,4 +1,4 @@
-package com.lh.frameproj.util;
+package com.android.frameproj.library.widget;
 
 /**
  * Created by WE-WIN-027 on 2016/9/28.

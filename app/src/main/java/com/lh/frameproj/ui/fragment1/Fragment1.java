@@ -9,7 +9,7 @@ import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseFragment;
 import com.lh.frameproj.ui.header.RentalsSunHeaderView;
 import com.lh.frameproj.ui.main.MainComponent;
-import com.lh.frameproj.util.log.Logger;
+import com.android.frameproj.library.util.log.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.lh.frameproj.components.okhttp.AddCookiesInterceptor;
 import com.lh.frameproj.components.okhttp.ReceivedCookiesInterceptor;
-import com.lh.frameproj.util.log.Logger;
+import com.android.frameproj.library.util.log.Logger;
 import com.squareup.otto.Bus;
 
 import java.util.concurrent.TimeUnit;

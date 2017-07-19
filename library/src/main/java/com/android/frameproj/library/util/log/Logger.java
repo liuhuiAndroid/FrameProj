@@ -1,9 +1,9 @@
-package com.lh.frameproj.util.log;
+package com.android.frameproj.library.util.log;
 
 import android.support.annotation.NonNull;
 
-import com.lh.frameproj.util.log.util.ObjParser;
-import com.lh.frameproj.util.log.util.XmlJsonParser;
+import com.android.frameproj.library.util.log.util.ObjParser;
+import com.android.frameproj.library.util.log.util.XmlJsonParser;
 
 import timber.log.Timber;
 
@@ -12,7 +12,7 @@ import timber.log.Timber;
  * But more pretty, simple and powerful
  *
  * @author Orhan Obut
- * http://www.jianshu.com/p/586c27e77e81 从这里抄过来的
+ * http://www.jianshu.com/p/586c27e77e81
  */
 public class Logger {
 

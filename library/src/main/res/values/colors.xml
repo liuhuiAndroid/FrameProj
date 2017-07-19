@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 底部栏 -->
+    <color name="selector_item_color">#2ecc71</color>
+
+</resources>

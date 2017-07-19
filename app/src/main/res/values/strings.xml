@@ -2,7 +2,7 @@
 
     <string name="app_name">FrameProj</string>
 
-    <string name="MainActivity_title_news">新闻</string>
+    <string name="MainActivity_title_news"></string>
     <string name="MainActivity_title_photo">美图</string>
     <string name="MainActivity_title_video">视频</string>
     <string name="MainActivity_title_about">关于</string>
