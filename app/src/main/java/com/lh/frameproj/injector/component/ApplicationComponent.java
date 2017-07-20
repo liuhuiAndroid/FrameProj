@@ -3,6 +3,7 @@ package com.lh.frameproj.injector.component;
 import android.content.Context;
 
 import com.lh.frameproj.MyApplication;
+import com.lh.frameproj.components.okhttp.OkHttpHelper;
 import com.lh.frameproj.db.TestDao;
 import com.lh.frameproj.injector.module.ApplicationModule;
 import com.lh.frameproj.injector.module.DBModule;
@@ -33,5 +34,7 @@ public interface ApplicationComponent {
     void inject(MyApplication mApplication);
 
     void inject(BaseActivity mBaseActivity);
+
+    OkHttpHelper getOkHttpHelper();
 
 }

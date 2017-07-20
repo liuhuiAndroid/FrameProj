@@ -9,7 +9,7 @@ import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseFragment;
 import com.lh.frameproj.ui.header.RentalsSunHeaderView;
 import com.lh.frameproj.ui.main.MainComponent;
-import com.lh.frameproj.util.log.Logger;
+import com.android.frameproj.library.util.log.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +92,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
 
         frame.setLoadingMinTime(1000);
         frame.setDurationToCloseHeader(1500);
+        //这个在my
         frame.setHeaderView(header);
         frame.addPtrUIHandler(header);
         frame.setPtrHandler(new PtrHandler() {
@@ -130,4 +131,5 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
         mFragment1Adapter.notifyDataSetChanged();
         frame.refreshComplete();
     }
+
 }

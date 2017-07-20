@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- MarginDecoration -->
+    <dimen name="margindecoration_margin">26dp</dimen>
+    <dimen name="progressBar_size">20dp</dimen>
+
+</resources>

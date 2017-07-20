@@ -1,12 +1,14 @@
 package com.lh.frameproj.ui.main;
 
-import android.app.Fragment;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lh.frameproj.R;
 import com.lh.frameproj.injector.HasComponent;
 import com.lh.frameproj.ui.BaseActivity;
@@ -26,8 +28,8 @@ public class MainActivity extends BaseActivity implements MainContract.View
     Toolbar mToolbar;
     @BindView(R.id.frame_layout)
     FrameLayout mFrameLayout;
-    @BindView(R.id.bottom_navigation_bar)
-    BottomNavigationBar mBottomNavigationBar;
+    @BindView(R.id.bnve)
+    BottomNavigationViewEx mBottomNavigationViewEx;
 
     @Inject
     MainPresenter mPresenter;
@@ -54,31 +56,32 @@ public class MainActivity extends BaseActivity implements MainContract.View
         ButterKnife.bind(this);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
-        mBottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
-        mBottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
-                .addItem(new BottomNavigationItem(R.mipmap.ic_news_24dp, "新闻").setActiveColorResource(R.color.red))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_photo_24dp, "美图").setActiveColorResource(R.color.red))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_video_24dp, "视频").setActiveColorResource(R.color.red))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_about_me, "关于").setActiveColorResource(R.color.red))
-                .setFirstSelectedPosition(0)
-                .initialise();
-        mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+        // 禁止所有动画效果
+        mBottomNavigationViewEx.enableAnimation(false);
+        mBottomNavigationViewEx.enableShiftingMode(false);
+        mBottomNavigationViewEx.enableItemShiftingMode(false);
+        // 自定义图标和文本大小
+        //        mBottomNavigationViewEx.setIconSize(widthDp, heightDp);
+        //        mBottomNavigationViewEx.setTextSize(sp);
+        mBottomNavigationViewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onTabSelected(int position) {
-                mPresenter.onTabClick(position);
-            }
-
-            @Override
-            public void onTabUnselected(int position) {
-
-            }
-
-            @Override
-            public void onTabReselected(int position) {
-
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.i_choose:
+                        mPresenter.onTabClick(0);
+                        break;
+                    case R.id.i_order:
+                        mPresenter.onTabClick(1);
+                        break;
+                    case R.id.i_mine:
+                        mPresenter.onTabClick(2);
+                        break;
+                }
+                return true;
             }
         });
-        getFragmentManager().beginTransaction()
+
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout,
                         new Fragment1())
                 .commit();
@@ -95,11 +98,12 @@ public class MainActivity extends BaseActivity implements MainContract.View
 
     @Override
     public void showFragment(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
     }
 
     @Override
     public MainComponent getComponent() {
         return mMainComponent;
     }
+
 }

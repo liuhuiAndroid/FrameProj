@@ -1,6 +1,7 @@
 package com.lh.frameproj.ui.main;
 
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 
 import com.lh.frameproj.ui.BasePresenter;
 import com.lh.frameproj.ui.BaseView;

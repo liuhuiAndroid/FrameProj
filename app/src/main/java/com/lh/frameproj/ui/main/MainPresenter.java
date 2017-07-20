@@ -1,15 +1,13 @@
 package com.lh.frameproj.ui.main;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
-import com.lh.frameproj.R;
 import com.lh.frameproj.injector.PerActivity;
 import com.lh.frameproj.ui.fragment1.Fragment1;
 import com.lh.frameproj.ui.fragment2.Fragment2;
 import com.lh.frameproj.ui.fragment3.Fragment3;
-import com.lh.frameproj.ui.fragment4.Fragment4;
 
 import javax.inject.Inject;
 
@@ -46,20 +44,16 @@ public class MainPresenter implements MainContract.Presenter {
         switch (position) {
 
             case 0:
-                mMainView.setTitle(mContext.getResources().getString(R.string.MainActivity_title_news));
+                mMainView.setTitle("找车");
                 mFragment = new Fragment1();
                 break;
             case 1:
-                mMainView.setTitle(mContext.getResources().getString(R.string.MainActivity_title_photo));
+                mMainView.setTitle("订单");
                 mFragment = new Fragment2();
                 break;
             case 2:
-                mMainView.setTitle(mContext.getResources().getString(R.string.MainActivity_title_video));
+                mMainView.setTitle("我");
                 mFragment = new Fragment3();
-                break;
-            case 3:
-                mMainView.setTitle(mContext.getResources().getString(R.string.MainActivity_title_about));
-                mFragment = new Fragment4();
                 break;
 
         }

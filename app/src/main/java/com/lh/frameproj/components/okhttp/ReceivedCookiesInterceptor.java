@@ -5,11 +5,12 @@ import android.content.SharedPreferences;
 
 import java.io.IOException;
 
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import okhttp3.Interceptor;
 import okhttp3.Response;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by WE-WIN-027 on 2016/9/2.
@@ -33,17 +34,17 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             final StringBuffer cookieBuffer = new StringBuffer();
             //最近在学习RxJava,这里用了RxJava的相关API大家可以忽略,用自己逻辑实现即可.大家可以用别的方法保存cookie数据
-            Observable.from(originalResponse.headers("Set-Cookie"))
-                    .map(new Func1<String, String>() {
+            Observable.fromArray(originalResponse.headers("Set-Cookie").get(0))
+                    .map(new Function<String, String>() {
                         @Override
-                        public String call(String s) {
+                        public String apply(@NonNull String s) throws Exception {
                             String[] cookieArray = s.split(";");
                             return cookieArray[0];
                         }
                     })
-                    .subscribe(new Action1<String>() {
+                    .subscribe(new Consumer<String>() {
                         @Override
-                        public void call(String cookie) {
+                        public void accept(@NonNull String cookie) throws Exception {
                             cookieBuffer.append(cookie).append(";");
                         }
                     });

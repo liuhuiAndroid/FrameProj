@@ -1,5 +1,6 @@
 package com.lh.frameproj.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import com.lh.frameproj.AppManager;
 import com.lh.frameproj.MyApplication;
 import com.lh.frameproj.injector.component.ApplicationComponent;
 import com.lh.frameproj.injector.module.ActivityModule;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -24,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         initTheme();
         super.onCreate(savedInstanceState);
         setContentView(initContentView());
+        ButterKnife.bind(this);
         initInjector();
         initUiAndListener();
         AppManager.getAppManager().addActivity(this);
@@ -67,6 +71,14 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override protected void onDestroy() {
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
+    }
+
+    /**
+     * 打开新的Activity
+     * @param cls
+     */
+    public void openActivity(Class<?> cls) {
+        startActivity(new Intent(this, cls));
     }
 
 }

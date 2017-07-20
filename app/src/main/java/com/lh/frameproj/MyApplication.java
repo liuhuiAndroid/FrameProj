@@ -7,9 +7,9 @@ import android.util.Log;
 import com.lh.frameproj.injector.component.ApplicationComponent;
 import com.lh.frameproj.injector.component.DaggerApplicationComponent;
 import com.lh.frameproj.injector.module.ApplicationModule;
-import com.lh.frameproj.util.log.CrashlyticsTree;
-import com.lh.frameproj.util.log.Logger;
-import com.lh.frameproj.util.log.Settings;
+import com.android.frameproj.library.util.log.CrashlyticsTree;
+import com.android.frameproj.library.util.log.Logger;
+import com.android.frameproj.library.util.log.Settings;
 import com.squareup.leakcanary.LeakCanary;
 
 /**

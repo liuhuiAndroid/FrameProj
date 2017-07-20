@@ -1,7 +1,7 @@
 package com.lh.frameproj.api.common;
 
+import io.reactivex.Observable;
 import retrofit2.http.POST;
-import rx.Observable;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
