@@ -1,8 +1,8 @@
 package com.lh.frameproj.ui.main;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
 import com.lh.frameproj.injector.PerActivity;
 import com.lh.frameproj.ui.fragment1.Fragment1;

@@ -4,6 +4,7 @@ import com.lh.frameproj.injector.PerActivity;
 import com.lh.frameproj.injector.component.ApplicationComponent;
 import com.lh.frameproj.injector.module.ActivityModule;
 import com.lh.frameproj.ui.fragment1.Fragment1;
+import com.lh.frameproj.ui.fragment3.Fragment3;
 
 import dagger.Component;
 
@@ -21,5 +22,7 @@ public interface MainComponent {
     void inject(MainActivity activity);
 
     void inject(Fragment1 fragment);
+
+    void inject(Fragment3 fragment);
 
 }

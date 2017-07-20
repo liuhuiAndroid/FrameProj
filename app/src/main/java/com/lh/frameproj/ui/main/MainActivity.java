@@ -1,8 +1,8 @@
 package com.lh.frameproj.ui.main;
 
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
             }
         });
 
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout,
                         new Fragment1())
                 .commit();
@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
 
     @Override
     public void showFragment(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
     }
 
     @Override
