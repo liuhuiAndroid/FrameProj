@@ -6,11 +6,13 @@ import android.view.View;
 import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseFragment;
 
+import java.util.List;
+
 /**
  * Created by we-win on 2017/7/20.
  */
 
-public class OrderWaitingAcceptFragment extends BaseFragment {
+public class OrderWaitingAcceptFragment extends BaseFragment  implements OrderWaitingAcceptContract.View{
     @Override
     public void initInjector() {
 
@@ -33,6 +35,46 @@ public class OrderWaitingAcceptFragment extends BaseFragment {
 
     @Override
     public void initData() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void renderOrderList(List<String> orders) {
+
+    }
+
+    @Override
+    public void onRefreshCompleted() {
+
+    }
+
+    @Override
+    public void onLoadCompleted(boolean haMore) {
+
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void onEmpty() {
+
+    }
+
+    @Override
+    public void showContentUi(String tid, String pid, int page) {
 
     }
 }
