@@ -2,7 +2,7 @@ package com.lh.frameproj.ui.splash;
 
 import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseActivity;
-import com.lh.frameproj.ui.main.MainActivity;
+import com.lh.frameproj.ui.login.LoginActivity;
 
 import javax.inject.Inject;
 
@@ -39,6 +39,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View{
 
     @Override
     public void showMainUi() {
-        openActivity(MainActivity.class);
+        openActivity(LoginActivity.class);
     }
 }

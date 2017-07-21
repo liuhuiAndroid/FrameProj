@@ -34,7 +34,6 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         return (mLoadMoreView != null || mLoadMoreLayoutId != 0) && isLoadAll;
     }
 
-
     private boolean isShowLoadMore(int position) {
         return hasLoadMore() && (position >= mInnerAdapter.getItemCount());
     }

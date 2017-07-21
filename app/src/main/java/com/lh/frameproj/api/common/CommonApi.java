@@ -3,6 +3,7 @@ package com.lh.frameproj.api.common;
 import com.lh.frameproj.Constants;
 import com.lh.frameproj.bean.AccountVersionEntity;
 import com.lh.frameproj.bean.HttpResult;
+import com.lh.frameproj.bean.LoginEntity;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -35,6 +36,13 @@ public class CommonApi {
      */
     public Observable<HttpResult<AccountVersionEntity>> accountVersion() {
         return mCommonService.accountVersion().subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 登录
+     */
+    public Observable<HttpResult<LoginEntity>> loginSms() {
+        return mCommonService.loginSms(null,null,null,null,null,null).subscribeOn(Schedulers.io());
     }
 
 

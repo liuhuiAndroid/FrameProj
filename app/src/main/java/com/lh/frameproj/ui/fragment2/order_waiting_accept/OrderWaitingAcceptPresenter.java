@@ -19,7 +19,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by we-win on 2017/7/20.
@@ -61,7 +60,6 @@ public class OrderWaitingAcceptPresenter implements OrderWaitingAcceptContract.P
                         return stringHttpResult.getResultValue();
                     }
                 })
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<AccountVersionEntity>() {
                     @Override
