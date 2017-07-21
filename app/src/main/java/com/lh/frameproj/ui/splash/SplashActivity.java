@@ -40,5 +40,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View{
     @Override
     public void showMainUi() {
         openActivity(LoginActivity.class);
+        finish();
     }
 }

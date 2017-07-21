@@ -8,7 +8,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -21,6 +21,12 @@
         </activity>
         <activity android:name=".ui.main.MainActivity"/>
         <activity android:name=".ui.login.LoginActivity"/>
+
+        <!-- 将Bitmap的格式改为ARGB_8888 -->
+        <meta-data
+            android:name="com.android.frameproj.library.adapter.utils.GlideConfiguration"
+            android:value="GlideModule"/>
+
     </application>
 
 </manifest>
