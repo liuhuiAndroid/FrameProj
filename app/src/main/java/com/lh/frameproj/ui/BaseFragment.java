@@ -2,45 +2,26 @@ package com.lh.frameproj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.android.frameproj.library.util.ResourceUtil;
+import com.android.frameproj.library.widget.ProgressBarCircularIndeterminate;
+import com.lh.frameproj.R;
 import com.lh.frameproj.injector.HasComponent;
-
-import butterknife.ButterKnife;
+import com.lh.frameproj.ui.widget.ProgressFragment;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
  *
  * @des ${TODO}
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends ProgressFragment {
 
-    protected View rootView;
-    protected BaseActivity baseActivity;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = LayoutInflater.from(container.getContext()).inflate(initContentView(), null);
-        ButterKnife.bind(this, rootView);
-
-        if(rootView != null){
-            ViewGroup parent = (ViewGroup) rootView.getParent();
-            if (parent != null) {
-                parent.removeView(rootView);
-            }
-        }
-
-        if (getActivity() instanceof BaseActivity) {
-            baseActivity = (BaseActivity) getActivity();
-        }
-
-        return rootView;
-    }
+    private TextView tvError, tvEmpty, tvLoading;
+    private Button btnReload;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -75,8 +56,78 @@ public abstract class BaseFragment extends Fragment {
     public abstract void initData();
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public View onCreateContentView(LayoutInflater inflater) {
+        return inflater.inflate(initContentView(), null);
+    }
+
+    @Override
+    public View onCreateContentErrorView(LayoutInflater inflater) {
+        View error = inflater.inflate(R.layout.error_view_layout, null);
+        tvError = (TextView) error.findViewById(R.id.tvError);
+        error.findViewById(R.id.btnReload).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onReloadClicked();
+            }
+        });
+        return error;
+    }
+
+    @Override
+    public View onCreateContentEmptyView(LayoutInflater inflater) {
+        View empty = inflater.inflate(R.layout.empty_view_layout, null);
+        tvEmpty = (TextView) empty.findViewById(R.id.tvEmpty);
+        btnReload = (Button) empty.findViewById(R.id.btnReload);
+        empty.findViewById(R.id.btnReload).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onReloadClicked();
+            }
+        });
+        return empty;
+    }
+
+    @Override
+    public View onCreateProgressView(LayoutInflater inflater) {
+        View loading = inflater.inflate(R.layout.loading_view_layout, null);
+        tvLoading = (TextView) loading.findViewById(R.id.tvLoading);
+        ProgressBarCircularIndeterminate progressBar =
+                (ProgressBarCircularIndeterminate) loading.findViewById(R.id.progress_view);
+        progressBar.setBackgroundColor(ResourceUtil.getThemeColor(getActivity()));
+        return loading;
+    }
+
+    public void setErrorText(String text) {
+        tvError.setText(text);
+    }
+
+    public void setErrorText(int textResId) {
+        setErrorText(getString(textResId));
+    }
+
+    public void setEmptyText(String text) {
+        tvEmpty.setText(text);
+    }
+
+    public void setEmptyButtonVisible(int visible) {
+        btnReload.setVisibility(visible);
+    }
+
+    public void setEmptyText(int textResId) {
+        setEmptyText(getString(textResId));
+    }
+
+    public void setLoadingText(String text) {
+        tvLoading.setText(text);
+    }
+
+    public void setLoadingText(int textResId) {
+        setLoadingText(getString(textResId));
+    }
+
+    //Override this to reload
+    public void onReloadClicked() {
+
     }
 
     @SuppressWarnings("unchecked") protected <C> C getComponent(Class<C> componentType) {

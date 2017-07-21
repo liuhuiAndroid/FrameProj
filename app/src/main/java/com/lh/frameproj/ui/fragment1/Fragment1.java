@@ -77,6 +77,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
     @Override
     public void initUI(View view) {
         ButterKnife.bind(this, rootView);
+        showContent(true);
         mFragment1Presenter.attachView(this);
 
         data = new ArrayList<>();

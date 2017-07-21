@@ -20,26 +20,24 @@ public class OrderWaitingAcceptContract {
 
         void onRefreshCompleted();
 
-        void onLoadCompleted(boolean haMore);
+        void onLoadCompleted(boolean isLoadAll);
 
         void onError();
 
         void onEmpty();
 
-        void showContentUi(String tid, String pid, int page);
-
     }
 
     interface Presenter extends BasePresenter<View> {
-        void onMessageListReceive();
+
+        void onOrderWaitingAcceptListReceive();
 
         void onRefresh();
 
-        void onReload();
-
         void onLoadMore();
 
-        void onMessageClick(int position);
+        void onOrderClick(int position);
+
     }
 
 }

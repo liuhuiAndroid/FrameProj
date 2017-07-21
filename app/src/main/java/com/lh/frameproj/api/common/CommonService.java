@@ -1,5 +1,8 @@
 package com.lh.frameproj.api.common;
 
+import com.lh.frameproj.bean.AccountVersionEntity;
+import com.lh.frameproj.bean.HttpResult;
+
 import io.reactivex.Observable;
 import retrofit2.http.POST;
 
@@ -10,8 +13,10 @@ import retrofit2.http.POST;
  */
 public interface CommonService {
 
-    //获取最新消息
-    @POST("Message/GetAllNew")
-    Observable<Void> messageGetAllNew();
+    // 版本控制
+    @POST("api/version/control")
+    Observable<HttpResult<AccountVersionEntity>> accountVersion();
+
+
 
 }

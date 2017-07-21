@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/actionbar_rl"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:src="@drawable/actionbar_back_green"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/actionbar_title"/>
+
+</RelativeLayout>

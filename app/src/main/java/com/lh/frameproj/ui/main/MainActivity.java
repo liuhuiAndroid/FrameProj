@@ -3,7 +3,6 @@ package com.lh.frameproj.ui.main;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -22,10 +21,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity implements MainContract.View
         , HasComponent<MainComponent> {
 
-    @BindView(R.id.toolbar_title)
+    @BindView(R.id.tv_title)
     TextView mToolbarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.frame_layout)
     FrameLayout mFrameLayout;
     @BindView(R.id.bnve)
@@ -54,8 +51,6 @@ public class MainActivity extends BaseActivity implements MainContract.View
     @Override
     public void initUiAndListener() {
         ButterKnife.bind(this);
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
         // 禁止所有动画效果
         mBottomNavigationViewEx.enableAnimation(false);
         mBottomNavigationViewEx.enableShiftingMode(false);
@@ -86,7 +81,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
                         new Fragment1())
                 .commit();
 
-        mToolbarTitle.setText(R.string.MainActivity_title_news);
+        mToolbarTitle.setText(R.string.MainActivity_title_1);
         mPresenter.attachView(this);
     }
 

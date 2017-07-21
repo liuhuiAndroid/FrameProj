@@ -36,7 +36,7 @@ public class Fragment3 extends BaseFragment {
 
     @Override
     public void initUI(View view) {
-
+        showContent(true);
     }
 
     @Override

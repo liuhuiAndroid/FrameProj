@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<!--<android.support.design.widget.CoordinatorLayout-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:fitsSystemWindows="true"-->
+<!--tools:context=".ui.main.MainActivity">-->
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.main.MainActivity">
+    android:orientation="vertical"
+    >
 
-    <android.support.design.widget.AppBarLayout
+    <include layout="@layout/include_actionbar"/>
+
+    <include layout="@layout/content_main"/>
+
+</LinearLayout>
+
+    <!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -28,9 +40,10 @@
                 android:singleLine="true"
                 android:textColor="@color/md_black_1000"
                 android:textSize="@dimen/font_size_normal_high"/>
+
         </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main"/>
+    </android.support.design.widget.AppBarLayout>-->
 
-</android.support.design.widget.CoordinatorLayout>
+    <!--
+    </android.support.design.widget.CoordinatorLayout>-->

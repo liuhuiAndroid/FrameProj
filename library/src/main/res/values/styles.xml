@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="actionbar_rl">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="actionbar_title">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/zfb331f</item>
+    </style>
+
+</resources>

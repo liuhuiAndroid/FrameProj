@@ -48,6 +48,7 @@ public class Fragment2 extends BaseFragment {
 
     @Override
     public void initUI(View view) {
+        showContent(true);
         OrderFragmentPagerAdapter myMainFragmentPagerAdapter = new OrderFragmentPagerAdapter(getChildFragmentManager());
         myMainFragmentPagerAdapter.addFragment(new OrderWaitingAcceptFragment(),"待接单");
         myMainFragmentPagerAdapter.addFragment(new OrderWorkingFragement(),"服务中");

@@ -3,5 +3,53 @@
 
     <!-- 底部栏 -->
     <color name="selector_item_color">#2ecc71</color>
+    <color name="retry_button_background">#30000000</color>
+    <color name="retry_button_background_stroke">#50000000</color>
+
+    <!--不同项目不同的来-->
+    <color name="zfd4a2e">#FD4A2E</color>
+    <color name="zdddddd">#acb6be</color>
+    <color name="zf4f4f4">#f6f6f6</color>
+    <color name="zfb331f">#52a752</color>
+    <color name="zd58706">#d58706</color>
+    <color name="z616161">#616161</color>
+    <color name="register_one">#f4fdf5</color>
+    <color name="base">#f2f4f6</color>
+    <color name="register_one_shuo_ming">#616161</color>
+    <color name="zc3ccc4">#c3ccc4</color>
+    <color name="z535455">#535455</color>
+    <color name="zd1d3d4">#d1d3d4</color>
+    <color name="zcbcdce">#cbcdce</color>
+    <color name="ze6e7e9">#e6e7e9</color>
+    <color name="z868788">#868788</color>
+    <color name="zf1f2f4">#f1f2f4</color>
+    <color name="zadb5bb">#adb5bb</color>
+    <color name="z565758">#565758</color>
+    <color name="ze8eaeb">#e8eaeb</color>
+    <color name="z262627">#262627</color>
+    <color name="z404b53">#404b53</color>
+    <color name="zdfe0e1">#dfe0e1</color>
+    <color name="zf4fdf5">#f4fdf5</color>
+    <color name="zeaefeb">#eaefeb</color>
+    <color name="z5b5b5b">#5b5b5b</color>
+    <color name="zloading">#55000000</color>
+    <color name="trans">#00000000</color>
+    <color name="trans_55">#99ffffff</color>
+    <color name="black">#000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#0093ff</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="province_line_border">#C7C7C7</color>
+    <color name="white">#ffffff</color>
+    <color name="colorAccent2">#4081</color>
+    <color name="zb0d8ba">#b0d8ba</color>
+    <color name="lv">#52a752</color>
+    <color name="z78adb3">#7dc1ca</color>
+    <color name="zf0f0f0">#f2f2f2</color>
+    <color name="zffffff">#ffffff</color>
+    <color name="z000000">#000000</color>
+    <color name="z454545">#3b3b3b</color>
+    <color name="zd7d7d7">#d7d7d7</color>
 
 </resources>

@@ -1,7 +1,11 @@
 package com.lh.frameproj.api.common;
 
 import com.lh.frameproj.Constants;
+import com.lh.frameproj.bean.AccountVersionEntity;
+import com.lh.frameproj.bean.HttpResult;
 
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -14,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class CommonApi {
 
-    private CommonService mCookieService;
+    private CommonService mCommonService;
 
     public CommonApi(OkHttpClient mOkHttpClient) {
         Retrofit retrofit =
@@ -23,15 +27,15 @@ public class CommonApi {
                         .baseUrl(Constants.BASE_URL)
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build();
-        mCookieService = retrofit.create(CommonService.class);
+        mCommonService = retrofit.create(CommonService.class);
     }
 
-    public CommonService getCookieService() {
-        return mCookieService;
+    /**
+     * 版本更新
+     */
+    public Observable<HttpResult<AccountVersionEntity>> accountVersion() {
+        return mCommonService.accountVersion().subscribeOn(Schedulers.io());
     }
 
-    //    public Observable<Void> messageGetAllNew() {
-//        return mCookieService.messageGetAllNew().subscribeOn(Schedulers.io());
-//    }
 
 }

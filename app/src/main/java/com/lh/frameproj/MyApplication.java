@@ -4,12 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import com.lh.frameproj.injector.component.ApplicationComponent;
-import com.lh.frameproj.injector.component.DaggerApplicationComponent;
-import com.lh.frameproj.injector.module.ApplicationModule;
+import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.util.log.CrashlyticsTree;
 import com.android.frameproj.library.util.log.Logger;
 import com.android.frameproj.library.util.log.Settings;
+import com.lh.frameproj.injector.component.ApplicationComponent;
+import com.lh.frameproj.injector.component.DaggerApplicationComponent;
+import com.lh.frameproj.injector.module.ApplicationModule;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -28,6 +29,7 @@ public class MyApplication extends Application {
         initComponent();
         mContext = getApplicationContext();
         new AppError().initUncaught();
+        ToastUtil.register(this);
 
         // 初始化日志功能
         Logger.initialize(
