@@ -41,6 +41,13 @@ public class ApplicationModule {
         return context.getApplicationContext();
     }
 
+    /**
+     * Provides最终解决第三方类库依赖注入问题
+     * Module中的创建类实例方法用Provides进行标注，Component在搜索到目标类中用Inject注解标注的属性后，
+     * Component就会去Module中去查找用Provides标注的对应的创建类实例方法，
+     * 这样就可以解决第三方类库用dagger2实现依赖注入了
+     * @return
+     */
     @Provides @Singleton public Bus provideBusEvent() {
         return new Bus();
     }

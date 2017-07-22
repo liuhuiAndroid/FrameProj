@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by WE-WIN-027 on 2016/9/27.
  *
- * @des ${TODO}
+ * @des ${实现接口的调用}
  */
 public class CommonApi {
 

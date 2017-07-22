@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.android.frameproj.library.adapter.base.ViewHolder;
 import com.android.frameproj.library.adapter.utils.WrapperUtils;
+
 
 /**
  * Created by zhy on 16/6/23.
@@ -84,6 +86,7 @@ public class LoadMoreWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         });
     }
+
 
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {

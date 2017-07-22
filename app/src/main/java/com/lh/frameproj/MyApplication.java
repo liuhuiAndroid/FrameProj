@@ -21,6 +21,7 @@ import com.squareup.leakcanary.LeakCanary;
 public class MyApplication extends Application {
 
     private ApplicationComponent mApplicationComponent;
+
     private static Context mContext;
 
     @Override
@@ -53,10 +54,13 @@ public class MyApplication extends Application {
         LeakCanary.install(this);
     }
 
+    /**
+     * 需要保证ApplicationComponent只有一个实例
+     */
     private void initComponent() {
         mApplicationComponent =
                 DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
-        mApplicationComponent.inject(this);
+        mApplicationComponent.inject(this);//现在没有需要在MyApplication注入的对象，所以这句代码可写可不写
     }
 
     public ApplicationComponent getApplicationComponent() {

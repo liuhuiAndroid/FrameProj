@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 /**
  * Created by WE-WIN-027 on 2016/9/27.
  *
- * @des ${TODO}
+ * @des ${写接口}
  */
 public interface CommonService {
 
