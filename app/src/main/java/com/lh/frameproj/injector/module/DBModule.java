@@ -5,8 +5,7 @@ import android.content.Context;
 import com.lh.frameproj.db.DaoMaster;
 import com.lh.frameproj.db.DaoSession;
 import com.lh.frameproj.db.TestDao;
-
-import javax.inject.Singleton;
+import com.lh.frameproj.injector.PerApp;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,20 +18,21 @@ import dagger.Provides;
 @Module
 public class DBModule {
 
-    @Provides @Singleton DaoMaster.DevOpenHelper provideDevOpenHelper(Context context) {
+    @Provides @PerApp DaoMaster.DevOpenHelper provideDevOpenHelper(Context context) {
         return new DaoMaster.DevOpenHelper(context, "app.db", null);
     }
 
-    @Provides @Singleton DaoMaster provideDaoMaster(DaoMaster.DevOpenHelper helper) {
+    @Provides @PerApp
+    DaoMaster provideDaoMaster(DaoMaster.DevOpenHelper helper) {
         return new DaoMaster(helper.getWritableDatabase());
     }
 
-    @Provides @Singleton
+    @Provides @PerApp
     DaoSession provideDaoSession(DaoMaster master) {
         return master.newSession();
     }
 
-    @Provides @Singleton
+    @Provides @PerApp
     TestDao getTestDao(DaoSession session) {
         return session.getTestDao();
     }

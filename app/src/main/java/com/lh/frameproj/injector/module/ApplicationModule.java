@@ -4,12 +4,12 @@ import android.content.Context;
 
 import com.android.frameproj.library.util.log.Logger;
 import com.lh.frameproj.components.okhttp.OkHttpHelper;
+import com.lh.frameproj.injector.PerApp;
 import com.squareup.otto.Bus;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -36,7 +36,7 @@ public class ApplicationModule {
      * @return
      */
     @Provides
-    @Singleton
+    @PerApp
     public Context provideApplicationContext() {
         return context.getApplicationContext();
     }
@@ -48,7 +48,7 @@ public class ApplicationModule {
      * 这样就可以解决第三方类库用dagger2实现依赖注入了
      * @return
      */
-    @Provides @Singleton public Bus provideBusEvent() {
+    @Provides @PerApp public Bus provideBusEvent() {
         return new Bus();
     }
 
@@ -56,7 +56,8 @@ public class ApplicationModule {
      * 获取OkHttpClient
      * @return
      */
-    @Provides @Singleton @Named("api")
+    @Provides @PerApp
+    @Named("api") // 区分返回类型相同的@Provides 方法
     OkHttpClient provideApiOkHttpClient() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
@@ -81,7 +82,7 @@ public class ApplicationModule {
     }
 
     @Provides
-    @Singleton
+    @PerApp
     OkHttpClient provideOkHttpClient(@Named("api") OkHttpClient mOkHttpClient) {
         OkHttpClient.Builder builder = mOkHttpClient.newBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
@@ -92,8 +93,13 @@ public class ApplicationModule {
     }
 
 
+    /**
+     * Module中@Provides方法可以带输入参数，其参数由Module集合中的其他@Provides方法提供，或者自动调用构造方法
+     * @param mOkHttpClient
+     * @return
+     */
     @Provides
-    @Singleton
+    @PerApp
     OkHttpHelper provideOkHttpHelper(OkHttpClient mOkHttpClient) {
         return new OkHttpHelper(mOkHttpClient);
     }

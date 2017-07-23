@@ -1,9 +1,9 @@
 package com.lh.frameproj.injector.module;
 
 import com.lh.frameproj.api.common.CommonApi;
+import com.lh.frameproj.injector.PerApp;
 
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,7 +18,7 @@ import okhttp3.OkHttpClient;
 public class ApiModule {
 
     @Provides
-    @Singleton
+    @PerApp
     public CommonApi providesCookieApi(@Named("api") OkHttpClient okHttpClient) {
         return new CommonApi(okHttpClient);
     }

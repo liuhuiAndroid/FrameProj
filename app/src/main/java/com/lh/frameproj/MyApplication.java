@@ -59,7 +59,9 @@ public class MyApplication extends Application {
      */
     private void initComponent() {
         mApplicationComponent =
-                DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+                DaggerApplicationComponent.builder()
+                        .applicationModule(new ApplicationModule(this)) // 如果Module只有有参构造器，则必须显式传入Module实例。
+                        .build();
         mApplicationComponent.inject(this);//现在没有需要在MyApplication注入的对象，所以这句代码可写可不写
     }
 
