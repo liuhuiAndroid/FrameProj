@@ -20,6 +20,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
  * Created by WE-WIN-027 on 2016/9/27.
  *
  * @des ${TODO}
+ * singleton是application级别的 我们要放在application里面去初始化
  */
 @Module
 public class ApplicationModule {
@@ -59,7 +60,6 @@ public class ApplicationModule {
     @Provides @PerApp
     @Named("api") // 区分返回类型相同的@Provides 方法
     OkHttpClient provideApiOkHttpClient() {
-
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -67,17 +67,11 @@ public class ApplicationModule {
             }
         });
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addNetworkInterceptor(interceptor)
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(15, TimeUnit.SECONDS);
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        builder.addInterceptor(logging);
-//        builder.addInterceptor(new AddCookiesInterceptor(context));
-//        builder.addInterceptor(new ReceivedCookiesInterceptor(context));
         return builder.build();
     }
 
