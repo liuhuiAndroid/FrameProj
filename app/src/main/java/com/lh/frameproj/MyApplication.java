@@ -11,7 +11,6 @@ import com.android.frameproj.library.util.log.Settings;
 import com.lh.frameproj.injector.component.ApplicationComponent;
 import com.lh.frameproj.injector.component.DaggerApplicationComponent;
 import com.lh.frameproj.injector.module.ApplicationModule;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -46,12 +45,12 @@ public class MyApplication extends Application {
         }
 
         // 初始化LeakCanary
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
+        //        if (LeakCanary.isInAnalyzerProcess(this)) {
+        //            // This process is dedicated to LeakCanary for heap analysis.
+        //            // You should not init your app in this process.
+        //            return;
+        //        }
+        //        LeakCanary.install(this);
     }
 
     /**
