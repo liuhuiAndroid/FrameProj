@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#55000000"
+    android:gravity="bottom"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_cancle"
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:paddingTop="15dp"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#979797"/>
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/text_yes"
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:paddingTop="15dp"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/zfb331f"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <com.android.frameproj.library.widget.wheel.time.TimePicker
+            android:id="@+id/citypicker"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone">
+        </com.android.frameproj.library.widget.wheel.time.TimePicker>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
