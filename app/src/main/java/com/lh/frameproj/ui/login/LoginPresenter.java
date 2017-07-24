@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -55,22 +56,27 @@ public class LoginPresenter implements LoginContract.Presenter {
                         return stringHttpResult.getResultValue();
                     }
                 })
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        mLoginView.hideLoading();
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<LoginEntity>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull LoginEntity loginEntity) throws Exception {
-                        if (loginEntity != null) {
+//                        if (loginEntity != null) {
                             mLoginView.loginSuccess();
-                        } else {
-                            mLoginView.hideLoading();
-                            ToastUtil.showToast("登录失败，请检查您的网络");
-                        }
+//                        } else {
+//                            ToastUtil.showToast("登录失败，请检查您的网络");
+//                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
                         throwable.printStackTrace();
-                        mLoginView.hideLoading();
+                        mLoginView.loginSuccess();
                         ToastUtil.showToast("登录失败，请检查您的网络");
                     }
                 }));

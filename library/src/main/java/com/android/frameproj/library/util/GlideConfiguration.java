@@ -1,4 +1,4 @@
-package com.android.frameproj.library.adapter.utils;
+package com.android.frameproj.library.util;
 
 import android.content.Context;
 

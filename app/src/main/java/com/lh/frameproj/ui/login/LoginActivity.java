@@ -8,6 +8,7 @@ import com.android.frameproj.library.util.ToastUtil;
 import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseActivity;
 import com.lh.frameproj.ui.main.MainActivity;
+import com.lh.frameproj.util.SPUtil;
 
 import javax.inject.Inject;
 
@@ -19,6 +20,9 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
+
+    @Inject
+    SPUtil mSPUtil;
 
     @Inject
     LoginPresenter mPresenter;

@@ -24,7 +24,7 @@ public class GreenDaoGenerator {
     }
 
     /**
-     * 考勤表
+     * 
      * @param schema
      */
     private static void addTest(Schema schema) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.frameproj.library.util.log.Logger;
 import com.lh.frameproj.components.okhttp.OkHttpHelper;
 import com.lh.frameproj.injector.PerApp;
+import com.lh.frameproj.util.SPUtil;
 import com.squareup.otto.Bus;
 
 import java.util.concurrent.TimeUnit;
@@ -97,4 +98,12 @@ public class ApplicationModule {
     OkHttpHelper provideOkHttpHelper(OkHttpClient mOkHttpClient) {
         return new OkHttpHelper(mOkHttpClient);
     }
+
+
+    @Provides
+    @PerApp
+    SPUtil provideSPUtil(Context context) {
+        return new SPUtil(context);
+    }
+
 }

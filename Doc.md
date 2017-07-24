@@ -1,10 +1,9 @@
 - NOW
 > - 错误日志
 > - 登录注册、订单
-> -
-> -
-> -
-> -
+> - 轮子控件
+> - fragment
+> - 地图选点
 > -
 
 - TODO
@@ -17,6 +16,8 @@
 > - fragment
 > - log
 > - rxjava
-> - compile 'com.jph.takephoto:takephoto_library:4.0.3'??
-> - me.iwf.photopicker
 > -
+
+- END
+> - 权限
+> - 图片选择控件
