@@ -17,12 +17,18 @@ public interface MainContract {
 
         void setTitle(String title);
 
+        void addFragment(Fragment fragment);
+
         void showFragment(Fragment fragment);
+
+        void hideFragment(Fragment fragment);
     }
 
     interface Presenter extends BasePresenter<View>{
 
         void onTabClick(int position);
+
+        void initFragment();
 
     }
 

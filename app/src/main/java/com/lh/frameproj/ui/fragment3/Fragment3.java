@@ -40,6 +40,11 @@ public class Fragment3 extends BaseFragment {
      */
     private List<LocalMedia> selectList = new ArrayList<>();
 
+    public static BaseFragment newInstance() {
+        Fragment3 fragment3 = new Fragment3();
+        return fragment3;
+    }
+
     @Override
     public void initInjector() {
         getComponent(MainComponent.class).inject(this);

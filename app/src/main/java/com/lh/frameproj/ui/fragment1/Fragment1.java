@@ -41,6 +41,12 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
     private Fragment1Adapter mFragment1Adapter;
     private LinearLayoutManager mLinearLayoutManager;
 
+
+    public static BaseFragment newInstance() {
+        Fragment1 fragment1 = new Fragment1();
+        return fragment1;
+    }
+
     //  0
     @Override
     public int initContentView() {

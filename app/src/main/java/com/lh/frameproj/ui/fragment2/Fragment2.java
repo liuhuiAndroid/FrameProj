@@ -31,6 +31,11 @@ public class Fragment2 extends BaseFragment {
     @BindView(R.id.vp_task)
     ViewPager mVpTask;
 
+    public static BaseFragment newInstance() {
+        Fragment2 fragment2 = new Fragment2();
+        return fragment2;
+    }
+
     @Override
     public void initInjector() {
 

@@ -1,6 +1,8 @@
 package com.lh.frameproj.ui.main;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
@@ -11,7 +13,6 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lh.frameproj.R;
 import com.lh.frameproj.injector.HasComponent;
 import com.lh.frameproj.ui.BaseActivity;
-import com.lh.frameproj.ui.fragment1.Fragment1;
 
 import javax.inject.Inject;
 
@@ -32,6 +33,15 @@ public class MainActivity extends BaseActivity implements MainContract.View
     MainPresenter mPresenter;
 
     private MainComponent mMainComponent;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getSupportFragmentManager().getFragments() != null
+                && getSupportFragmentManager().getFragments().size() > 0) {
+            getSupportFragmentManager().getFragments().clear();
+        }
+    }
 
     @Override
     public int initContentView() {
@@ -76,13 +86,8 @@ public class MainActivity extends BaseActivity implements MainContract.View
             }
         });
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_layout,
-                        new Fragment1())
-                .commit();
-
-        mToolbarTitle.setText(R.string.MainActivity_title_1);
         mPresenter.attachView(this);
+        mPresenter.initFragment();
     }
 
 
@@ -92,8 +97,18 @@ public class MainActivity extends BaseActivity implements MainContract.View
     }
 
     @Override
+    public void addFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().add(R.id.frame_layout, fragment).commit();
+    }
+
+    @Override
     public void showFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, fragment).commit();
+        getSupportFragmentManager().beginTransaction().show(fragment).commit();
+    }
+
+    @Override
+    public void hideFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().hide(fragment).commit();
     }
 
     @Override
