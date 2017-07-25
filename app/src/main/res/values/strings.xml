@@ -23,7 +23,9 @@
     <string name="login_nhy">登录农好运</string>
     <string name="login">登录</string>
     <string name="yan_zheng_ma">验证码</string>
+    <string name="password">密\u0020\u0020\u0020\u0020码</string>
     <string name="yan_zheng_ma_hint">请输入验证码</string>
+    <string name="password_hint">请输入密码</string>
     <string name="get_again">重新获取</string>
     <string name="tou_xiang">头像</string>
     <string name="ni_cheng">姓名</string>

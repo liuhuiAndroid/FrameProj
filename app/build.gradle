@@ -72,4 +72,7 @@ dependencies {
     // leakcanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
+
+    // 处理常用的编码方法的工具类包
+    compile 'commons-codec:commons-codec:1.10'
 }

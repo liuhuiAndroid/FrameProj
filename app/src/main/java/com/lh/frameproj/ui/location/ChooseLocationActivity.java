@@ -144,13 +144,14 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
                 if (isFirstLoc) {
                     isFirstLoc = false;
                     MapStatus.Builder builder = new MapStatus.Builder();
-                    LatLng center = new LatLng(latitude, longitude);
+                    LatLng latLng = new LatLng(latitude, longitude);
                     float zoom = 18.0f; // 默认 18级
-                    builder.target(center).zoom(zoom);
+                    builder.target(latLng).zoom(zoom);
                     //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
                     MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(builder.build());
                     //改变地图状态
                     mBaiduMap.animateMapStatus(mMapStatusUpdate);
+                    getCurrentData(latLng);
                 }
             }
         }

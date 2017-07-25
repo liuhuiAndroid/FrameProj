@@ -38,17 +38,17 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void login(String userName, String identifyingCode) {
+    public void login(String userName, String password) {
         if (TextUtils.isEmpty(userName)) {
             mLoginView.showUserNameError("请输入用户名");
             return;
         }
-        if (TextUtils.isEmpty(identifyingCode)) {
-            mLoginView.showPassWordError("请输入验证码");
+        if (TextUtils.isEmpty(password)) {
+            mLoginView.showPassWordError("请输入密码");
             return;
         }
         mLoginView.showLoading();
-        disposables.add(mCommonApi.loginSms()
+        disposables.add(mCommonApi.mallLogin(userName,password)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .map(new Function<HttpResult<LoginEntity>, LoginEntity>() {
                     @Override

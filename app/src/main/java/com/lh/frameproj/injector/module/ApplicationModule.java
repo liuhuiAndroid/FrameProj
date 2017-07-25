@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.android.frameproj.library.util.log.Logger;
 import com.lh.frameproj.components.okhttp.OkHttpHelper;
+import com.lh.frameproj.components.retrofit.RequestHelper;
+import com.lh.frameproj.components.retrofit.UserStorage;
 import com.lh.frameproj.injector.PerApp;
 import com.lh.frameproj.util.SPUtil;
 import com.squareup.otto.Bus;
@@ -105,5 +107,20 @@ public class ApplicationModule {
     SPUtil provideSPUtil(Context context) {
         return new SPUtil(context);
     }
+
+
+    @Provides
+    @PerApp
+    RequestHelper provideRequestHelper(Context mContext,
+                                       UserStorage mUserStorage) {
+        return new RequestHelper(mContext, mUserStorage);
+    }
+
+    @Provides
+    @PerApp
+    UserStorage provideUserStorage(Context mContext) {
+        return new UserStorage(mContext);
+    }
+
 
 }

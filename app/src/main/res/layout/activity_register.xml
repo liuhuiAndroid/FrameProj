@@ -66,17 +66,17 @@
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/register_one_shuo_ming"
-            android:text="@string/password"
+            android:text="@string/yan_zheng_ma"
             android:layout_marginLeft="28px"
             android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/editPassWord"
+            android:id="@+id/editIdentifyingCode"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:textSize="16sp"
             android:textColor="@color/register_one_shuo_ming"
             android:textColorHint="@color/zc3ccc4"
-            android:hint="@string/password_hint"
+            android:hint="@string/yan_zheng_ma_hint"
             android:background="@null"
             android:layout_marginLeft="40px"
             android:layout_marginRight="40px"
@@ -85,6 +85,19 @@
             android:gravity="center|left"
             android:textCursorDrawable="@null"
             android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/text_get_verification_code"
+            android:layout_width="210px"
+            android:layout_height="100px"
+            android:clickable="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="24px"
+            android:background="@drawable/rectangle_register_phone_corner_bg"
+            android:gravity="center"
+            android:text="@string/get_again"
+            android:textColor="@color/base"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

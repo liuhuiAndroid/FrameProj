@@ -32,10 +32,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     TextView mTextType;
     @BindView(R.id.editPhone)
     EditText mEditPhone;
-    @BindView(R.id.editIdentifyingCode)
-    EditText mEditIdentifyingCode;
-    @BindView(R.id.text_get_verification_code)
-    TextView mTextGetVerificationCode;
+    @BindView(R.id.editPassWord)
+    EditText mEditPassWord;
     @BindView(R.id.textLogin)
     TextView mTextLogin;
     private MaterialDialog mLoginDialog;
@@ -97,8 +95,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @OnClick(R.id.textLogin)
     public void mTextLogin() {
         String mUserName = mEditPhone.getText().toString().trim();
-        String mIdentifyingCode = mEditIdentifyingCode.getText().toString().trim();
-        mPresenter.login(mUserName, mIdentifyingCode);
+        String mPassword = mEditPassWord.getText().toString().trim();
+        mPresenter.login(mUserName, mPassword);
     }
 
     @Override
