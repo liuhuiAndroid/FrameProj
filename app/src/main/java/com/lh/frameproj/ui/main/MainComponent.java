@@ -8,6 +8,7 @@ import com.lh.frameproj.ui.fragment2.order_waiting_accept.OrderWaitingAcceptFrag
 import com.lh.frameproj.ui.fragment2.order_waiting_evaluate.OrderWaitingEvaluateFragment;
 import com.lh.frameproj.ui.fragment2.order_working.OrderWorkingFragement;
 import com.lh.frameproj.ui.fragment3.Fragment3;
+import com.lh.frameproj.ui.fragment4.Fragment4;
 
 import dagger.Component;
 
@@ -32,4 +33,5 @@ public interface MainComponent {
     void inject(OrderWorkingFragement fragment);
     void inject(OrderWaitingEvaluateFragment fragment);
 
+    void inject(Fragment4 fragment);
 }

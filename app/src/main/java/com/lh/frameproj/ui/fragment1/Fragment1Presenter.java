@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 /**
  * Created by WE-WIN-027 on 2016/9/27.
  *
@@ -14,6 +16,7 @@ import javax.inject.Inject;
  */
 public class Fragment1Presenter implements Fragment1Contract.Presenter {
 
+    private final CompositeDisposable disposables = new CompositeDisposable();
     private Fragment1Contract.View mView;
 
     @Inject
@@ -47,7 +50,8 @@ public class Fragment1Presenter implements Fragment1Contract.Presenter {
 
     @Override
     public void detachView() {
-
+        disposables.clear();
+        mView = null;
     }
 
 }

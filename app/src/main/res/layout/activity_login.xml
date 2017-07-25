@@ -49,7 +49,8 @@
             android:inputType="number"
             android:gravity="center|left"
             android:textCursorDrawable="@null"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="15026446937"/>
 
     </LinearLayout>
 
@@ -84,7 +85,8 @@
             android:inputType="number"
             android:gravity="center|left"
             android:textCursorDrawable="@null"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:text="111111"/>
 
     </LinearLayout>
 

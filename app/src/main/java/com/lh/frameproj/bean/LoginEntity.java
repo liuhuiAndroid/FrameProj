@@ -5,4 +5,24 @@ package com.lh.frameproj.bean;
  */
 
 public class LoginEntity {
+
+    private long validTime;
+    private String token;
+
+    public long getValidTime() {
+        return validTime;
+    }
+
+    public void setValidTime(long validTime) {
+        this.validTime = validTime;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
 }

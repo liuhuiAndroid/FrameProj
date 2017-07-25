@@ -76,7 +76,6 @@ public class LoginPresenter implements LoginContract.Presenter {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
                         throwable.printStackTrace();
-                        mLoginView.loginSuccess();
                         ToastUtil.showToast("登录失败，请检查您的网络");
                     }
                 }));

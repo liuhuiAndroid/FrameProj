@@ -2,6 +2,7 @@ package com.lh.frameproj.ui.location;
 
 import android.support.annotation.NonNull;
 
+import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.util.log.Logger;
 import com.lh.frameproj.api.common.CommonApi;
 import com.squareup.otto.Bus;
@@ -55,7 +56,7 @@ public class ChooseLocationPresenter implements ChooseLocationContract.Presenter
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
                         throwable.printStackTrace();
-                        mChooseLocationView.geocoderResultFail();
+                        ToastUtil.showToast("登录失败，请检查您的网络");
                     }
                 }));
     }

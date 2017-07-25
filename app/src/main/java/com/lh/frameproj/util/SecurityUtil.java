@@ -77,6 +77,7 @@ public class SecurityUtil {
         result += Constants.app_value;
         String generateDigest;
         Logger.i("result = " + result);
+        Logger.i("currentTimeMillis = " + currentTimeMillis);
         try {
             generateDigest = generateDigest(result, currentTimeMillis + "");
         } catch (Exception e) {

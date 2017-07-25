@@ -5,11 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.android.frameproj.library.util.log.Logger;
 import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseFragment;
 import com.lh.frameproj.ui.header.RentalsSunHeaderView;
 import com.lh.frameproj.ui.main.MainComponent;
-import com.android.frameproj.library.util.log.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -27,7 +26,7 @@ import in.srain.cube.views.ptr.PtrHandler;
  *
  * @des ${TODO}
  */
-public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
+public class Fragment1 extends BaseFragment implements Fragment1Contract.View {
 
     private static final String TAG = "Fragment1";
     @BindView(R.id.recyclerView)
@@ -35,7 +34,8 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
     @BindView(R.id.material_style_ptr_frame)
     PtrFrameLayout frame;
 
-    @Inject Fragment1Presenter mFragment1Presenter;
+    @Inject
+    Fragment1Presenter mFragment1Presenter;
 
     List<String> data;
     private Fragment1Adapter mFragment1Adapter;
@@ -70,19 +70,18 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
             //调用方法
             stepNext(i);
             //打log查看当前i的值（此步多余，实际开发请忽略）
-            Logger.e("for当前的i的值：" + i);
+            //            Logger.e("for当前的i的值：" + i);
         }
 
     }
 
     private void stepNext(int i) {
-        Logger.i("i = "+i);
+        Logger.i("i = " + i);
     }
 
     //  3
     @Override
     public void initUI(View view) {
-        ButterKnife.bind(this, rootView);
         showContent(true);
         mFragment1Presenter.attachView(this);
 
@@ -106,10 +105,10 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
                 if (mLinearLayoutManager != null) {
-                    boolean result=false;
-                    if(mLinearLayoutManager.findFirstVisibleItemPosition()==0){
+                    boolean result = false;
+                    if (mLinearLayoutManager.findFirstVisibleItemPosition() == 0) {
                         final View topChildView = mRecyclerView.getChildAt(0);
-                        result=topChildView.getTop()==0;
+                        result = topChildView.getTop() == 0;
                     }
                     return result && PtrDefaultHandler
                             .checkContentCanBePulledDown(frame, content, header);
@@ -139,4 +138,9 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View{
         frame.refreshComplete();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mFragment1Presenter.detachView();
+    }
 }

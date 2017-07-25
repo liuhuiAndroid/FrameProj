@@ -14,8 +14,6 @@ public class ChooseLocationContract {
         void hideLoading();
 
         void geocoderResultSuccess(String geoCoderResultEntity);
-
-        void geocoderResultFail();
     }
 
     interface Presenter extends BasePresenter<ChooseLocationContract.View> {

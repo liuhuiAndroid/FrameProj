@@ -1,8 +1,10 @@
 package com.lh.frameproj.injector.module;
 
 import android.content.Context;
+import android.telephony.TelephonyManager;
 
 import com.android.frameproj.library.util.log.Logger;
+import com.lh.frameproj.Constants;
 import com.lh.frameproj.components.okhttp.OkHttpHelper;
 import com.lh.frameproj.components.retrofit.RequestHelper;
 import com.lh.frameproj.components.retrofit.UserStorage;
@@ -10,14 +12,20 @@ import com.lh.frameproj.injector.PerApp;
 import com.lh.frameproj.util.SPUtil;
 import com.squareup.otto.Bus;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+
+import static android.provider.MediaStore.getVersion;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -62,7 +70,7 @@ public class ApplicationModule {
      */
     @Provides @PerApp
     @Named("api") // 区分返回类型相同的@Provides 方法
-    OkHttpClient provideApiOkHttpClient() {
+    OkHttpClient provideApiOkHttpClient(final Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -74,7 +82,22 @@ public class ApplicationModule {
                 .addNetworkInterceptor(interceptor)
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS);
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        Request.Builder builder1 = request.newBuilder();
+                        builder1.addHeader("key", Constants.app_key);
+                        builder1.addHeader("app_type", "2");
+                        builder1.addHeader("OS_type", "os_type");
+                        String deviceId = ((TelephonyManager) (context.getSystemService(Context.TELEPHONY_SERVICE))).getDeviceId();
+                        builder1.addHeader("device_id",  deviceId);
+                        builder1.addHeader("app_version", getVersion(context));
+                        Request build = builder1.build();
+                        return chain.proceed(build);
+                    }
+                });
         return builder.build();
     }
 

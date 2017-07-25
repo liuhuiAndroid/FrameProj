@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
-import com.android.frameproj.library.util.ToastUtil;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.mapapi.map.BaiduMap;
@@ -273,11 +272,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
             mCommonAdapter.setDatas(geoCoderResultEntity.getResult().getPois());
             mCommonAdapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void geocoderResultFail() {
-        ToastUtil.showToast("登录失败，请检查您的网络");
     }
 
 }

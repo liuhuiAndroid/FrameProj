@@ -67,4 +67,5 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         openActivity(LoginActivity.class);
         finish();
     }
+
 }

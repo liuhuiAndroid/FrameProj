@@ -49,11 +49,11 @@ public class CommonApi {
      * 登录
      */
     public Observable<HttpResult<LoginEntity>> mallLogin(String username,String password) {
-        Map<String, Object> params = new HashMap<>();
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("username",username);
         params.put("password",password);
         params.put("appType",Constants.APPTYPE);
-        long currentTimeMillis = System.currentTimeMillis();
         String sign = mRequestHelper.getRequestSign(params,currentTimeMillis);
         return mCommonService.mallLogin(currentTimeMillis,sign,params).subscribeOn(Schedulers.io());
     }

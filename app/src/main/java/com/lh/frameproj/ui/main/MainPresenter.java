@@ -6,9 +6,9 @@ import android.util.SparseArray;
 
 import com.lh.frameproj.injector.PerActivity;
 import com.lh.frameproj.ui.BaseFragment;
-import com.lh.frameproj.ui.fragment1.Fragment1;
 import com.lh.frameproj.ui.fragment2.Fragment2;
 import com.lh.frameproj.ui.fragment3.Fragment3;
+import com.lh.frameproj.ui.fragment4.Fragment4;
 
 import javax.inject.Inject;
 
@@ -79,7 +79,7 @@ public class MainPresenter implements MainContract.Presenter {
         }
         if (mFragment == null) {
             if (nowSelect == 0) {
-                mFragment = Fragment1.newInstance();
+                mFragment = Fragment4.newInstance();
             } else if (nowSelect == 1) {
                 mFragment = Fragment2.newInstance();
             } else if (nowSelect == 2) {
