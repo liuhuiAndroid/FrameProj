@@ -43,6 +43,7 @@
         </activity>
         <activity android:name=".ui.main.MainActivity"/>
         <activity android:name=".ui.login.LoginActivity"/>
+        <activity android:name=".ui.location.ChooseLocationActivity"/>
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->
         <meta-data

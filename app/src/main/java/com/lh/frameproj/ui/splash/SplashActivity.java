@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.android.frameproj.library.util.log.Logger;
 import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseActivity;
-import com.lh.frameproj.ui.login.LoginActivity;
+import com.lh.frameproj.ui.location.ChooseLocationActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import javax.inject.Inject;
@@ -64,7 +64,8 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void showMainUi() {
-        openActivity(LoginActivity.class);
+//        openActivity(LoginActivity.class);
+        openActivity(ChooseLocationActivity.class);
         finish();
     }
 }

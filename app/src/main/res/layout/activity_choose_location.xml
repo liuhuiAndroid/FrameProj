@@ -4,4 +4,35 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/baiduMapView"
+            android:layout_width="match_parent"
+            android:layout_height="350dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_current_location" />
+
+        <ImageView
+            android:id="@+id/iv_my_location"
+            android:src="@drawable/icon_gui_wei"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20px"
+            android:layout_width="100px"
+            android:layout_height="100px" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
