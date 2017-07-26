@@ -2,11 +2,13 @@ package com.lh.frameproj.api.common;
 
 import com.lh.frameproj.Constants;
 import com.lh.frameproj.bean.AccountVersionEntity;
+import com.lh.frameproj.bean.CarTypeEntity;
 import com.lh.frameproj.bean.HttpResult;
 import com.lh.frameproj.bean.LoginEntity;
 import com.lh.frameproj.components.retrofit.RequestHelper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -72,5 +74,17 @@ public class CommonApi {
         params.put("mcode","CC:DE:0D:85:1D:4A:71:BF:9B:E3:53:F4:7F:37:4D:B3:72:DF:07:D7;com.lh.frameproj");
         return mCommonService.geocoderApi(params).subscribeOn(Schedulers.io());
     }
+
+    /**
+     * 用车类型
+     */
+    public Observable<HttpResult<List<CarTypeEntity>>> carType() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        String sign = mRequestHelper.getRequestSign(params,currentTimeMillis);
+        return mCommonService.carType(currentTimeMillis,sign).subscribeOn(Schedulers.io());
+    }
+
+
 
 }

@@ -52,4 +52,14 @@
     <color name="z454545">#3b3b3b</color>
     <color name="zd7d7d7">#d7d7d7</color>
 
+
+
+    <color name="black_12_percent">#1f000000</color>
+    <color name="black_38_percent">#61000000</color>
+    <color name="black_50_percent">#80000000</color>
+    <color name="black_54_percent">#8a000000</color>
+    <color name="black_70_percent">#b3000000</color>
+    <color name="black_87_percent">#de000000</color>
+
+
 </resources>

@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.android.frameproj.library.util.log.Logger;
 import com.lh.frameproj.R;
 import com.lh.frameproj.ui.BaseActivity;
-import com.lh.frameproj.ui.login.LoginActivity;
+import com.lh.frameproj.ui.main.MainActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import javax.inject.Inject;
@@ -48,7 +48,8 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         mPresenter.attachView(this);
         //请求读写SDcard权限和定位权限
         mRxPermissions
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION)
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.READ_PHONE_STATE)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(@NonNull Boolean granted) throws Exception {
@@ -64,7 +65,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void showMainUi() {
-        openActivity(LoginActivity.class);
+        openActivity(MainActivity.class);
         finish();
     }
 

@@ -12,7 +12,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.lh.frameproj.injector.component.ApplicationComponent;
 import com.lh.frameproj.injector.component.DaggerApplicationComponent;
 import com.lh.frameproj.injector.module.ApplicationModule;
-import com.lh.frameproj.service.LocationService;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -24,11 +23,6 @@ public class MyApplication extends Application {
     private ApplicationComponent mApplicationComponent;
 
     private static Context mContext;
-
-    /**
-     * 百度地图定位
-     */
-    private LocationService locationService;
 
     @Override
     public void onCreate() {
@@ -59,10 +53,6 @@ public class MyApplication extends Application {
         //        }
         //        LeakCanary.install(this);
 
-        /***
-         * 初始化定位sdk，建议在Application中创建
-         */
-        locationService = new LocationService(getApplicationContext());
         SDKInitializer.initialize(getApplicationContext());
 
     }
@@ -86,8 +76,5 @@ public class MyApplication extends Application {
         return mContext;
     }
 
-    public LocationService getLocationService() {
-        return locationService;
-    }
 
 }

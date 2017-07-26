@@ -9,6 +9,7 @@ import com.lh.frameproj.components.okhttp.OkHttpHelper;
 import com.lh.frameproj.components.retrofit.RequestHelper;
 import com.lh.frameproj.components.retrofit.UserStorage;
 import com.lh.frameproj.injector.PerApp;
+import com.lh.frameproj.service.LocationService;
 import com.lh.frameproj.util.SPUtil;
 import com.squareup.otto.Bus;
 
@@ -45,6 +46,7 @@ public class ApplicationModule {
 
     /**
      * 提供context
+     *
      * @return
      */
     @Provides
@@ -58,18 +60,24 @@ public class ApplicationModule {
      * Module中的创建类实例方法用Provides进行标注，Component在搜索到目标类中用Inject注解标注的属性后，
      * Component就会去Module中去查找用Provides标注的对应的创建类实例方法，
      * 这样就可以解决第三方类库用dagger2实现依赖注入了
+     *
      * @return
      */
-    @Provides @PerApp public Bus provideBusEvent() {
+    @Provides
+    @PerApp
+    public Bus provideBusEvent() {
         return new Bus();
     }
 
     /**
      * 获取OkHttpClient
+     *
      * @return
      */
-    @Provides @PerApp
-    @Named("api") // 区分返回类型相同的@Provides 方法
+    @Provides
+    @PerApp
+    @Named("api")
+    // 区分返回类型相同的@Provides 方法
     OkHttpClient provideApiOkHttpClient(final Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
@@ -92,7 +100,7 @@ public class ApplicationModule {
                         builder1.addHeader("app_type", "2");
                         builder1.addHeader("OS_type", "os_type");
                         String deviceId = ((TelephonyManager) (context.getSystemService(Context.TELEPHONY_SERVICE))).getDeviceId();
-                        builder1.addHeader("device_id",  deviceId);
+                        builder1.addHeader("device_id", deviceId);
                         builder1.addHeader("app_version", getVersion(context));
                         Request build = builder1.build();
                         return chain.proceed(build);
@@ -115,6 +123,7 @@ public class ApplicationModule {
 
     /**
      * Module中@Provides方法可以带输入参数，其参数由Module集合中的其他@Provides方法提供，或者自动调用构造方法
+     *
      * @param mOkHttpClient
      * @return
      */
@@ -143,6 +152,12 @@ public class ApplicationModule {
     @PerApp
     UserStorage provideUserStorage(Context mContext) {
         return new UserStorage(mContext);
+    }
+
+    @Provides
+    @PerApp
+    LocationService provideLocationService(Context mContext) {
+        return new LocationService(mContext);
     }
 
 

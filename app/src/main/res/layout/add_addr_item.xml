@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:minHeight="56.0dip">
+
+        <LinearLayout
+            android:id="@+id/lineV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/transparent"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/topline"
+                android:layout_width="0.5dip"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.0"
+                android:background="@color/md_grey_300"
+                android:visibility="visible"/>
+
+            <View
+                android:id="@+id/bottomline"
+                android:layout_width="0.5dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:background="@color/md_white_1000"
+                android:paddingLeft="5.0dip"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_dest"
+            android:visibility="visible"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/editLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.android.frameproj.library.widget.SuperEditTextPlus
+            android:id="@+id/add_stop"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"/>
+    </LinearLayout>
+</LinearLayout>

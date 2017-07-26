@@ -75,6 +75,5 @@
     <color name="gplus_color_3">#427fed</color>
     <color name="gplus_color_4">#b23424</color>
 
-
-
+    <color name="common_background">#fff3f4f5</color>
 </resources>

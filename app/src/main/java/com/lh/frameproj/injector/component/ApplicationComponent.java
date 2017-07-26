@@ -10,6 +10,7 @@ import com.lh.frameproj.injector.PerApp;
 import com.lh.frameproj.injector.module.ApiModule;
 import com.lh.frameproj.injector.module.ApplicationModule;
 import com.lh.frameproj.injector.module.DBModule;
+import com.lh.frameproj.service.LocationService;
 import com.lh.frameproj.ui.BaseActivity;
 import com.squareup.otto.Bus;
 
@@ -45,5 +46,7 @@ public interface ApplicationComponent { //4 接口，自动生成实现
     void inject(BaseActivity mBaseActivity);
 
     OkHttpHelper getOkHttpHelper();
+
+    LocationService getLocationService();
 
 }

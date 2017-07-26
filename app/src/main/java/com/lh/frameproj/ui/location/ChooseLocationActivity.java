@@ -1,5 +1,6 @@
 package com.lh.frameproj.ui.location;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.android.frameproj.library.adapter.CommonAdapter;
+import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -18,23 +20,26 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
-import com.lh.frameproj.MyApplication;
 import com.lh.frameproj.R;
 import com.lh.frameproj.bean.GeoCoderResultEntity;
 import com.lh.frameproj.service.LocationService;
 import com.lh.frameproj.ui.BaseActivity;
 import com.lh.frameproj.ui.decoration.DividerGridItemDecoration;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.lh.frameproj.ui.fragment4.Fragment4.RESULT_CHOOSE_LOCATION_CODE;
+
 /**
  * 地图选点
  */
 
-public class ChooseLocationActivity extends BaseActivity implements ChooseLocationContract.View{
+public class ChooseLocationActivity extends BaseActivity implements ChooseLocationContract.View {
 
     //百度地图
     @BindView(R.id.baiduMapView)
@@ -47,15 +52,20 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
 
     private BaiduMap mBaiduMap;
 
-    private LocationService locationService;
+    @Inject
+    LocationService locationService;
+
     boolean isFirstLoc = true; // 是否首次定位
 
     private LinearLayoutManager mLinearLayoutManager;
     private CommonAdapter mCommonAdapter;
+    private int mCheck_point;
 
     @Override
     protected void onStart() {
         super.onStart();
+        mCheck_point = getIntent().getIntExtra("check_point", -1);
+
         initlLocationService();
         //初始化百度地图
         initBaiduMap();
@@ -74,8 +84,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
      * 初始化定位服务
      */
     private void initlLocationService() {
-        // -----------location config ------------
-        locationService = ((MyApplication) getApplication()).getLocationService();
         //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
         locationService.registerListener(mListener);
         //注册监听
@@ -246,25 +254,46 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     public void geocoderResultSuccess(String dataString) {
 
         String geoCoderResultString = dataString.replace("renderReverse&&renderReverse(", "").replace(")", "");
-        GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
+        final GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
 
         if (mCommonAdapter == null) {
-            mCommonAdapter = new CommonAdapter<GeoCoderResultEntity.ResultBean.PoisBean>(ChooseLocationActivity.this, R.layout.item_aroundmap,geoCoderResultEntity.getResult().getPois() ) {
+            mCommonAdapter = new CommonAdapter<GeoCoderResultEntity.ResultBean.PoisBean>(ChooseLocationActivity.this, R.layout.item_aroundmap, geoCoderResultEntity.getResult().getPois()) {
                 @Override
                 protected void convert(ViewHolder holder, final GeoCoderResultEntity.ResultBean.PoisBean poisBean, int position) {
 
-                    holder.setText(R.id.item_aroundmap_name,poisBean.getName());
-                    holder.setText(R.id.item_aroundmap_address,poisBean.getAddr());
+                    holder.setText(R.id.item_aroundmap_name, poisBean.getName());
+                    holder.setText(R.id.item_aroundmap_address, poisBean.getAddr());
                     if (position == 0) {
                         holder.getView(R.id.item_aroundmap_icon).setVisibility(View.VISIBLE);
-                        holder.setTextColor(R.id.item_aroundmap_name,Color.RED);
+                        holder.setTextColor(R.id.item_aroundmap_name, Color.RED);
                     } else {
                         holder.getView(R.id.item_aroundmap_icon).setVisibility(View.GONE);
-                        holder.setTextColor(R.id.item_aroundmap_name,Color.BLACK);
+                        holder.setTextColor(R.id.item_aroundmap_name, Color.BLACK);
                     }
 
                 }
             };
+            mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    //这样有问题
+                    if (geoCoderResultEntity != null) {
+                        List<GeoCoderResultEntity.ResultBean.PoisBean> pois = geoCoderResultEntity.getResult().getPois();
+                        if (pois != null && pois.size() > position) {
+                            setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
+                                    .putExtra("name", pois.get(position).getName())
+                                    .putExtra("addr", pois.get(position).getAddr())
+                                    .putExtra("check_point", mCheck_point));
+                        }
+                    }
+                    finish();
+                }
+
+                @Override
+                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    return false;
+                }
+            });
             mRecyclerView.setAdapter(mCommonAdapter);
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mRecyclerView.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));

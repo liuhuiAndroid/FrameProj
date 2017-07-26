@@ -3,10 +3,10 @@ package com.lh.frameproj.ui.fragment4;
 import android.support.annotation.NonNull;
 
 import com.lh.frameproj.api.common.CommonApi;
-import com.lh.frameproj.bean.AccountVersionEntity;
+import com.lh.frameproj.bean.CarTypeEntity;
 import com.lh.frameproj.bean.HttpResult;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -33,20 +33,20 @@ public class Fragment4Presenter implements Fragment4Contract.Presenter {
 
     @Override
     public void onCarListReceive() {
-        disposables.add(mCommonApi.accountVersion()
+        disposables.add(mCommonApi.carType()
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .map(new Function<HttpResult<AccountVersionEntity>, AccountVersionEntity>() {
+                .map(new Function<HttpResult<List<CarTypeEntity>>, List<CarTypeEntity>>() {
                     @Override
-                    public AccountVersionEntity apply(@io.reactivex.annotations.NonNull HttpResult<AccountVersionEntity> stringHttpResult) throws Exception {
-                        return stringHttpResult.getResultValue();
+                    public List<CarTypeEntity> apply(@io.reactivex.annotations.NonNull HttpResult<List<CarTypeEntity>> listHttpResult) throws Exception {
+                        return listHttpResult.getResultValue();
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<AccountVersionEntity>() {
+                .subscribe(new Consumer<List<CarTypeEntity>>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull AccountVersionEntity accountVersionEntity) throws Exception {
-                        if (accountVersionEntity != null) {
-                            mView.renderCarList(new ArrayList<String>());
+                    public void accept(@io.reactivex.annotations.NonNull List<CarTypeEntity> carTypeEntities) throws Exception {
+                        if (carTypeEntities != null && carTypeEntities.size()>0) {
+                            mView.renderCarList(carTypeEntities);
                         } else {
                             loadError();
                         }

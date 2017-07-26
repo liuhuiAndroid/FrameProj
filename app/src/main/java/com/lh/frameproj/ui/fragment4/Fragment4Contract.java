@@ -1,5 +1,6 @@
 package com.lh.frameproj.ui.fragment4;
 
+import com.lh.frameproj.bean.CarTypeEntity;
 import com.lh.frameproj.ui.BasePresenter;
 import com.lh.frameproj.ui.BaseView;
 
@@ -16,7 +17,7 @@ public class Fragment4Contract {
 
         void hideLoading();
 
-        void renderCarList(List<String> orders);
+        void renderCarList(List<CarTypeEntity> orders);
 
         void onError();
 

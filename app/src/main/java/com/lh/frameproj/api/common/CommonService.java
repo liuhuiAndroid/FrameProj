@@ -1,9 +1,11 @@
 package com.lh.frameproj.api.common;
 
 import com.lh.frameproj.bean.AccountVersionEntity;
+import com.lh.frameproj.bean.CarTypeEntity;
 import com.lh.frameproj.bean.HttpResult;
 import com.lh.frameproj.bean.LoginEntity;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -35,5 +37,10 @@ public interface CommonService {
     // 提供从地址到经纬度坐标或者从经纬度坐标到地址的转换服务
     @GET("http://api.map.baidu.com/geocoder/v2/?")
     Observable<ResponseBody> geocoderApi(@QueryMap Map<String, Object> params);
+
+    //用车类型
+    @POST("common/car/type")
+    Observable<HttpResult<List<CarTypeEntity>>> carType(@Header("timestamp") long timestamp, @Header("sign") String sign);
+
 
 }
