@@ -29,7 +29,7 @@ public class CommonApi {
     private CommonService mCommonService;
     private RequestHelper mRequestHelper;
 
-    public CommonApi(OkHttpClient mOkHttpClient,RequestHelper requestHelper) {
+    public CommonApi(OkHttpClient mOkHttpClient, RequestHelper requestHelper) {
         this.mRequestHelper = requestHelper;
         Retrofit retrofit =
                 new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
@@ -50,14 +50,14 @@ public class CommonApi {
     /**
      * 登录
      */
-    public Observable<HttpResult<LoginEntity>> mallLogin(String username,String password) {
+    public Observable<HttpResult<LoginEntity>> mallLogin(String username, String password) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
-        params.put("username",username);
-        params.put("password",password);
-        params.put("appType",Constants.APPTYPE);
-        String sign = mRequestHelper.getRequestSign(params,currentTimeMillis);
-        return mCommonService.mallLogin(currentTimeMillis,sign,params).subscribeOn(Schedulers.io());
+        params.put("username", username);
+        params.put("password", password);
+        params.put("appType", Constants.APPTYPE);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.mallLogin(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -67,11 +67,11 @@ public class CommonApi {
         Map<String, Object> params = new HashMap<>();
         // ak:百度地图api key
         params.put("ak", "KLOSK99izO93bGjmOKnCxScVy0AOhkGB");
-        params.put("callback","renderReverse");
-        params.put("location",latLng);
-        params.put("output","json");
-        params.put("pois","1");
-        params.put("mcode","CC:DE:0D:85:1D:4A:71:BF:9B:E3:53:F4:7F:37:4D:B3:72:DF:07:D7;com.lh.frameproj");
+        params.put("callback", "renderReverse");
+        params.put("location", latLng);
+        params.put("output", "json");
+        params.put("pois", "1");
+        params.put("mcode", "CC:DE:0D:85:1D:4A:71:BF:9B:E3:53:F4:7F:37:4D:B3:72:DF:07:D7;com.lh.frameproj");
         return mCommonService.geocoderApi(params).subscribeOn(Schedulers.io());
     }
 
@@ -81,10 +81,29 @@ public class CommonApi {
     public Observable<HttpResult<List<CarTypeEntity>>> carType() {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
-        String sign = mRequestHelper.getRequestSign(params,currentTimeMillis);
-        return mCommonService.carType(currentTimeMillis,sign).subscribeOn(Schedulers.io());
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.carType(currentTimeMillis, sign).subscribeOn(Schedulers.io());
     }
 
+    /**
+     * 商户-下单
+     */
+    public Observable<HttpResult<Void>> orderSubmit(String serviceTime, String volume, String weight, String serviceType,
+                                                 String carType, String remark, String counts, String address, String submitType) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("serviceTime", serviceTime);
+        params.put("volume", volume);
+        params.put("weight", weight);
+        params.put("serviceType", serviceType);
+        params.put("carType", carType);
+        params.put("remark", remark);
+        params.put("counts", counts);
+        params.put("address", address);
+        params.put("submitType", submitType);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.orderSubmit(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
+    }
 
 
 }

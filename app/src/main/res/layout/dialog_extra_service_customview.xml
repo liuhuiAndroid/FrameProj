@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/lin_msg"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/rectangle_yzm_gray_corner_bg"
+        android:gravity="center|left">
+        <TextView
+            style="@style/normal_sixteen_text"
+            android:textSize="16sp"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/z262627"
+            android:text="@string/money"
+            />
+
+        <EditText
+            android:id="@+id/edit_msg"
+            android:layout_width="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:textSize="16sp"
+            android:textColorHint="@color/zd1d3d4"
+            android:textColor="@color/z262627"
+            android:hint="@string/the_most_money"
+            android:inputType="number"
+            android:textCursorDrawable="@null"
+            android:layout_height="45dp" />
+    </LinearLayout>
+
+</LinearLayout>

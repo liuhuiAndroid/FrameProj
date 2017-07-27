@@ -23,11 +23,14 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.lh.frameproj.R;
 import com.lh.frameproj.bean.CarTypeEntity;
+import com.lh.frameproj.bean.TerminiEntity;
 import com.lh.frameproj.service.LocationService;
 import com.lh.frameproj.ui.BaseFragment;
-import com.lh.frameproj.ui.location.ChooseLocationActivity;
+import com.lh.frameproj.ui.delivery.DeliveryInfoActivity;
+import com.lh.frameproj.ui.improveorder.ImproveOrderActivity;
 import com.lh.frameproj.ui.main.MainComponent;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +40,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.lh.frameproj.Constants.REQUEST_DELIVERY_INFO_CODE;
+import static com.lh.frameproj.Constants.RESULT_DELIVERY_INFO_CODE;
 import static com.lh.frameproj.R.id.viewPager;
 
 /**
@@ -86,9 +91,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     private int nextIndex = 1;
     //最大8个
     private int maxStation = 8;
-
-    public static final int REQUEST_CHOOSE_LOCATION_CODE = 100;
-    public static final int RESULT_CHOOSE_LOCATION_CODE = 101;
+    private VehiclePagerAdapter mVehiclePagerAdapter;
 
     public static BaseFragment newInstance() {
         Fragment4 fragment4 = new Fragment4();
@@ -148,8 +151,8 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     public void renderCarList(final List<CarTypeEntity> carTypeEntities) {
         updateVehicleUI(0, carTypeEntities);
         //初始化ViewPager
-        VehiclePagerAdapter vehiclePagerAdapter = new VehiclePagerAdapter(mViewPager, carTypeEntities);
-        mViewPager.setAdapter(vehiclePagerAdapter);
+        mVehiclePagerAdapter = new VehiclePagerAdapter(mViewPager, carTypeEntities);
+        mViewPager.setAdapter(mVehiclePagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         //防止频繁的销毁视图
         mViewPager.setOffscreenPageLimit(carTypeEntities.size());
@@ -282,10 +285,13 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
      * 选择位置
      */
     private void toPickLocation(View paramView, int paramInt) {
-        Intent localIntent = new Intent(getActivity(), ChooseLocationActivity.class);
-        localIntent.putExtra("check_point", paramInt);
-        //如果之前有定位需要先定位在之前的位置上
-        startActivityForResult(localIntent, REQUEST_CHOOSE_LOCATION_CODE);
+        TerminiEntity terminiEntity = new TerminiEntity();
+        Intent intent = new Intent(getActivity(),DeliveryInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("termini_info", (Serializable) terminiEntity);
+        bundle.putInt("position",paramInt);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, REQUEST_DELIVERY_INFO_CODE);
     }
 
     /**
@@ -352,8 +358,17 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     @Override
     public void onStop() {
         super.onStop();
-        locationService.unregisterListener(mListener); //注销掉监听
-        locationService.stop(); //停止定位服务
+        stopLocationService();
+    }
+
+    /**
+     * 停止LocationService
+     */
+    private void stopLocationService() {
+        if (locationService != null) {
+            locationService.unregisterListener(mListener); //注销掉监听
+            locationService.stop(); //停止定位服务
+        }
     }
 
     private boolean isFirstLoc = true;
@@ -374,6 +389,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                             mSeStPtOF.setTopText(location.getAddrStr());
                         }
                     });
+                    stopLocationService();
                 }
             } else {
                 //申请权限
@@ -387,18 +403,35 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CHOOSE_LOCATION_CODE && resultCode == RESULT_CHOOSE_LOCATION_CODE) {
-            String name = data.getStringExtra("name");
-            String addr = data.getStringExtra("addr");
-            Logger.i("choose position :" + name + ";" + addr);
-            int check_point = data.getIntExtra("check_point", -1);
-            if (check_point != -1) {
-                SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(check_point);
-                localSuperEditTextPlus.setTopText(name);
-                localSuperEditTextPlus.setMiddleText(addr);
+        if (requestCode == REQUEST_DELIVERY_INFO_CODE && resultCode == RESULT_DELIVERY_INFO_CODE) {
+            int position = data.getIntExtra("position",-1);
+            TerminiEntity terminiEntity = (TerminiEntity) data.getExtras().getSerializable("terminiEntity");
+            if (position != -1) {
+                SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(position);
+                localSuperEditTextPlus.setTopText(terminiEntity.getAddressName());
+                localSuperEditTextPlus.setMiddleText(terminiEntity.getAddressDescribeName());
             }
         }
     }
 
+    /**
+     * 下一步
+     */
+    @OnClick(R.id.btnNext)
+    public void mBtnNext() {
+        // TODO 判断起始点
+
+        Intent intent = new Intent(baseActivity, ImproveOrderActivity.class);
+        int currentItem = mViewPager.getCurrentItem();
+        List<CarTypeEntity> carTypeEntities = mVehiclePagerAdapter.getCarTypeEntities();
+        if (carTypeEntities.size() > currentItem) {
+            intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
+            Logger.i("选择 cartype = "+ carTypeEntities.get(currentItem).getCarTypeId() + ""+
+                    ";carname = "+carTypeEntities.get(currentItem).getCarTypeName());
+            startActivity(intent);
+        }else{
+            ToastUtil.showToast("车型数据有误");
+        }
+    }
 
 }

@@ -44,6 +44,16 @@
         <activity android:name=".ui.main.MainActivity"/>
         <activity android:name=".ui.login.LoginActivity"/>
         <activity android:name=".ui.location.ChooseLocationActivity"/>
+        <!-- 完善订单信息 -->
+        <activity android:name=".ui.improveorder.ImproveOrderActivity"/>
+        <!-- 给司机捎句话 -->
+        <activity android:name=".ui.sentence.WriteSentenceActivity"/>
+        <!-- 额外服务 -->
+        <activity android:name=".ui.extraservice.ExtraServiceActivity"/>
+        <!-- 额外服务 -->
+        <activity android:name=".ui.comfirmorder.ComfirmOrderActivity"/>
+        <!-- 发货位置信息 -->
+        <activity android:name=".ui.delivery.DeliveryInfoActivity"/>
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->
         <meta-data

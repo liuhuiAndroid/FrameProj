@@ -21,4 +21,14 @@ public class Constants {
     public static String app_key = "B272F43387B8504C";
     public static String app_value = "70BAE8B491362AB39042B77C7653199D";
 
+
+    public static final int REQUEST_CHOOSE_LOCATION_CODE = 100;
+    public static final int RESULT_CHOOSE_LOCATION_CODE = 101;
+    public static final int REQUEST_EXTRA_SERVICE_CODE = 102;
+    public static final int RESULT_EXTRA_SERVICE_CODE = 103;
+    public static final int REQUEST_WRITE_SENTENCE_CODE = 104;
+    public static final int RESULT_WRITE_SENTENCE_CODE = 105;
+    public static final int REQUEST_DELIVERY_INFO_CODE = 106;
+    public static final int RESULT_DELIVERY_INFO_CODE = 107;
+
 }

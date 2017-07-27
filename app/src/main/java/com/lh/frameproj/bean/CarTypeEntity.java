@@ -6,6 +6,7 @@ package com.lh.frameproj.bean;
 
 public class CarTypeEntity {
 
+    private int carTypeId;
     private int startPrice;
     private int unitPrice;
     private String loadWeight;
@@ -15,6 +16,14 @@ public class CarTypeEntity {
     private String describe;
     private int sort;
     private String carTypeName;
+
+    public int getCarTypeId() {
+        return carTypeId;
+    }
+
+    public void setCarTypeId(int carTypeId) {
+        this.carTypeId = carTypeId;
+    }
 
     public int getStartPrice() {
         return startPrice;

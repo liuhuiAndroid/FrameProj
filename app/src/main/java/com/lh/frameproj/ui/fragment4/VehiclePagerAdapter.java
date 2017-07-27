@@ -61,4 +61,7 @@ public class VehiclePagerAdapter extends PagerAdapter {
         return mCarTypeEntities.get(position%mCarTypeEntities.size()).getCarTypeName();
     }
 
+    public List<CarTypeEntity> getCarTypeEntities() {
+        return mCarTypeEntities;
+    }
 }

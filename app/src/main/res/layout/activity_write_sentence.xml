@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/normal_weight_vertical"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@color/zf1f2f4"
+              android:fitsSystemWindows="true">
+
+    <include layout="@layout/includer_header"/>
+
+    <View style="@style/ZddddddLineStyle"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:layout_marginBottom="28px"
+        android:layout_marginLeft="44px"
+        android:layout_marginRight="44px"
+        android:layout_marginTop="28px"
+        android:background="@drawable/rectangle_shao_hua_corner_bg">
+
+        <EditText
+            android:id="@+id/editShaoHua"
+            android:layout_width="wrap_content"
+            android:layout_height="300px"
+            android:layout_margin="20px"
+            android:background="@null"
+            android:gravity="top|left"
+            android:hint="@string/shao_hua_content"
+            android:textColor="@color/z262627"
+            android:textColorHint="@color/z868788"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/textLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20px"
+            android:layout_marginRight="20px"
+            android:text="60/60"
+            android:textColor="@color/z868788"
+            android:textCursorDrawable="@null"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textOk"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_marginBottom="28px"
+        android:layout_marginLeft="44px"
+        android:layout_marginRight="44px"
+        android:layout_marginTop="28px"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="exit"
+        android:text="@string/ok"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+</LinearLayout>
+

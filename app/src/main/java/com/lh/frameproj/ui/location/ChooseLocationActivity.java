@@ -33,7 +33,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.lh.frameproj.ui.fragment4.Fragment4.RESULT_CHOOSE_LOCATION_CODE;
+import static com.lh.frameproj.Constants.RESULT_CHOOSE_LOCATION_CODE;
+
 
 /**
  * 地图选点
@@ -150,15 +151,18 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
 
                 if (isFirstLoc) {
                     isFirstLoc = false;
-                    MapStatus.Builder builder = new MapStatus.Builder();
+                    //                    更新地图位置
+                                        MapStatus.Builder builder = new MapStatus.Builder();
                     LatLng latLng = new LatLng(latitude, longitude);
-                    float zoom = 18.0f; // 默认 18级
+                                        float zoom = 18.0f; // 默认 18级
+
                     builder.target(latLng).zoom(zoom);
                     //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
                     MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(builder.build());
                     //改变地图状态
                     mBaiduMap.animateMapStatus(mMapStatusUpdate);
                     getCurrentData(latLng);
+
                 }
             }
         }
@@ -254,7 +258,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     public void geocoderResultSuccess(String dataString) {
 
         String geoCoderResultString = dataString.replace("renderReverse&&renderReverse(", "").replace(")", "");
-        final GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
+        GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
 
         if (mCommonAdapter == null) {
             mCommonAdapter = new CommonAdapter<GeoCoderResultEntity.ResultBean.PoisBean>(ChooseLocationActivity.this, R.layout.item_aroundmap, geoCoderResultEntity.getResult().getPois()) {
@@ -276,13 +280,13 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
             mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapter.getDatas();
                     //这样有问题
-                    if (geoCoderResultEntity != null) {
-                        List<GeoCoderResultEntity.ResultBean.PoisBean> pois = geoCoderResultEntity.getResult().getPois();
-                        if (pois != null && pois.size() > position) {
+                    if (datas != null) {
+                        if (datas != null && datas.size() > position) {
                             setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
-                                    .putExtra("name", pois.get(position).getName())
-                                    .putExtra("addr", pois.get(position).getAddr())
+                                    .putExtra("name", datas.get(position).getName())
+                                    .putExtra("addr", datas.get(position).getAddr())
                                     .putExtra("check_point", mCheck_point));
                         }
                     }

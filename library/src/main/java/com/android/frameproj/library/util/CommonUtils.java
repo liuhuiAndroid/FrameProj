@@ -1,10 +1,13 @@
 
 package com.android.frameproj.library.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -106,5 +109,36 @@ public class CommonUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    /**
+     * 显示软键盘
+     * @param context
+     * @param view
+     */
+    public static void showSoftInput(Context context, View view){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * 隐藏软键盘
+     * @param context
+     * @param view
+     */
+    public static void hideSoftInput(Context context, View view){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
+    }
+
+    /**
+     * 隐藏软键盘
+     * @param context
+     */
+    public static void hideSoftInput(Context context){
+        InputMethodManager imm = (InputMethodManager) ((Activity) context).getSystemService(context.INPUT_METHOD_SERVICE);
+        View v = ((Activity) context).getCurrentFocus();
+        if (v!=null){
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
 
 }

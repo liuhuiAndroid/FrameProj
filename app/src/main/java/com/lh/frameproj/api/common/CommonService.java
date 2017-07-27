@@ -42,5 +42,10 @@ public interface CommonService {
     @POST("common/car/type")
     Observable<HttpResult<List<CarTypeEntity>>> carType(@Header("timestamp") long timestamp, @Header("sign") String sign);
 
+    //商户-下单
+    @FormUrlEncoded
+    @POST("order/submit")
+    Observable<HttpResult<Void>> orderSubmit(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                          @FieldMap Map<String, Object> params);
 
 }

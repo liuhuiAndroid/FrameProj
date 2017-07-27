@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/normal_weight_vertical"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@color/zf1f2f4"
+                android:fitsSystemWindows="true">
+
+    <!-- 页面头部-->
+    <LinearLayout
+        android:id="@+id/linearClude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/includer_header"/>
+
+        <View style="@style/ZddddddLineStyle"/>
+
+    </LinearLayout>
+
+    <!-- 页面底部下一步-->
+    <LinearLayout
+        android:id="@+id/linearBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginLeft="44px"
+            android:layout_marginRight="44px"
+            android:background="@drawable/rectangle_register_phone_white_corner_bg"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textMoney"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:gravity="center"
+                android:hint=""
+                android:textColor="@color/red"
+                android:textColorHint="@color/zcbcdce"/>
+            <!--<View-->
+            <!--style="@style/ZddddddLineOneStyle"-->
+            <!--android:layout_height="0.7dp"-->
+            <!--android:background="@color/zcbcdce"/>-->
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textNext"
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginBottom="28px"
+            android:layout_marginLeft="44px"
+            android:layout_marginRight="44px"
+            android:layout_marginTop="28px"
+            android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/zf1f2f4"
+        android:layout_below="@+id/linearClude"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/zf1f2f4"
+            android:orientation="vertical">
+
+            <!-- 用车时间-->
+            <LinearLayout
+                android:id="@+id/linearUpdateTime"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:layout_marginBottom="30px"
+                android:layout_marginTop="30px"
+                android:background="@drawable/rectangle_get_order_corner_bg"
+                android:gravity="center|left"
+                android:paddingLeft="44px"
+                android:paddingRight="44px">
+
+                <ImageView
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:src="@drawable/icon_time"/>
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:text="@string/use_car_time"
+                    android:textColor="@color/z535455"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/textShowTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    />
+
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginRight="30px"
+                    android:text="@string/click_update"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    style="@style/normal_image_next"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:background="@color/zcbcdce"/>
+
+            <!-- 体积-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center|left"
+                android:paddingLeft="44px"
+                android:paddingRight="44px">
+
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="55px"
+                    android:src="@drawable/icon_extra"/>
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:text="@string/tiJi"
+                    android:textColor="@color/z262627"
+                    android:textSize="14sp"/>
+
+                <EditText
+                    android:id="@+id/editTiJi"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:hint="@string/hint_tiJi"
+                    android:singleLine="true"
+                    android:textColor="@color/red"
+                    android:textColorHint="@color/z535455"
+                    android:textSize="12sp"
+                    android:inputType="number"
+                    />
+
+
+            </LinearLayout>
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:layout_height="0.6dp"
+                android:layout_marginLeft="44px"
+                android:background="@color/zcbcdce"/>
+
+            <!-- 重量 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center|left"
+                android:paddingLeft="44px"
+                android:paddingRight="44px">
+
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="55px"
+                    android:src="@drawable/icon_extra"/>
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:text="@string/weight"
+                    android:textColor="@color/z262627"
+                    android:textSize="14sp"/>
+
+                <EditText
+                    android:id="@+id/editWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:hint="@string/hint_weight"
+                    android:singleLine="true"
+                    android:textColor="@color/red"
+                    android:textColorHint="@color/z535455"
+                    android:textSize="12sp"
+                    android:inputType="number"
+                    />
+
+            </LinearLayout>
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:layout_height="0.6dp"
+                android:layout_marginLeft="44px"
+                android:background="@color/zcbcdce"/>
+
+            <!-- 数量 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center|left"
+                android:paddingLeft="44px"
+                android:paddingRight="44px">
+
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="55px"
+                    android:src="@drawable/icon_extra"/>
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:text="数量"
+                    android:textColor="@color/z262627"
+                    android:textSize="14sp"/>
+
+                <EditText
+                    android:id="@+id/editCount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:hint="数量为个数"
+                    android:singleLine="true"
+                    android:textColor="@color/red"
+                    android:textColorHint="@color/z535455"
+                    android:textSize="12sp"
+                    android:inputType="number"
+                    />
+
+            </LinearLayout>
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:layout_marginTop="30px"
+                android:background="@color/zcbcdce"/>
+
+            <!-- 额外服务 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center|left"
+                android:onClick="extraService"
+                android:paddingLeft="44px"
+                android:paddingRight="44px">
+
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="55px"
+                    android:src="@drawable/icon_extra"/>
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:text="@string/extra_service"
+                    android:textColor="@color/z262627"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/textExtraService"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:hint="@string/extra__service"
+                    android:singleLine="true"
+                    android:textColor="@color/red"
+                    android:textColorHint="@color/red"
+                    android:textSize="12sp"
+                    />
+
+                <ImageView
+                    style="@style/normal_image_next"/>
+
+            </LinearLayout>
+
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:layout_height="0.6dp"
+                android:layout_marginLeft="44px"
+                android:background="@color/zcbcdce"/>
+
+            <!-- 给司机捎句话 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center|left"
+                android:onClick="shaoHua"
+                android:paddingLeft="44px"
+                android:paddingRight="44px">
+
+                <ImageView
+                    android:layout_width="55px"
+                    android:layout_height="55px"
+                    android:src="@drawable/icon_write"/>
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:text="@string/shao_hua"
+                    android:textColor="@color/z262627"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/textShaoHua"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30px"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:hint="@string/shao__hua"
+                    android:singleLine="true"
+                    android:textColor="@color/red"
+                    android:textColorHint="@color/red"
+                    android:textSize="12sp"
+                    />
+
+                <ImageView
+                    style="@style/normal_image_next"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:layout_height="0.6dp"
+                android:background="@color/zcbcdce"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
+

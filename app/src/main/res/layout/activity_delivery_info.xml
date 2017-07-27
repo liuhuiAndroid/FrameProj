@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                            xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+                                                            xmlns:tools="http://schemas.android.com/tools"
+                                                            style="@style/normal_weight_vertical"
+                                                            android:background="@color/zf1f2f4"
+                                                            android:fitsSystemWindows="true">
+
+    <include layout="@layout/includer_header" />
+
+    <View style="@style/ZddddddLineStyle" />
+
+    <RelativeLayout
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:gravity="center|left"
+        android:background="@color/white"
+        android:layout_height="140px">
+
+        <EditText
+            android:id="@+id/textAddress"
+            style="@style/normal_fourteen_edittext"
+            android:layout_marginLeft="0px"
+            android:paddingRight="44px"
+            android:paddingLeft="128px"
+            android:text=""
+            />
+        <ImageView
+            android:layout_width="53px"
+            android:layout_marginLeft="44px"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_find"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/myListView"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+    <View
+        style="@style/ZddddddLineOneStyle"
+        android:layout_height="1px"
+        android:layout_marginLeft="44px"
+        android:background="@color/zcbcdce"/>
+
+    <LinearLayout
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:paddingRight="44px"
+        android:paddingLeft="44px"
+        android:gravity="center|left"
+        android:background="@color/white"
+        android:layout_height="140px">
+        <ImageView
+            android:layout_width="53px"
+            android:src="@drawable/img_address"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/textDetailsAddress"
+            style="@style/normal_fourteen_edittext"
+            android:hint="@string/details_address"
+            />
+
+
+    </LinearLayout>
+    <View
+
+        style="@style/ZddddddLineOneStyle"
+        android:layout_height="1px"
+        android:background="@color/zcbcdce"/>
+
+
+    <LinearLayout
+        android:clickable="true"
+        android:layout_marginTop="30px"
+        android:layout_width="match_parent"
+        android:paddingRight="44px"
+        android:paddingLeft="44px"
+        android:gravity="center|left"
+        android:background="@color/white"
+        android:layout_height="140px">
+        <ImageView
+            android:layout_width="53px"
+            android:src="@drawable/img_contact"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/textPersonalName"
+            style="@style/normal_fourteen_edittext"
+            android:hint="@string/personal_name"
+            />
+
+
+    </LinearLayout>
+    <View
+        style="@style/ZddddddLineOneStyle"
+        android:layout_height="1px"
+        android:background="@color/zcbcdce"/>
+
+    <LinearLayout
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:paddingRight="44px"
+        android:paddingLeft="44px"
+        android:gravity="center|left"
+        android:background="@color/white"
+        android:layout_height="140px">
+        <ImageView
+            android:layout_width="53px"
+            android:src="@drawable/img_mobile"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/textContactPhone"
+            style="@style/normal_fourteen_edittext"
+            android:inputType="number"
+            android:maxLength="11"
+            android:hint="@string/contact_phone"
+            />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textOk"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="44px"
+        android:layout_marginRight="44px"
+        android:layout_marginTop="40px"
+        android:layout_marginBottom="28px"
+        android:gravity="center"
+        android:clickable="true"
+        android:onClick="ok"
+        android:textColor="@color/white"
+        android:text="@string/ok"
+        android:textSize="18sp"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+        android:layout_height="150px" />
+</LinearLayout>
+
+

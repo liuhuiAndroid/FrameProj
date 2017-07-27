@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.lh.frameproj.AppManager;
 import com.lh.frameproj.MyApplication;
@@ -79,6 +81,19 @@ public abstract class BaseActivity extends AppCompatActivity{
      */
     public void openActivity(Class<?> cls) {
         startActivity(new Intent(this, cls));
+    }
+
+    /**
+     * 设置返回键
+     * @param imageView
+     */
+    public void setImgBack(ImageView imageView) {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 }

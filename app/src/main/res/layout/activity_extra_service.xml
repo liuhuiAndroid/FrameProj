@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                              xmlns:tools="http://schemas.android.com/tools"
+                                                              style="@style/normal_weight_vertical"
+                                                              android:fitsSystemWindows="true"
+                                                              android:background="@color/zf1f2f4">
+
+    <LinearLayout
+        android:id="@+id/linear_top"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <include
+
+            layout="@layout/includer_header" />
+
+        <View style="@style/ZddddddLineStyle" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textOk"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="44px"
+        android:layout_marginRight="44px"
+        android:layout_marginTop="28px"
+        android:layout_marginBottom="28px"
+        android:gravity="center"
+        android:onClick="exit"
+        android:clickable="true"
+        android:textColor="@color/white"
+        android:text="@string/ok"
+        android:textSize="18sp"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+        android:layout_height="150px" />
+
+    <RelativeLayout
+        android:id="@+id/relative_con"
+        android:layout_below="@id/linear_top"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="30px"
+        android:layout_height="290px">
+        <View
+            style="@style/ZddddddLineOneStyle"
+            android:background="@color/zd1d3d4"
+            />
+        <TextView
+            android:id="@+id/text_base_server"
+            style="@style/normal_sixteen_text"
+            android:textColor="@color/z262627"
+            android:layout_marginTop="35px"
+            android:layout_marginLeft="44px"
+            android:layout_marginBottom="35px"
+            android:text="@string/base_service"/>
+
+        <LinearLayout
+            android:id="@+id/linear_xie_zhuang"
+            android:layout_below="@id/text_base_server"
+            android:layout_width="310px"
+            android:layout_marginLeft="44px"
+            android:gravity="center"
+            android:background="@drawable/rectangle_yzm_gray_corner_bg"
+            android:orientation="vertical"
+            android:layout_height="120px">
+            <TextView
+                android:textSize="14sp"
+                android:textColor="@color/z535455"
+                android:text="@string/need_xie_zhuang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="10sp"
+                android:textColor="@color/z868788"
+                android:text="@string/yi_jia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linear_hui_dan"
+            android:layout_below="@id/text_base_server"
+            android:layout_toRightOf="@id/linear_xie_zhuang"
+            android:layout_width="310px"
+            android:layout_marginLeft="25px"
+            android:gravity="center"
+            android:background="@drawable/rectangle_yzm_gray_corner_bg"
+            android:orientation="vertical"
+            android:layout_height="120px">
+            <TextView
+                android:textSize="14sp"
+                android:textColor="@color/z535455"
+                android:text="@string/need_hui_dan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="10sp"
+                android:textColor="@color/z868788"
+                android:text="@string/free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_hui_jia"
+            android:layout_toRightOf="@id/linear_hui_dan"
+            android:layout_below="@id/text_base_server"
+            android:layout_width="310px"
+            android:layout_marginLeft="25px"
+            android:gravity="center"
+            android:background="@drawable/rectangle_yzm_gray_corner_bg"
+            android:orientation="vertical"
+            android:layout_height="120px"
+            android:visibility="gone">
+            <TextView
+                android:textSize="14sp"
+                android:textColor="@color/z535455"
+                android:text="@string/need_hui_kuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textHuiKuan"
+                android:textSize="10sp"
+                android:textColor="@color/z868788"
+                android:text="@string/free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            style="@style/ZddddddLineOneStyle"
+            android:layout_marginLeft="44px"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/linear_hui_dan_con"
+        android:visibility="gone"
+        android:layout_below="@id/relative_con"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/linear_shou"
+
+            android:layout_width="match_parent"
+            android:paddingTop="40px"
+            android:paddingBottom="40px"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@color/z262627"
+                android:layout_marginLeft="44px"
+                android:text="@string/hui_dan_shuo_ming"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/text_shou"
+                android:layout_width="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/z262627"
+                android:layout_marginLeft="44px"
+                android:text="@string/shou_qi"
+                android:layout_marginRight="10px"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/image_shou"
+                android:src="@drawable/pull_up"
+                android:layout_marginRight="44px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_hui_dan_con"
+            android:layout_width="match_parent"
+            android:layout_marginRight="44px"
+            android:layout_marginLeft="44px"
+            android:textSize="12sp"
+            android:text="· 回单、回款："
+            android:layout_marginBottom="20px"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/text_hui_dan_con_"
+            android:layout_width="match_parent"
+            android:layout_marginRight="44px"
+            android:layout_marginLeft="64px"
+            android:textSize="12sp"
+            android:lineSpacingMultiplier = "1.5"
+            android:layout_marginBottom="40px"
+            android:layout_height="wrap_content" />
+
+
+        <View
+            style="@style/ZddddddLineOneStyle"
+            android:background="@color/zd1d3d4"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+
