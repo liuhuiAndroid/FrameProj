@@ -22,11 +22,37 @@
         android:layout_height="1dp"
         android:layout_below="@id/tab_layout"/>
 
+    <!-- 页面底部下一步-->
+    <LinearLayout
+        android:id="@+id/linearBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textNext"
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginBottom="28px"
+            android:layout_marginLeft="44px"
+            android:layout_marginRight="44px"
+            android:layout_marginTop="28px"
+            android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view_line"
+        android:layout_above="@id/linearBottom"
         android:layout_marginBottom="30dp"
         android:fillViewport="true"
         android:scrollbars="none"
@@ -326,12 +352,5 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="下一步"/>
 
 </RelativeLayout>

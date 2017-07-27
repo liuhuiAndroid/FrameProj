@@ -38,10 +38,10 @@ public class ComfirmOrderPresenter  implements ComfirmOrderContract.Presenter {
         mView.showLoading();
         disposables.add(mCommonApi.orderSubmit(serviceTime,volume,weight,serviceType,carType,remark,counts,address,submitType)
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .map(new Function<HttpResult<Void>, Void>() {
+                .map(new Function<HttpResult<String>, String>() {
                     @Override
-                    public Void apply(@io.reactivex.annotations.NonNull HttpResult<Void> voidHttpResult) throws Exception {
-                        return voidHttpResult.getResultValue();
+                    public String apply(@io.reactivex.annotations.NonNull HttpResult<String> stringHttpResult) throws Exception {
+                        return stringHttpResult.getResultValue();
                     }
                 })
                 .doFinally(new Action() {
@@ -51,9 +51,9 @@ public class ComfirmOrderPresenter  implements ComfirmOrderContract.Presenter {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Void>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull Void aVoid) throws Exception {
+                    public void accept(@io.reactivex.annotations.NonNull String s) throws Exception {
                         mView.submitSuccess();
                     }
                 }, new Consumer<Throwable>() {

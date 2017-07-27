@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout style="@style/normal_weight_vertical"
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:background="@color/zf1f2f4"
                 android:fitsSystemWindows="true">
 
@@ -44,10 +42,7 @@
                 android:hint=""
                 android:textColor="@color/red"
                 android:textColorHint="@color/zcbcdce"/>
-            <!--<View-->
-            <!--style="@style/ZddddddLineOneStyle"-->
-            <!--android:layout_height="0.7dp"-->
-            <!--android:background="@color/zcbcdce"/>-->
+
         </LinearLayout>
 
         <TextView
@@ -71,9 +66,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/zf1f2f4"
-        android:layout_below="@+id/linearClude"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_below="@id/linearClude"
+        android:layout_above="@id/linearBottom">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,7 +162,7 @@
                     android:textColor="@color/red"
                     android:textColorHint="@color/z535455"
                     android:textSize="12sp"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     />
 
 
@@ -215,7 +209,7 @@
                     android:textColor="@color/red"
                     android:textColorHint="@color/z535455"
                     android:textSize="12sp"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     />
 
             </LinearLayout>

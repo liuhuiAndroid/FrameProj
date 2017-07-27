@@ -61,6 +61,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
 
     private TerminiEntity mTerminiEntity;
     private int mPosition;
+    private double longitude = 0.0;
+    private double latitude = 0.0;
 
     @Override
     public int initContentView() {
@@ -129,7 +131,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                     if (!mTerminiEntity.getAddressName().equals(mTextAddress.getText().toString().trim())
                             || !mTerminiEntity.getAddressDescribeName().equals(mTextDetailsAddress.getText().toString().trim())
                             || !mTerminiEntity.getReceiverName().equals(mTextPersonalName.getText().toString().trim())
-                            || !mTerminiEntity.getReceiverPhone().equals(mTextContactPhone.getText().toString().trim()) ) {
+                            || !mTerminiEntity.getReceiverPhone().equals(mTextContactPhone.getText().toString().trim())) {
                         isFinish();
                     } else {
                         finish();
@@ -153,6 +155,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         if (requestCode == REQUEST_CHOOSE_LOCATION_CODE && resultCode == RESULT_CHOOSE_LOCATION_CODE) {
             String name = data.getStringExtra("name");
             String addr = data.getStringExtra("addr");
+            longitude = data.getDoubleExtra("longitude",0.0);
+            latitude = data.getDoubleExtra("latitude",0.0);
             mTextAddress.setText(name);
             mTextDetailsAddress.setText(addr);
         }
@@ -186,38 +190,40 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         String detailName = mTextDetailsAddress.getText().toString().trim();
         String peopleName = mTextPersonalName.getText().toString().trim();
         String phone = mTextContactPhone.getText().toString().trim();
-        if (TextUtils.isEmpty(name)){
-            if (mPosition == 0){
-               ToastUtil.showToast("请填写始发站地址");
-            }else{
+        if (TextUtils.isEmpty(name)) {
+            if (mPosition == 0) {
+                ToastUtil.showToast("请填写始发站地址");
+            } else {
                 ToastUtil.showToast("请填写目的地地址");
             }
-        }else{
+        } else {
 
-            if (TextUtils.isEmpty(peopleName)){
-                if (mPosition == 0){
+            if (TextUtils.isEmpty(peopleName)) {
+                if (mPosition == 0) {
                     ToastUtil.showToast("请填写发货人姓名");
-                }else{
+                } else {
                     ToastUtil.showToast("请填写收货人姓名");
                 }
 
-            }else{
-                if (TextUtils.isEmpty(phone)){
+            } else {
+                if (TextUtils.isEmpty(phone)) {
                     ToastUtil.showToast("请填写联系电话");
-                }else{
-                    if (phone.length() == 11){
+                } else {
+                    if (phone.length() == 11) {
                         mTerminiEntity.setAddressName(name);
                         mTerminiEntity.setAddressDescribeName(detailName);
                         mTerminiEntity.setReceiverName(peopleName);
                         mTerminiEntity.setReceiverPhone(phone);
+                        mTerminiEntity.setLongitude(longitude);
+                        mTerminiEntity.setLatitude(latitude);
                         Intent intent = new Intent();
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("terminiEntity",mTerminiEntity);
-                        bundle.putInt("position",mPosition);
+                        bundle.putSerializable("terminiEntity", mTerminiEntity);
+                        bundle.putInt("position", mPosition);
                         intent.putExtras(bundle);
                         setResult(RESULT_DELIVERY_INFO_CODE, intent);
                         finish();
-                    }else{
+                    } else {
                         ToastUtil.showToast("请填写11位长度的联系电话");
                     }
 
@@ -226,15 +232,4 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!mTerminiEntity.getAddressName().equals(mTextAddress.getText().toString().trim())
-                || !mTerminiEntity.getAddressDescribeName().equals(mTextDetailsAddress.getText().toString().trim())
-                || !mTerminiEntity.getReceiverName().equals(mTextPersonalName.getText().toString().trim())
-                || !mTerminiEntity.getReceiverPhone().equals(mTextContactPhone.getText().toString().trim()) ) {
-            isFinish();
-        } else {
-            finish();
-        }
-    }
 }

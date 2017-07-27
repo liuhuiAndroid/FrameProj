@@ -1,6 +1,8 @@
 package com.lh.frameproj.ui.comfirmorder;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +22,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.lh.frameproj.R.id.linear_d;
 
 /**
  * Created by we-win on 2017/7/27.
@@ -61,7 +65,7 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     TextView mTextWeightShow;
     @BindView(R.id.view1)
     View mView1;
-    @BindView(R.id.linear_d)
+    @BindView(linear_d)
     LinearLayout mLinearD;
 
     @Inject
@@ -73,7 +77,7 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     /**
      * 订单目的地信息
      */
-    private List<TerminiEntity> mTerminiDatas;
+    private List<TerminiEntity> tempTerminiEntity;
 
     @Override
     public int initContentView() {
@@ -99,7 +103,29 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
 
         Bundle bundle = getIntent().getExtras();
         mOrderCarInfo = (OrderCarInfo) bundle.getSerializable("orderCarInfo");
-        mTerminiDatas = (List<TerminiEntity>) bundle.getSerializable("terminiDatas");
+        tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
+
+        if (tempTerminiEntity != null && tempTerminiEntity.size() > 0) {
+            for (int i = 0; i < tempTerminiEntity.size(); i++) {
+                View view = LayoutInflater.from(this).inflate(R.layout.item_termini, null);
+                TextView t = (TextView) view.findViewById(R.id.muDiDi);
+                TextView textMuDiDi = (TextView) view.findViewById(R.id.textMuDiDi);
+                String edtalName = tempTerminiEntity.get(i).getAddressDescribeName();
+                if (TextUtils.isEmpty(edtalName)) {
+                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressDescribeName());
+                } else {
+                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressDescribeName() + "(" + tempTerminiEntity.get(i).getAddressName() + ")");
+                }
+                if (i == 0) {
+                    t.setText(getResources().getString(R.string.begin_d));
+                } else if (i != tempTerminiEntity.size() - 1) {
+                    t.setText(getResources().getString(R.string.pass_d));
+                } else {
+                    t.setText(getResources().getString(R.string.target_d));
+                }
+                mLinearD.addView(view);
+            }
+        }
     }
 
     @Override
@@ -131,7 +157,7 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     public void mTextNext() {
         mComfirmOrderPresenter.orderSubmit(mOrderCarInfo.getServiceTime(), mOrderCarInfo.getVolume(),
                 mOrderCarInfo.getWeight(), mOrderCarInfo.getServiceType(), mOrderCarInfo.getCarType(),
-                mOrderCarInfo.getRemark(), mOrderCarInfo.getCounts(), new Gson().toJson(mTerminiDatas),"1");
+                mOrderCarInfo.getRemark(), mOrderCarInfo.getCounts(), new Gson().toJson(tempTerminiEntity),"1");
     }
 
 }

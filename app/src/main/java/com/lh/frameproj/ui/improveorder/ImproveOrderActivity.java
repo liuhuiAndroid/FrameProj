@@ -86,6 +86,7 @@ public class ImproveOrderActivity extends BaseActivity {
     private String huiKuan = "";
     private String huikuanMoney = "";
     private String mCartype;
+    private List<TerminiEntity> tempTerminiEntity;
 
     @Override
     public int initContentView() {
@@ -104,6 +105,7 @@ public class ImproveOrderActivity extends BaseActivity {
         setImgBack(mImageBack);
         mTextTitle.setText("完善订单信息");
         mCartype = getIntent().getStringExtra("cartype");
+        tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
     }
 
 
@@ -226,8 +228,6 @@ public class ImproveOrderActivity extends BaseActivity {
                         }
                         minut_map.put(dayTime + HOUR[l], minutList);
                     }
-
-
                 }
 
             } else {
@@ -324,9 +324,6 @@ public class ImproveOrderActivity extends BaseActivity {
      */
     @OnClick(R.id.textNext)
     public void mTextNext() {
-        List<TerminiEntity> terminiDatas = null;
-
-
         String serviceTime = mTextShowTime.getText().toString().trim();
         if(TextUtils.isEmpty(serviceTime)){
             ToastUtil.showToast("请选择用车时间");
@@ -354,7 +351,7 @@ public class ImproveOrderActivity extends BaseActivity {
         Intent intent = new Intent(this, ComfirmOrderActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("orderCarInfo", orderCarInfo);
-        bundle.putSerializable("terminiDatas", (Serializable) terminiDatas);
+        bundle.putSerializable("tempTerminiEntity", (Serializable) tempTerminiEntity);
         intent.putExtras(bundle);
         startActivity(intent);
     }

@@ -88,7 +88,7 @@ public class CommonApi {
     /**
      * 商户-下单
      */
-    public Observable<HttpResult<Void>> orderSubmit(String serviceTime, String volume, String weight, String serviceType,
+    public Observable<HttpResult<String>> orderSubmit(String serviceTime, String volume, String weight, String serviceType,
                                                  String carType, String remark, String counts, String address, String submitType) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);

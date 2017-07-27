@@ -10,10 +10,22 @@ public class TerminiEntity extends Entity {
 
     private String addressName; // 阜新路20弄
     private String addressDescribeName; // 国中酒店
-    private String longitude;
-    private String latitude;
+    private double longitude;
+    private double latitude;
     private String receiverName;
     private String receiverPhone;
+
+    public TerminiEntity() {
+    }
+
+    public TerminiEntity(String addressName, String addressDescribeName, double longitude, double latitude, String receiverName, String receiverPhone) {
+        this.addressName = addressName;
+        this.addressDescribeName = addressDescribeName;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.receiverName = receiverName;
+        this.receiverPhone = receiverPhone;
+    }
 
     public String getAddressName() {
         return addressName;
@@ -31,19 +43,19 @@ public class TerminiEntity extends Entity {
         this.addressDescribeName = addressDescribeName;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 

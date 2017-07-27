@@ -31,6 +31,7 @@ import com.lh.frameproj.ui.improveorder.ImproveOrderActivity;
 import com.lh.frameproj.ui.main.MainComponent;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +88,10 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
      * 存放起始地、途径地和终点
      */
     public Map<Integer, SuperEditTextPlus> superEditTextsMap = new HashMap();
+    /**
+     * 存放起始地、途径地和终点的信息
+     */
+    public Map<Integer, TerminiEntity> tempTerminiEntity = new HashMap();
     private int startIndex = 0;
     private int nextIndex = 1;
     //最大8个
@@ -116,6 +121,8 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     @Override
     public void initUI(View view) {
         showContent(true);
+
+        tempTerminiEntity.clear();
 
         mSeStPtOF.setHintText("按此输入起点");
         mNextDestOF.setHintText("按此输入目的地");
@@ -240,7 +247,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
         @Override
         public void onRightBtnClicked(View paramView) {
-            addAddrItem();
+            addAddrItem(null);
             assignStPt2CurrentLocation();
         }
     };
@@ -255,7 +262,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     /**
      * 新增途径地
      */
-    private void addAddrItem() {
+    private void addAddrItem(TerminiEntity terminiEntity) {
         if (false) {
             ToastUtil.showToast("最多添加100个目的地");
             return;
@@ -264,7 +271,12 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         final SuperEditTextPlus localSuperEditTextPlus = addAddrItem2(mLlAddrOF, maxStation);
         //设置属性
         final int i = ((Integer) localSuperEditTextPlus.getTag()).intValue();
-        localSuperEditTextPlus.setTag(i);
+        if (terminiEntity != null) {
+            //            localSuperEditTextPlus.setTopText();
+            //            localSuperEditTextPlus.setMiddleText();
+            //            localSuperEditTextPlus.setBottomText();
+            tempTerminiEntity.put(Integer.valueOf(i), terminiEntity);
+        }
         //设置监听
         localSuperEditTextPlus.setListener(new SuperEditTextPlus.SuperEditTextListener() {
             @Override
@@ -276,6 +288,9 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
             public void onRightBtnClicked(View paramView) {
                 removeItem(mLlAddrOF, localSuperEditTextPlus);
                 superEditTextsMap.remove(Integer.valueOf(i));
+                if (tempTerminiEntity.containsKey(Integer.valueOf(i))) {
+                    tempTerminiEntity.remove(Integer.valueOf(i));
+                }
             }
         });
         superEditTextsMap.put(Integer.valueOf(i), localSuperEditTextPlus);
@@ -286,10 +301,10 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
      */
     private void toPickLocation(View paramView, int paramInt) {
         TerminiEntity terminiEntity = new TerminiEntity();
-        Intent intent = new Intent(getActivity(),DeliveryInfoActivity.class);
+        Intent intent = new Intent(getActivity(), DeliveryInfoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("termini_info", (Serializable) terminiEntity);
-        bundle.putInt("position",paramInt);
+        bundle.putInt("position", paramInt);
         intent.putExtras(bundle);
         startActivityForResult(intent, REQUEST_DELIVERY_INFO_CODE);
     }
@@ -387,6 +402,8 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                         @Override
                         public void run() {
                             mSeStPtOF.setTopText(location.getAddrStr());
+                            //                            TerminiEntity terminiEntity = new TerminiEntity()
+                            //                            tempTerminiEntity.put(0, terminiEntity);
                         }
                     });
                     stopLocationService();
@@ -404,12 +421,13 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_DELIVERY_INFO_CODE && resultCode == RESULT_DELIVERY_INFO_CODE) {
-            int position = data.getIntExtra("position",-1);
+            int position = data.getIntExtra("position", -1);
             TerminiEntity terminiEntity = (TerminiEntity) data.getExtras().getSerializable("terminiEntity");
             if (position != -1) {
                 SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(position);
                 localSuperEditTextPlus.setTopText(terminiEntity.getAddressName());
                 localSuperEditTextPlus.setMiddleText(terminiEntity.getAddressDescribeName());
+                tempTerminiEntity.put(position, terminiEntity);
             }
         }
     }
@@ -417,20 +435,34 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     /**
      * 下一步
      */
-    @OnClick(R.id.btnNext)
-    public void mBtnNext() {
-        // TODO 判断起始点
-
-        Intent intent = new Intent(baseActivity, ImproveOrderActivity.class);
-        int currentItem = mViewPager.getCurrentItem();
-        List<CarTypeEntity> carTypeEntities = mVehiclePagerAdapter.getCarTypeEntities();
-        if (carTypeEntities.size() > currentItem) {
-            intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
-            Logger.i("选择 cartype = "+ carTypeEntities.get(currentItem).getCarTypeId() + ""+
-                    ";carname = "+carTypeEntities.get(currentItem).getCarTypeName());
-            startActivity(intent);
-        }else{
-            ToastUtil.showToast("车型数据有误");
+    @OnClick(R.id.textNext)
+    public void mTextNext() {
+        boolean isPrefect = true;
+        if ((tempTerminiEntity.size() < 2) || (!tempTerminiEntity.containsKey(Integer.valueOf(0))) || (tempTerminiEntity.get(Integer.valueOf(0)) == null)) {
+            isPrefect = false;
+        }
+        if (isPrefect) {
+            Intent intent = new Intent(baseActivity, ImproveOrderActivity.class);
+            int currentItem = mViewPager.getCurrentItem();
+            List<CarTypeEntity> carTypeEntities = mVehiclePagerAdapter.getCarTypeEntities();
+            if (carTypeEntities.size() > currentItem) {
+                intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
+                intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
+                Logger.i("选择 cartype = " + carTypeEntities.get(currentItem).getCarTypeId() + "" +
+                        ";carname = " + carTypeEntities.get(currentItem).getCarTypeName());
+                Bundle bundle = new Bundle();
+                List<TerminiEntity> terminiEntities = new ArrayList<TerminiEntity>();
+                for(Integer integer : tempTerminiEntity.keySet()) {
+                    terminiEntities.add(tempTerminiEntity.get(integer));
+                }
+                bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else {
+                ToastUtil.showToast("车型数据有误");
+            }
+        } else {
+            ToastUtil.showToast("请填写地址");
         }
     }
 

@@ -281,12 +281,13 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                     List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapter.getDatas();
-                    //这样有问题
                     if (datas != null) {
                         if (datas != null && datas.size() > position) {
                             setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
                                     .putExtra("name", datas.get(position).getName())
                                     .putExtra("addr", datas.get(position).getAddr())
+                                    .putExtra("longitude", datas.get(position).getPoint().getX())
+                                    .putExtra("latitude", datas.get(position).getPoint().getY())
                                     .putExtra("check_point", mCheck_point));
                         }
                     }

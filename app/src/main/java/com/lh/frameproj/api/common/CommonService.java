@@ -14,6 +14,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
@@ -44,8 +45,9 @@ public interface CommonService {
 
     //商户-下单
     @FormUrlEncoded
-    @POST("order/submit")
-    Observable<HttpResult<Void>> orderSubmit(@Header("timestamp") long timestamp, @Header("sign") String sign,
+    @Headers("token:4rE6HcLu438nII0stjagjn5mCkZhyXWS4nC9k7fqzsQeY84bqhSlJQA7qGo9Bh0XyePbuSR9aQHJMbZAhTEvCBzai8EQpMtsLm43BaKpqYA=")
+    @POST("mall/order/submit ")
+    Observable<HttpResult<String>> orderSubmit(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                           @FieldMap Map<String, Object> params);
 
 }
