@@ -4,11 +4,12 @@ import android.Manifest;
 import android.widget.Toast;
 
 import com.android.frameproj.library.util.log.Logger;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.xjgj.mall.R;
 import com.xjgj.mall.components.retrofit.UserStorage;
 import com.xjgj.mall.ui.BaseActivity;
+import com.xjgj.mall.ui.login.LoginActivity;
 import com.xjgj.mall.ui.main.MainActivity;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import javax.inject.Inject;
 
@@ -71,7 +72,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         if(mUserStorage.isLogin()) {
             openActivity(MainActivity.class);
         }else{
-            openActivity(MainActivity.class);
+            openActivity(LoginActivity.class);
         }
         finish();
     }

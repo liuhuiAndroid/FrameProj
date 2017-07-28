@@ -506,11 +506,11 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         } else {
             mRecyclerViewGeocoderData.clear();
             mRecyclerViewGeocoderData.addAll(geoCoderResultEntity.getResult().getPois());
+            Logger.i("test mRecyclerViewGeocoderData.size = " + mRecyclerViewGeocoderData.size());
             mCommonAdapterGeocoder.notifyDataSetChanged();
             Logger.i("test notifyDataSetChanged ============ 成功");
         }
     }
-
 
     private AlphaAnimation animation;
 

@@ -81,7 +81,7 @@
         <!-- 百度地图AcessKey -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="KLOSK99izO93bGjmOKnCxScVy0AOhkGB"/>
+            android:value="mFPjNn9HWii1KiKWLTFdgvb3KI7LQVoF"/>
 
     </application>
 
