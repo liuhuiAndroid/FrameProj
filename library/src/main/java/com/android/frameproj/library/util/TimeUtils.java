@@ -154,7 +154,14 @@ public class TimeUtils {
         String year = time.substring(0,4);
         String month = time.substring(5, 7);
         String day = time.substring(8, 10);
-        return  year+"-"+month+"-"+day+" ";
+        return  year+"-"+month+"-"+day;
+    }
+
+    public static String getYear(String str) {
+
+        String time = getLocalTimeSecond(str);
+        String year = time.substring(0,4);
+        return  year;
     }
 
 

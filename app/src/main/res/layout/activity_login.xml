@@ -101,8 +101,9 @@
         android:textColor="@color/white"
         android:text="@string/login"
         android:textSize="18sp"
-        android:background="@drawable/rectangle_register_phone_corner_bg"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
         android:layout_height="150px" />
 
+    <!-- rectangle_register_phone_corner_bg-->
 </LinearLayout>
 

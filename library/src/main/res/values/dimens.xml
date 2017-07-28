@@ -4,4 +4,9 @@
     <dimen name="margindecoration_margin">26dp</dimen>
     <dimen name="progressBar_size">20dp</dimen>
 
+    <dimen name="location_common_height_or_width">48.0dip</dimen>
+    <dimen name="location_common_margin">16.0dip</dimen>
+    <dimen name="location_common_padding">8.0dip</dimen>
+    <dimen name="location_margin_top_or_button">8.0dip</dimen>
+
 </resources>

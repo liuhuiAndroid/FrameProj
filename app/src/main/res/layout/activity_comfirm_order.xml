@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout style="@style/normal_weight_vertical"
                 xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:background="@color/zf1f2f4"
                 android:fitsSystemWindows="true">
 
@@ -177,6 +178,18 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <!-- 加载中 -->
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallPulseIndicator"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
+
 </RelativeLayout>
 
 
