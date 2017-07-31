@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import okhttp3.ResponseBody;
 
@@ -40,12 +39,6 @@ public class ChooseLocationPresenter implements com.xjgj.mall.ui.location.Choose
     public void geocoderApi(String latLng) {
         disposables.add(mCommonApi.geocoderApi(latLng)
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        mChooseLocationView.hideLoading();
-                    }
-                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override

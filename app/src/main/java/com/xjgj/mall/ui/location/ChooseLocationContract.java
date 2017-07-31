@@ -12,9 +12,6 @@ import java.util.List;
 
 public class ChooseLocationContract {
     interface View extends BaseView {
-        void showLoading();
-
-        void hideLoading();
 
         void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> poisBeanList);
 

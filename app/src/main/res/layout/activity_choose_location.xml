@@ -31,16 +31,10 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewGeocoder"
+    <!--<View
+        android:id="@+id/shadeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_mapview"/>
-
-    <View
-        android:id="@+id/shadeView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
         android:background="@color/black_50_percent"
         android:visibility="gone"/>
 
@@ -84,6 +78,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8.0dip"/>
-    </LinearLayout>
+    </LinearLayout>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewGeocoder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_mapview"/>
 
 </RelativeLayout>

@@ -1,15 +1,13 @@
 package com.xjgj.mall.ui.location;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.android.frameproj.library.adapter.CommonAdapter;
@@ -53,7 +51,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.RESULT_CHOOSE_LOCATION_CODE;
-import static com.xjgj.mall.R.id.searchView;
 
 
 /**
@@ -71,18 +68,16 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @Inject
     com.xjgj.mall.ui.location.ChooseLocationPresenter mPresenter;
     // 阴影布局
-    @BindView(R.id.shadeView)
+    //    @BindView(R.id.shadeView)
     View mShadeView;
     // 搜索控件
-    @BindView(searchView)
+    //    @BindView(searchView)
     CustomSearchView mSearchView;
-    @BindView(R.id.btn_common)
-    Button mBtnCommon;
     //搜索结果
-    @BindView(R.id.list_result)
+    //    @BindView(R.id.list_result)
     RecyclerView mListResult;
     //搜索结果所在布局
-    @BindView(R.id.ll_search_result)
+    //    @BindView(R.id.ll_search_result)
     LinearLayout mLlSearchResult;
     private BaiduMap mBaiduMap;
     @Inject
@@ -91,13 +86,13 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     boolean isFirstLoc = true; // 是否首次定位
 
     private LinearLayoutManager mLinearLayoutManager;
-    private CommonAdapter mCommonAdapterGeocoder;
     private int mCheck_point;
 
     //选中的城市默认是上海
     private String selectCity = "上海市";
     private int loadIndex = 0;
-    private List<GeoCoderResultEntity.ResultBean.PoisBean> mRecyclerViewGeocoderData = new ArrayList<>();
+    private List<GeoCoderResultEntity.ResultBean.PoisBean> mRecyclerViewGeoCoderData = new ArrayList<>();
+    private ChooseLocationAdapter mCommonAdapterGeocoder;
 
     @Override
     protected void onStart() {
@@ -110,176 +105,42 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         //开始定位
         locationService.start();// 定位SDK
         //初始化搜索
-        initBaiduMapPoi();
+        //        initBaiduMapPoi();
 
     }
 
     private void initRecyclerView() {
+        Logger.i("test initRecyclerView");
+        Logger.i("test mRecyclerViewGeoCoderData.size = " + mRecyclerViewGeoCoderData.size());
         mLinearLayoutManager = new LinearLayoutManager(ChooseLocationActivity.this);
         mRecyclerViewGeocoder.setLayoutManager(mLinearLayoutManager);
-        mCommonAdapterGeocoder = new CommonAdapter<GeoCoderResultEntity.ResultBean.PoisBean>(ChooseLocationActivity.this, R.layout.item_aroundmap, mRecyclerViewGeocoderData) {
-            @Override
-            protected void convert(ViewHolder holder, final GeoCoderResultEntity.ResultBean.PoisBean poisBean, int position) {
-                Logger.i("test mCommonAdapterGeocoder convert ");
-                holder.setText(R.id.item_aroundmap_name, poisBean.getName());
-                holder.setText(R.id.item_aroundmap_address, poisBean.getAddr());
-                if (position == 0) {
-                    holder.getView(R.id.item_aroundmap_icon).setVisibility(View.VISIBLE);
-                    holder.setTextColor(R.id.item_aroundmap_name, Color.RED);
-                } else {
-                    holder.getView(R.id.item_aroundmap_icon).setVisibility(View.GONE);
-                    holder.setTextColor(R.id.item_aroundmap_name, Color.BLACK);
-                }
-
-            }
-        };
-        mCommonAdapterGeocoder.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapterGeocoder.getDatas();
-                if (datas != null) {
-                    if (datas != null && datas.size() > position) {
-                        setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
-                                .putExtra("name", datas.get(position).getName())
-                                .putExtra("addr", datas.get(position).getAddr())
-                                .putExtra("longitude", datas.get(position).getPoint().getX())
-                                .putExtra("latitude", datas.get(position).getPoint().getY())
-                                .putExtra("check_point", mCheck_point));
-                    }
-                }
-                finish();
-            }
-
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                return false;
-            }
-        });
-        Logger.i("test setAdapter ============ 成功");
-        // -------------------------- 测试
+        mCommonAdapterGeocoder = new ChooseLocationAdapter(ChooseLocationActivity.this, mRecyclerViewGeoCoderData);
+        //        mCommonAdapterGeocoder.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+        //            @Override
+        //            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+        //                List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapterGeocoder.getDatas();
+        //                if (datas != null) {
+        //                    if (datas != null && datas.size() > position) {
+        //                        setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
+        //                                .putExtra("name", datas.get(position).getName())
+        //                                .putExtra("addr", datas.get(position).getAddr())
+        //                                .putExtra("longitude", datas.get(position).getPoint().getX())
+        //                                .putExtra("latitude", datas.get(position).getPoint().getY())
+        //                                .putExtra("check_point", mCheck_point));
+        //                    }
+        //                }
+        //                finish();
+        //            }
+        //
+        //            @Override
+        //            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+        //                return false;
+        //            }
+        //        });
         mRecyclerViewGeocoder.setAdapter(mCommonAdapterGeocoder);
-        Logger.i("test notifyDataSetChanged ============ 测试成功");
-        // -------------------------- 测试
-        //            mRecyclerViewGeocoder.setAdapter(mCommonAdapterGeocoder);
         mRecyclerViewGeocoder.setItemAnimator(new DefaultItemAnimator());
         mRecyclerViewGeocoder.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));
-    }
-
-    private PoiSearch mPoiSearch = null;
-
-    private void initBaiduMapPoi() {
-        // 初始化搜索模块，注册搜索事件监听
-        mPoiSearch = PoiSearch.newInstance();
-        mPoiSearch.setOnGetPoiSearchResultListener(new OnGetPoiSearchResultListener() {
-            @Override
-            public void onGetPoiResult(PoiResult poiResult) {
-                handlePoiResult(poiResult);
-            }
-
-            @Override
-            public void onGetPoiDetailResult(PoiDetailResult result) {
-                if (result.error != SearchResult.ERRORNO.NO_ERROR) {
-                    ToastUtil.showToast("抱歉，未找到结果");
-                } else {
-                    ToastUtil.showToast(result.getName() + ": " + result.getAddress());
-                }
-            }
-
-            @Override
-            public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
-
-            }
-        });
-    }
-
-    /**
-     * 获取到搜索结果
-     *
-     * @param result
-     */
-    private void handlePoiResult(PoiResult result) {
-        if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND
-                || result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
-            mLlSearchResult.setVisibility(View.GONE);
-            return;
-        }
-        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-            mLlSearchResult.setVisibility(View.VISIBLE);
-            setSearchItem(result.getAllPoi());
-        } else {
-            mLlSearchResult.setVisibility(View.GONE);
-        }
-    }
-
-    private List<SearchItem> mSearchItems = new ArrayList<>();
-
-    private void setSearchItem(List<PoiInfo> paramList) {
-        mSearchItems.clear();
-        Iterator localIterator = paramList.iterator();
-        while (localIterator.hasNext()) {
-            PoiInfo localPoiInfo = (PoiInfo) localIterator.next();
-
-            SearchItem localSearchItem = new SearchItem();
-            String str = localPoiInfo.address;
-            localSearchItem.setHistory(false);
-            if (!localPoiInfo.name.equals("")) {
-                localSearchItem.setName(localPoiInfo.name);
-            }
-            localSearchItem.setAddress(str.replaceAll(localPoiInfo.city, ""));
-            localSearchItem.setPoid(localPoiInfo.uid);
-            if (localPoiInfo.location != null) {
-                localSearchItem.setLat(localPoiInfo.location.latitude);
-                localSearchItem.setLng(localPoiInfo.location.longitude);
-                localSearchItem.setCity(localPoiInfo.city);
-                mSearchItems.add(localSearchItem);
-            }
-        }
-        showResultPage();
-    }
-
-    private CommonAdapter mCommonAdapterSearch;
-
-    /**
-     * 展示数据
-     */
-    private void showResultPage() {
-        showShade();
-        if (mCommonAdapterSearch == null) {
-            mListResult.setLayoutManager(new LinearLayoutManager(ChooseLocationActivity.this));
-            mCommonAdapterSearch = new CommonAdapter<SearchItem>(ChooseLocationActivity.this, R.layout.location_search_listitem, mSearchItems) {
-                @Override
-                protected void convert(ViewHolder holder, final SearchItem searchItem, int position) {
-                    holder.setText(R.id.textview_formmatted_address_head, searchItem.getName());
-                    holder.setText(R.id.textview_formmatted_address, searchItem.getAddress());
-                }
-            };
-            mCommonAdapterSearch.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    List<SearchItem> datas = mCommonAdapterSearch.getDatas();
-                    if (datas != null) {
-                        if (datas != null && datas.size() > position) {
-                            setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
-                                    .putExtra("name", datas.get(position).getName())
-                                    .putExtra("addr", datas.get(position).getAddress())
-                                    .putExtra("longitude", datas.get(position).getLng())
-                                    .putExtra("latitude", datas.get(position).getLat())
-                                    .putExtra("check_point", mCheck_point));
-                        }
-                    }
-                    finish();
-                }
-
-                @Override
-                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    return false;
-                }
-            });
-            mListResult.setAdapter(mCommonAdapterSearch);
-            mListResult.setItemAnimator(new DefaultItemAnimator());
-        } else {
-            mCommonAdapterSearch.notifyDataSetChanged();
-        }
+        Logger.i("test setAdapter ============ 结束");
     }
 
     /**
@@ -337,33 +198,33 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     public void initUiAndListener() {
         mPresenter.attachView(this);
 
-        mSearchView.setCityName(selectCity);
-        mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
-            @Override
-            public void onBackButtonClicked() {
-                finish();
-            }
-
-            @Override
-            public void onEditTextClicked() {
-                mSearchView.editTextRequestFocus();
-            }
-
-            @Override
-            public void onRightButtonClicked() {
-                CommonUtils.hideSoftInput(ChooseLocationActivity.this);
-                //TODO 跳转选择城市页面
-            }
-
-            @Override
-            public void onQueryChanged(String paramString, int paramInt1, int paramInt2, int paramInt3) {
-                searchPlaces(paramString);
-            }
-
-            @Override
-            public void afterTextChanged(Editable paramEditable) {
-            }
-        });
+        //        mSearchView.setCityName(selectCity);
+        //        mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
+        //            @Override
+        //            public void onBackButtonClicked() {
+        //                finish();
+        //            }
+        //
+        //            @Override
+        //            public void onEditTextClicked() {
+        //                mSearchView.editTextRequestFocus();
+        //            }
+        //
+        //            @Override
+        //            public void onRightButtonClicked() {
+        //                CommonUtils.hideSoftInput(ChooseLocationActivity.this);
+        //                //TODO 跳转选择城市页面
+        //            }
+        //
+        //            @Override
+        //            public void onQueryChanged(String paramString, int paramInt1, int paramInt2, int paramInt3) {
+        //                searchPlaces(paramString);
+        //            }
+        //
+        //            @Override
+        //            public void afterTextChanged(Editable paramEditable) {
+        //            }
+        //        });
     }
 
     private void searchPlaces(String keystr) {
@@ -487,38 +348,20 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         mPresenter.geocoderApi(latLng.latitude + "," + latLng.longitude);
     }
 
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
     @Override
     public void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> geoCoderResultEntity) {
-        Logger.i("test 监听到位置变化 geocoderResultSuccess");
-        //        Logger.i("test 监听到位置变化 dataString = " + dataString);
-
-        //        String geoCoderResultString = dataString.replace("renderReverse&&renderReverse(", "").replace(")", "");
-        //        GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
+        Logger.i("test geocoderResultSuccess");
 
         if (mCommonAdapterGeocoder == null) {
-            mRecyclerViewGeocoderData.clear();
-            mRecyclerViewGeocoderData.addAll(geoCoderResultEntity);
+            mRecyclerViewGeoCoderData.clear();
+            mRecyclerViewGeoCoderData.addAll(geoCoderResultEntity);
             initRecyclerView();
 
         } else {
-            mRecyclerViewGeocoderData.clear();
-            mRecyclerViewGeocoderData.addAll(geoCoderResultEntity);
-            mCommonAdapterGeocoder.setDatas(mRecyclerViewGeocoderData);
-            Logger.i("test mRecyclerViewGeocoderData.size = " + mRecyclerViewGeocoderData.size());
-            Logger.i("test notifyDataSetChanged ============ 成功");
-            Logger.i("test notifyDataSetChanged testChangeThread:" + Thread.currentThread().getName());
-            new Handler().postDelayed(new Runnable() {
+            mRecyclerViewGeoCoderData.clear();
+            mRecyclerViewGeoCoderData.addAll(geoCoderResultEntity);
+            Logger.i("test mRecyclerViewGeoCoderData.size = " + mRecyclerViewGeoCoderData.size());
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mCommonAdapterGeocoder.notifyDataSetChanged();
@@ -533,6 +376,145 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @Override
     public void onError(Throwable throwable) {
         loadError(throwable);
+    }
+
+    // ==================================================  搜索模块
+    // ==================================================  搜索模块
+    private PoiSearch mPoiSearch = null;
+
+    /**
+     * 初始化搜索模块
+     */
+    private void initBaiduMapPoi() {
+        // 初始化搜索模块，注册搜索事件监听
+        mPoiSearch = PoiSearch.newInstance();
+        mPoiSearch.setOnGetPoiSearchResultListener(new OnGetPoiSearchResultListener() {
+            @Override
+            public void onGetPoiResult(PoiResult poiResult) {
+                handlePoiResult(poiResult);
+            }
+
+            @Override
+            public void onGetPoiDetailResult(PoiDetailResult result) {
+                if (result.error != SearchResult.ERRORNO.NO_ERROR) {
+                    ToastUtil.showToast("抱歉，未找到结果");
+                } else {
+                    ToastUtil.showToast(result.getName() + ": " + result.getAddress());
+                }
+            }
+
+            @Override
+            public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
+
+            }
+        });
+    }
+
+    /**
+     * 获取到搜索结果
+     *
+     * @param result
+     */
+    private void handlePoiResult(PoiResult result) {
+        if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND
+                || result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
+            mLlSearchResult.setVisibility(View.GONE);
+            return;
+        }
+        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+            mLlSearchResult.setVisibility(View.VISIBLE);
+            setSearchItem(result.getAllPoi());
+        } else {
+            mLlSearchResult.setVisibility(View.GONE);
+        }
+    }
+
+    private List<SearchItem> mSearchItems = new ArrayList<>();
+
+    /**
+     * 整理搜索到的数据，准备展示
+     *
+     * @param paramList
+     */
+    private void setSearchItem(List<PoiInfo> paramList) {
+        mSearchItems.clear();
+        Iterator localIterator = paramList.iterator();
+        while (localIterator.hasNext()) {
+            PoiInfo localPoiInfo = (PoiInfo) localIterator.next();
+
+            SearchItem localSearchItem = new SearchItem();
+            String str = localPoiInfo.address;
+            localSearchItem.setHistory(false);
+            if (!localPoiInfo.name.equals("")) {
+                localSearchItem.setName(localPoiInfo.name);
+            }
+            localSearchItem.setAddress(str.replaceAll(localPoiInfo.city, ""));
+            localSearchItem.setPoid(localPoiInfo.uid);
+            if (localPoiInfo.location != null) {
+                localSearchItem.setLat(localPoiInfo.location.latitude);
+                localSearchItem.setLng(localPoiInfo.location.longitude);
+                localSearchItem.setCity(localPoiInfo.city);
+                mSearchItems.add(localSearchItem);
+            }
+        }
+        showResultPage();
+    }
+
+    private CommonAdapter mCommonAdapterSearch;
+
+    /**
+     * 展示搜索数据
+     */
+    private void showResultPage() {
+        showShade();
+        if (mCommonAdapterSearch == null) {
+            mListResult.setLayoutManager(new LinearLayoutManager(ChooseLocationActivity.this));
+            mCommonAdapterSearch = new CommonAdapter<SearchItem>(ChooseLocationActivity.this, R.layout.location_search_listitem, mSearchItems) {
+                @Override
+                protected void convert(ViewHolder holder, final SearchItem searchItem, int position) {
+                    holder.setText(R.id.textview_formmatted_address_head, searchItem.getName());
+                    holder.setText(R.id.textview_formmatted_address, searchItem.getAddress());
+                }
+            };
+            mCommonAdapterSearch.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    List<SearchItem> datas = mCommonAdapterSearch.getDatas();
+                    if (datas != null) {
+                        if (datas != null && datas.size() > position) {
+                            setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
+                                    .putExtra("name", datas.get(position).getName())
+                                    .putExtra("addr", datas.get(position).getAddress())
+                                    .putExtra("longitude", datas.get(position).getLng())
+                                    .putExtra("latitude", datas.get(position).getLat())
+                                    .putExtra("check_point", mCheck_point));
+                        }
+                    }
+                    finish();
+                }
+
+                @Override
+                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    return false;
+                }
+            });
+            mListResult.setAdapter(mCommonAdapterSearch);
+            mListResult.setItemAnimator(new DefaultItemAnimator());
+        } else {
+            mCommonAdapterSearch.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 点击阴影隐藏搜索布局
+     */
+    //    @OnClick(R.id.shadeView)
+    public void mShadeView() {
+        mSearchView.clearQueryContent();
+        mSearchView.setEditTextFocus(false);
+        mLlSearchResult.setVisibility(View.GONE);
+        dismissShade();
+        CommonUtils.hideSoftInput(ChooseLocationActivity.this);
     }
 
     private AlphaAnimation animation;
@@ -559,18 +541,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         mShadeView.startAnimation(this.animation);
         mShadeView.setVisibility(View.VISIBLE);
         mShadeView.setClickable(true);
-    }
-
-    /**
-     * 点击阴影隐藏布局
-     */
-    @OnClick(R.id.shadeView)
-    public void mShadeView() {
-        mSearchView.clearQueryContent();
-        mSearchView.setEditTextFocus(false);
-        mLlSearchResult.setVisibility(View.GONE);
-        dismissShade();
-        CommonUtils.hideSoftInput(ChooseLocationActivity.this);
     }
 
 }
