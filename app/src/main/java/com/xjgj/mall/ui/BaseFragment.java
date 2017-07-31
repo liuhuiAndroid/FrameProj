@@ -1,6 +1,7 @@
 package com.xjgj.mall.ui;
 
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,29 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.frameproj.library.util.ResourceUtil;
+import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.widget.ProgressBarCircularIndeterminate;
+import com.google.gson.JsonParseException;
 import com.xjgj.mall.R;
+import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.injector.HasComponent;
 import com.xjgj.mall.ui.widget.ProgressFragment;
+
+import org.json.JSONException;
+
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import retrofit2.HttpException;
+
+import static com.xjgj.mall.Constants.BAD_GATEWAY;
+import static com.xjgj.mall.Constants.FORBIDDEN;
+import static com.xjgj.mall.Constants.GATEWAY_TIMEOUT;
+import static com.xjgj.mall.Constants.INTERNAL_SERVER_ERROR;
+import static com.xjgj.mall.Constants.NOT_FOUND;
+import static com.xjgj.mall.Constants.REQUEST_TIMEOUT;
+import static com.xjgj.mall.Constants.SERVICE_UNAVAILABLE;
+import static com.xjgj.mall.Constants.UNAUTHORIZED;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -133,4 +153,41 @@ public abstract class BaseFragment extends ProgressFragment {
     @SuppressWarnings("unchecked") protected <C> C getComponent(Class<C> componentType) {
         return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
     }
+
+    public void loadError(Throwable throwable) {
+        throwable.printStackTrace();
+        if (throwable instanceof CommonApi.APIException) {
+            ToastUtil.showToast(throwable.getMessage());
+        } else if (throwable instanceof HttpException) {
+            HttpException httpException = (HttpException) throwable;
+            switch (httpException.code()) {
+                case UNAUTHORIZED:
+                case FORBIDDEN:
+                    //                    onPermissionError(ex);          //权限错误，需要实现
+                    ToastUtil.showToast(getResources().getString(R.string.error_permission));
+                    break;
+                case NOT_FOUND:
+                case REQUEST_TIMEOUT:
+                case GATEWAY_TIMEOUT:
+                case INTERNAL_SERVER_ERROR:
+                case BAD_GATEWAY:
+                case SERVICE_UNAVAILABLE:
+                default:
+                    //均视为网络错误
+                    ToastUtil.showToast(getResources().getString(R.string.error_network));
+                    break;
+            }
+        } else if (throwable instanceof JsonParseException
+                || throwable instanceof JSONException
+                || throwable instanceof ParseException) {
+            ToastUtil.showToast(getResources().getString(R.string.error_parse));
+        } else if (throwable instanceof UnknownHostException) {
+            ToastUtil.showToast(getResources().getString(R.string.error_network));
+        } else if (throwable instanceof SocketTimeoutException) {    //超时
+            ToastUtil.showToast(getResources().getString(R.string.error_overtime));
+        } else {
+            ToastUtil.showToast(getResources().getString(R.string.error_unknow));
+        }
+    }
+
 }

@@ -9,7 +9,7 @@ import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
 import com.xjgj.mall.bean.User;
-import com.xjgj.mall.components.retrofit.UserStorage;
+import com.xjgj.mall.components.storage.UserStorage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -93,8 +93,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        ToastUtil.showToast("登录失败，请检查您的网络");
+                        mLoginView.onError(throwable);
                     }
                 }));
 

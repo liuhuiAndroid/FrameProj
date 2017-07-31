@@ -32,8 +32,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.xjgj.mall.Constants.REQUEST_CONFIRM_ORDER_CODE;
 import static com.xjgj.mall.Constants.REQUEST_EXTRA_SERVICE_CODE;
 import static com.xjgj.mall.Constants.REQUEST_WRITE_SENTENCE_CODE;
+import static com.xjgj.mall.Constants.RESULT_CONFIRM_ORDER_CODE;
 import static com.xjgj.mall.Constants.RESULT_EXTRA_SERVICE_CODE;
 import static com.xjgj.mall.Constants.RESULT_WRITE_SENTENCE_CODE;
 import static com.xjgj.mall.R.id.editTiJi;
@@ -317,6 +319,8 @@ public class ImproveOrderActivity extends BaseActivity {
                     mTextExtraService.setText("");
                 }
             }
+        } else if (requestCode == REQUEST_CONFIRM_ORDER_CODE && resultCode == RESULT_CONFIRM_ORDER_CODE) {
+            finish();
         }
     }
 
@@ -373,7 +377,8 @@ public class ImproveOrderActivity extends BaseActivity {
         bundle.putSerializable("orderCarInfo", orderCarInfo);
         bundle.putSerializable("tempTerminiEntity", (Serializable) tempTerminiEntity);
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CONFIRM_ORDER_CODE);
     }
+
 
 }

@@ -13,6 +13,7 @@ import com.android.frameproj.library.adapter.base.ViewHolder;
 import com.android.frameproj.library.adapter.wrapper.LoadMoreWrapper;
 import com.android.frameproj.library.widget.MyPtrClassicFrameLayout;
 import com.xjgj.mall.R;
+import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.decoration.DividerGridItemDecoration;
 import com.xjgj.mall.ui.main.MainComponent;
@@ -25,8 +26,6 @@ import butterknife.BindView;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
-
-import static com.xjgj.mall.R.id.tv_time;
 
 /**
  * Created by we-win on 2017/7/20.
@@ -94,12 +93,15 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
      * 得到数据，刷新RecyclerView
      */
     @Override
-    public void renderOrderList(List<String> orders) {
+    public void renderOrderList(List<OrderEntity> orderEntities) {
         if (mCommonAdapter == null) {
-            mCommonAdapter = new CommonAdapter<String>(getActivity(), R.layout.item_order_waiting_accept, orders) {
+            mCommonAdapter = new CommonAdapter<OrderEntity>(getActivity(), R.layout.item_order, orderEntities) {
                 @Override
-                protected void convert(ViewHolder holder, final String s, int position) {
-                    holder.setText(tv_time, "s = " + s);
+                protected void convert(ViewHolder holder, final OrderEntity orderEntity, int position) {
+                    holder.setText(R.id.textTime, orderEntity.getCreateTime().concat("  (").concat(orderEntity.getCarType()).concat(")"));
+                    holder.setText(R.id.textState, "待接单");
+                    holder.setText(R.id.textStart, "待接单");
+                    holder.setText(R.id.textEnd, "待接单");
                 }
             };
             mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
@@ -119,7 +121,7 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 0));
         } else {
-            mCommonAdapter.setDatas(orders);
+            mCommonAdapter.setDatas(orderEntities);
             mLoadMoreWrapper.notifyDataSetChanged();
         }
     }
@@ -137,8 +139,9 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
     }
 
     @Override
-    public void onError() {
+    public void onError(Throwable throwable) {
         showError(true);
+        loadError(throwable);
     }
 
     @Override

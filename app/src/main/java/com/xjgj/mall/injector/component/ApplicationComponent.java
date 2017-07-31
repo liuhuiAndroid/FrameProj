@@ -6,7 +6,7 @@ import com.squareup.otto.Bus;
 import com.xjgj.mall.MyApplication;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.components.okhttp.OkHttpHelper;
-import com.xjgj.mall.components.retrofit.UserStorage;
+import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.db.TestDao;
 import com.xjgj.mall.injector.PerApp;
 import com.xjgj.mall.injector.module.ApiModule;

@@ -3,11 +3,11 @@ package com.xjgj.mall.ui.fragment2.order_waiting_accept;
 import android.support.annotation.NonNull;
 
 import com.android.frameproj.library.util.ToastUtil;
-import com.xjgj.mall.api.common.CommonApi;
-import com.xjgj.mall.bean.AccountVersionEntity;
-import com.xjgj.mall.bean.HttpResult;
-import com.xjgj.mall.injector.PerActivity;
 import com.squareup.otto.Bus;
+import com.xjgj.mall.api.common.CommonApi;
+import com.xjgj.mall.bean.HttpResult;
+import com.xjgj.mall.bean.OrderEntity;
+import com.xjgj.mall.injector.PerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -32,7 +33,7 @@ public class OrderWaitingAcceptPresenter implements OrderWaitingAcceptContract.P
     private CommonApi mCommonApi;
     private Bus mBus;
 
-    private List<String> mStringList = new ArrayList<>();
+    private List<OrderEntity> mOrderEntities = new ArrayList<>();
 
     private int page = 1;
 
@@ -44,56 +45,47 @@ public class OrderWaitingAcceptPresenter implements OrderWaitingAcceptContract.P
 
     @Override
     public void onOrderWaitingAcceptListReceive() {
-        disposables.add(mCommonApi.accountVersion()
+        disposables.add(mCommonApi.mallOrderList(page, 0)
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .doOnNext(new Consumer<HttpResult<AccountVersionEntity>>() {
+                .flatMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull HttpResult<AccountVersionEntity> accountVersionEntityHttpResult) throws Exception {
+                    public ObservableSource<List<OrderEntity>> apply(@io.reactivex.annotations.NonNull HttpResult<List<OrderEntity>> listHttpResult) throws Exception {
+                        return mCommonApi.flatResponse(listHttpResult);
+                    }
+                })
+                .doOnNext(new Consumer<List<OrderEntity>>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull List<OrderEntity> orderEntities) throws Exception {
                         if (page == 1) {
-                            mStringList.clear();
+                            mOrderEntities.clear();
                         }
                     }
                 })
-                .map(new Function<HttpResult<AccountVersionEntity>, AccountVersionEntity>() {
-                    @Override
-                    public AccountVersionEntity apply(@io.reactivex.annotations.NonNull HttpResult<AccountVersionEntity> stringHttpResult) throws Exception {
-                        return stringHttpResult.getResultValue();
-                    }
-                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<AccountVersionEntity>() {
+                .subscribe(new Consumer<List<OrderEntity>>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull AccountVersionEntity accountVersionEntity) throws Exception {
-                        if (accountVersionEntity != null) {
-                            if (false) {
+                    public void accept(@io.reactivex.annotations.NonNull List<OrderEntity> orderEntities) throws Exception {
+                        if (orderEntities != null) {
+                            mOrderEntities.addAll(orderEntities);
+                            if (mOrderEntities.size() == 0) {
                                 mView.onEmpty();
                             } else {
-                                //TODO
-                                List<String> messages = new ArrayList<String>();
-                                messages.add("a");
-                                messages.add("b");
-                                messages.add("c");
-                                messages.add("d");
-                                messages.add("4");
-                                messages.add("5");
-                                messages.add("6");
-                                messages.add("7");
-                                messages.add("8");
-                                messages.add("9");
-                                mStringList.addAll(messages);
                                 mView.hideLoading();
-                                mView.renderOrderList(mStringList);
+                                mView.renderOrderList(mOrderEntities);
                                 mView.onRefreshCompleted();
-                                mView.onLoadCompleted(true);
+                                mView.onLoadCompleted(mOrderEntities.size() == 10 ? true : false);
                             }
                         } else {
-                            loadError();
+                            mView.hideLoading();
+                            mView.renderOrderList(mOrderEntities);
+                            mView.onRefreshCompleted();
+                            mView.onLoadCompleted(true);
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-                        loadError();
+                        loadError(throwable);
                         throwable.printStackTrace();
                     }
                 }));
@@ -106,11 +98,11 @@ public class OrderWaitingAcceptPresenter implements OrderWaitingAcceptContract.P
         onOrderWaitingAcceptListReceive();
     }
 
-    private void loadError() {
-        if (mStringList.isEmpty()) {
-            mView.onError();
+    private void loadError(Throwable throwable) {
+        if (mOrderEntities.isEmpty()) {
+            mView.onError(throwable);
         } else {
-            ToastUtil.showToast("数据加载失败，请重试");
+            mView.renderOrderList(mOrderEntities);
             mView.onRefreshCompleted();
             mView.onLoadCompleted(true);
         }
@@ -124,8 +116,8 @@ public class OrderWaitingAcceptPresenter implements OrderWaitingAcceptContract.P
 
     @Override
     public void onOrderClick(int position) {
-        String s = mStringList.get(position);
-        ToastUtil.showToast("点击条目:" + position + "，数据：" + s);
+        OrderEntity orderEntity = mOrderEntities.get(position);
+        ToastUtil.showToast("点击条目:" + position + "，数据：");
     }
 
     @Override

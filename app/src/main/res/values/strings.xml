@@ -1,5 +1,12 @@
 <resources>
 
+    <!--通用-->
+    <string name="error_overtime">连接超时</string>
+    <string name="error_network">网络异常</string>
+    <string name="error_permission">权限错误</string>
+    <string name="error_parse">解析异常</string>
+    <string name="error_unknow">未知的错误</string>
+    <string name="universal_empty">暂无更多内容</string>
 
     <string name="MainActivity_title_1">找车</string>
     <string name="MainActivity_title_2">订单</string>
@@ -17,8 +24,11 @@
     <string name="i_am_farmer">我是农产品采购商</string>
     <string name="register">注册</string>
     <string name="phone_login">手机号快捷登录</string>
+    <string name="phone_register">手机号快捷注册</string>
     <string name="phone">手机号</string>
     <string name="phone_hint">11位手机号</string>
+    <string name="nick_name">姓\u0020\u0020\u0020\u0020名</string>
+    <string name="nick_name_hint">请输入姓名</string>
     <string name="next">下一步</string>
     <string name="login_nhy">登录农好运</string>
     <string name="login">登录</string>

@@ -2,10 +2,11 @@ package com.xjgj.mall.ui.location;
 
 import android.support.annotation.NonNull;
 
-import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.util.log.Logger;
+import com.google.gson.Gson;
 import com.squareup.otto.Bus;
 import com.xjgj.mall.api.common.CommonApi;
+import com.xjgj.mall.bean.GeoCoderResultEntity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -49,14 +50,16 @@ public class ChooseLocationPresenter implements com.xjgj.mall.ui.location.Choose
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull ResponseBody responseBody) throws Exception {
-                        mChooseLocationView.geocoderResultSuccess(responseBody.string());
-                        Logger.i("jsonObject = "+responseBody.string());
+                        Logger.i("ResponseBody ?");
+                        Logger.i("ResponseBody "+responseBody.toString());
+                        String geoCoderResultString = responseBody.string().replace("renderReverse&&renderReverse(", "").replace(")", "");
+                        GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
+                        mChooseLocationView.geocoderResultSuccess(geoCoderResultEntity.getResult().getPois());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        ToastUtil.showToast("登录失败，请检查您的网络");
+                        mChooseLocationView.onError(throwable);
                     }
                 }));
     }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/normal_weight_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/register_one"
+    android:fitsSystemWindows="true"
+    android:gravity="center|top">
+
+    <include layout="@layout/includer_header"/>
+
+    <View
+        style="@style/ZddddddLineStyle"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            style="@style/normal_weight_vertical"
+            android:background="@color/trans"
+            android:gravity="center|top"
+            >
+
+            <TextView
+                android:id="@+id/textState"
+                style="@style/normal_sixteen_text"
+                android:layout_gravity="left"
+                android:layout_marginBottom="15px"
+                android:layout_marginLeft="44px"
+                android:layout_marginRight="44px"
+                android:layout_marginTop="15px"
+                android:text=""/>
+
+            <ImageView
+                android:id="@+id/imageCard"
+                android:layout_width="700px"
+                android:layout_height="700px"
+                android:layout_marginBottom="30px"
+                android:layout_marginTop="30px"
+                android:src="@drawable/card_add"/>
+
+
+            <TextView
+                android:id="@+id/textUpload"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:layout_marginLeft="35px"
+                android:layout_marginRight="35px"
+                android:layout_marginTop="28px"
+                android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/upload"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
+
+
+

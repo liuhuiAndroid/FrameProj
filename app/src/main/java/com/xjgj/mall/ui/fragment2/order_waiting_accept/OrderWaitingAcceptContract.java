@@ -1,5 +1,6 @@
 package com.xjgj.mall.ui.fragment2.order_waiting_accept;
 
+import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.ui.BasePresenter;
 import com.xjgj.mall.ui.BaseView;
 
@@ -16,15 +17,15 @@ public class OrderWaitingAcceptContract {
 
         void hideLoading();
 
-        void renderOrderList(List<String> orders);
+        void renderOrderList(List<OrderEntity> orders);
 
         void onRefreshCompleted();
 
         void onLoadCompleted(boolean isLoadAll);
 
-        void onError();
-
         void onEmpty();
+
+        void onError(Throwable throwable);
 
     }
 

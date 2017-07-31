@@ -15,6 +15,7 @@ public interface Fragment1Contract {
     interface  View extends BaseView{
 
         void onRefreshCompleted(List<String> data);
+
     }
 
     interface Presenter extends BasePresenter<View>{

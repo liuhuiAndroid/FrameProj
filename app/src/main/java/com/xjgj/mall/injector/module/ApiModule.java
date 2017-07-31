@@ -2,7 +2,7 @@ package com.xjgj.mall.injector.module;
 
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.components.retrofit.RequestHelper;
-import com.xjgj.mall.components.retrofit.UserStorage;
+import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.injector.PerApp;
 
 import javax.inject.Named;

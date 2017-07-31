@@ -8,7 +8,7 @@ import com.squareup.otto.Bus;
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.components.okhttp.OkHttpHelper;
 import com.xjgj.mall.components.retrofit.RequestHelper;
-import com.xjgj.mall.components.retrofit.UserStorage;
+import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.injector.PerApp;
 import com.xjgj.mall.service.LocationService;
 import com.xjgj.mall.util.SPUtil;
@@ -149,8 +149,8 @@ public class ApplicationModule {
 
     @Provides
     @PerApp
-    UserStorage provideUserStorage(Context mContext) {
-        return new UserStorage(mContext);
+    UserStorage provideUserStorage(Context mContext,SPUtil spUtil) {
+        return new UserStorage(mContext,spUtil);
     }
 
     @Provides

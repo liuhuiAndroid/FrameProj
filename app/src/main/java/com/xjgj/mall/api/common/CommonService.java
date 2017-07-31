@@ -1,10 +1,11 @@
 package com.xjgj.mall.api.common;
 
 
-import com.xjgj.mall.bean.AccountVersionEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
+import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.bean.User;
 
 import java.util.List;
@@ -26,14 +27,16 @@ import retrofit2.http.QueryMap;
  */
 public interface CommonService {
 
-    // 版本控制
-    @POST("version/control")
-    Observable<HttpResult<AccountVersionEntity>> accountVersion();
-
     //登录
     @FormUrlEncoded
     @POST("mall/login")
     Observable<HttpResult<LoginEntity>> mallLogin(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                  @FieldMap Map<String, Object> params);
+
+    //注册
+    @FormUrlEncoded
+    @POST("mall/register")
+    Observable<HttpResult<LoginEntity>> mallRegister(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                   @FieldMap Map<String, Object> params);
 
     // 提供从地址到经纬度坐标或者从经纬度坐标到地址的转换服务
@@ -50,9 +53,20 @@ public interface CommonService {
     Observable<HttpResult<String>> orderSubmit(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                @FieldMap Map<String, Object> params, @Header("token") String token);
 
+    //商户-我的订单
+    @FormUrlEncoded
+    @POST("mall/order/list")
+    Observable<HttpResult<List<OrderEntity>>> mallOrderList(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                      @FieldMap Map<String, Object> params,@Header("token") String token);
+
     //商户-查询个人信息
-    @POST("mall/information")
+    @POST("mall/info/my")
     Observable<HttpResult<User>> mallInformation(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                  @Header("token") String token);
+
+    //商户-个人主页
+    @POST("mall/homepage")
+    Observable<HttpResult<HomepageEntity>> mallHomepage(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                        @Header("token") String token);
 
 }

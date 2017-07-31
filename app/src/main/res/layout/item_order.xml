@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/normal_weight_f1f2f4_vertical"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearShow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="44px"
+        android:paddingRight="44px">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageState"
+                android:layout_width="80px"
+                android:layout_height="56px"
+                android:src="@drawable/icon_appointment"/>
+
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"
+                android:layout_weight="1"
+                android:text="2016-10-18 12:20  (金杯)"
+                android:textColor="@color/z262627"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/textState"
+                style="@style/normal_sixteen_text"
+                android:text="@string/order_server"
+                android:textColor="@color/red"/>
+        </LinearLayout>
+
+        <View
+            style="@style/ZddddddLineTwoStyle"
+            android:layout_height="2px"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40px"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <ImageView
+
+                android:layout_width="50px"
+                android:layout_height="60px"
+                android:layout_marginLeft="30px"
+                android:src="@drawable/point_start"/>
+
+            <TextView
+                android:id="@+id/textStart"
+                style="@style/normal_sixteen_text"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"
+                android:text="西郊国际农产品交易市场"
+                android:textColor="@color/z262627"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40px"
+            android:layout_marginTop="40px"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="60px"
+                android:layout_marginLeft="30px"
+                android:src="@drawable/point_end"/>
+
+            <TextView
+                android:id="@+id/textEnd"
+                style="@style/normal_sixteen_text"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"
+                android:text="美罗城"
+                android:textColor="@color/z262627"
+                android:textSize="14sp"/>
+
+
+            <ImageView
+                android:id="@+id/imageMoreTarget"
+                android:layout_width="45px"
+                android:layout_height="45px"
+                android:src="@drawable/point_multi"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/ZddddddLineTwoStyle"
+            android:layout_height="2px"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textMoneyCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25px"
+                android:layout_weight="1"
+                android:text="费用：￥360.0"
+                android:textColor="@color/z262627"
+                android:textSize="12sp"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/textDicuss"
+                style="@style/normal_sixteen_text"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="17px"
+                android:layout_marginTop="17px"
+                android:background="@drawable/rectangle_yzm_lv_corner_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:text="@string/want_discusses"
+                android:textColor="@color/zfb331f"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/textShengShu"
+                style="@style/normal_sixteen_text"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="17px"
+                android:layout_marginLeft="20px"
+                android:layout_marginTop="17px"
+                android:background="@drawable/rectangle_yzm_corner_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:text="@string/shen_su"
+                android:textColor="@color/red"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/textOrderAgain"
+                style="@style/normal_sixteen_text"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="17px"
+                android:layout_marginLeft="20px"
+                android:layout_marginTop="17px"
+                android:background="@drawable/rectangle_order_type_again_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:paddingLeft="30px"
+                android:paddingRight="30px"
+                android:text="@string/order_again"
+                android:textColor="@color/z262627"
+                android:textSize="12sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

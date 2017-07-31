@@ -2,7 +2,6 @@ package com.xjgj.mall.ui.comfirmorder;
 
 import android.support.annotation.NonNull;
 
-import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.bean.HttpResult;
 
@@ -60,8 +59,7 @@ public class ComfirmOrderPresenter  implements ComfirmOrderContract.Presenter {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        ToastUtil.showToast("提交失败，请检查您的网络");
+                        mView.onError(throwable);
                     }
                 }));
     }

@@ -1,13 +1,14 @@
 package com.xjgj.mall.api.common;
 
 import com.xjgj.mall.Constants;
-import com.xjgj.mall.bean.AccountVersionEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
+import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.bean.User;
 import com.xjgj.mall.components.retrofit.RequestHelper;
-import com.xjgj.mall.components.retrofit.UserStorage;
+import com.xjgj.mall.components.storage.UserStorage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -92,14 +93,6 @@ public class CommonApi {
 
     // =======================================  API
 
-
-    /**
-     * 版本更新
-     */
-    public Observable<HttpResult<AccountVersionEntity>> accountVersion() {
-        return mCommonService.accountVersion().subscribeOn(Schedulers.io());
-    }
-
     /**
      * 登录
      */
@@ -114,12 +107,28 @@ public class CommonApi {
     }
 
     /**
+     * 注册
+     */
+    public Observable<HttpResult<LoginEntity>> mallRegister(String mobile, String realName,String password,
+                                                            String smsCode) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("mobile", mobile);
+        params.put("realName", realName);
+        params.put("password", password);
+        params.put("smsCode", smsCode);
+        params.put("source", Constants.APPTYPE); // 用户来源:1-IOS,2-Android,3-Other
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.mallRegister(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 提供从地址到经纬度坐标或者从经纬度坐标到地址的转换服务
      */
     public Observable<ResponseBody> geocoderApi(String latLng) {
         Map<String, Object> params = new HashMap<>();
         // ak:百度地图api key
-        params.put("ak", "KLOSK99izO93bGjmOKnCxScVy0AOhkGB");
+        params.put("ak", "mFPjNn9HWii1KiKWLTFdgvb3KI7LQVoF");
         params.put("callback", "renderReverse");
         params.put("location", latLng);
         params.put("output", "json");
@@ -167,6 +176,29 @@ public class CommonApi {
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.mallInformation(currentTimeMillis, sign, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 商户-个人主页
+     */
+    public Observable<HttpResult<HomepageEntity>> mallHomepage() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.mallHomepage(currentTimeMillis, sign, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 商户-我的订单
+     */
+    public Observable<HttpResult<List<OrderEntity>>> mallOrderList(int page,int type) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("page",page);
+        params.put("pageSize",10);
+        params.put("type",type);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.mallOrderList(currentTimeMillis, sign,params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
 }

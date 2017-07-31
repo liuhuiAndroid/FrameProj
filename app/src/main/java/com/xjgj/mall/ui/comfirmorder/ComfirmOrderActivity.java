@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.xjgj.mall.Constants.RESULT_CONFIRM_ORDER_CODE;
 import static com.xjgj.mall.R.id.linear_d;
 
 
@@ -152,6 +153,13 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     @Override
     public void submitSuccess() {
         ToastUtil.showToast("下单成功");
+        setResult(RESULT_CONFIRM_ORDER_CODE);
+        finish();
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        loadError(throwable);
     }
 
     @Override

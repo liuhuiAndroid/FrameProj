@@ -3,6 +3,7 @@ package com.xjgj.mall.components.retrofit;
 import android.content.Context;
 
 import com.xjgj.mall.Constants;
+import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.util.SecurityUtil;
 
 import java.util.HashMap;

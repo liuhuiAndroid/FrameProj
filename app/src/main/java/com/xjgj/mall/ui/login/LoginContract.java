@@ -19,6 +19,8 @@ public interface LoginContract {
         void showPassWordError(String error);
 
         void loginSuccess();
+
+        void onError(Throwable throwable);
     }
 
     interface Presenter extends BasePresenter<View> {

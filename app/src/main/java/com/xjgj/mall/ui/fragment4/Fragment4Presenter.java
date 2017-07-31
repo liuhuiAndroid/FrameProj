@@ -2,6 +2,7 @@ package com.xjgj.mall.ui.fragment4;
 
 import android.support.annotation.NonNull;
 
+import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.HttpResult;
@@ -49,21 +50,17 @@ public class Fragment4Presenter implements Fragment4Contract.Presenter {
                         if (carTypeEntities != null && carTypeEntities.size()>0) {
                             mView.renderCarList(carTypeEntities);
                         } else {
-                            loadError();
+                            ToastUtil.showToast("没有查询到车型");
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-                        loadError();
-                        throwable.printStackTrace();
+                        mView.onError(throwable);
                     }
                 }));
     }
 
-    private void loadError() {
-        mView.onError();
-    }
 
     @Override
     public void attachView(@NonNull Fragment4Contract.View view) {

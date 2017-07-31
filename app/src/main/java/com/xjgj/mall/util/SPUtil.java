@@ -18,6 +18,7 @@ public class SPUtil {
     private final String LOTER_DATA = "loter_data";
 
     private final String IS_LOGIN = "is_login";
+    private final String TOKNE = "token";
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -81,6 +82,14 @@ public class SPUtil {
 
     public int getIS_LOGIN() {
         return getInt(IS_LOGIN);
+    }
+
+    public void setTOKNE(String token) {
+        save(TOKNE, token);
+    }
+
+    public String getTOKNE() {
+        return getString(TOKNE);
     }
 
 }

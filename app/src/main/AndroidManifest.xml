@@ -42,7 +42,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity"/>
+        <!-- 登录 -->
         <activity android:name=".ui.login.LoginActivity"/>
+        <!-- 注册 -->
+        <activity android:name=".ui.register.RegisterActivity"/>
+        <!-- 地图选择和搜索位置 -->
         <activity android:name=".ui.location.ChooseLocationActivity"/>
         <!-- 完善订单信息 -->
         <activity android:name=".ui.improveorder.ImproveOrderActivity"/>
@@ -54,6 +58,10 @@
         <activity android:name=".ui.comfirmorder.ComfirmOrderActivity"/>
         <!-- 发货位置信息 -->
         <activity android:name=".ui.delivery.DeliveryInfoActivity"/>
+        <!-- 营业执照 -->
+        <activity android:name=".ui.businesslicence.BusinessLicenceActivity"/>
+        <!-- 实名认证 -->
+        <activity android:name=".ui.certification.CertificationActivity"/>
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->
         <meta-data

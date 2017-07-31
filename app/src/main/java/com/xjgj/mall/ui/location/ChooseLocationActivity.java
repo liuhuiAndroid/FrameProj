@@ -2,6 +2,7 @@ package com.xjgj.mall.ui.location;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +36,6 @@ import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.google.gson.Gson;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.GeoCoderResultEntity;
 import com.xjgj.mall.bean.SearchItem;
@@ -52,8 +52,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.xjgj.mall.R.id.searchView;
 import static com.xjgj.mall.Constants.RESULT_CHOOSE_LOCATION_CODE;
+import static com.xjgj.mall.R.id.searchView;
 
 
 /**
@@ -107,12 +107,62 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         initlLocationService();
         //初始化百度地图
         initBaiduMap();
-        initRecyclerView();
         //开始定位
         locationService.start();// 定位SDK
         //初始化搜索
         initBaiduMapPoi();
 
+    }
+
+    private void initRecyclerView() {
+        mLinearLayoutManager = new LinearLayoutManager(ChooseLocationActivity.this);
+        mRecyclerViewGeocoder.setLayoutManager(mLinearLayoutManager);
+        mCommonAdapterGeocoder = new CommonAdapter<GeoCoderResultEntity.ResultBean.PoisBean>(ChooseLocationActivity.this, R.layout.item_aroundmap, mRecyclerViewGeocoderData) {
+            @Override
+            protected void convert(ViewHolder holder, final GeoCoderResultEntity.ResultBean.PoisBean poisBean, int position) {
+                Logger.i("test mCommonAdapterGeocoder convert ");
+                holder.setText(R.id.item_aroundmap_name, poisBean.getName());
+                holder.setText(R.id.item_aroundmap_address, poisBean.getAddr());
+                if (position == 0) {
+                    holder.getView(R.id.item_aroundmap_icon).setVisibility(View.VISIBLE);
+                    holder.setTextColor(R.id.item_aroundmap_name, Color.RED);
+                } else {
+                    holder.getView(R.id.item_aroundmap_icon).setVisibility(View.GONE);
+                    holder.setTextColor(R.id.item_aroundmap_name, Color.BLACK);
+                }
+
+            }
+        };
+        mCommonAdapterGeocoder.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapterGeocoder.getDatas();
+                if (datas != null) {
+                    if (datas != null && datas.size() > position) {
+                        setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
+                                .putExtra("name", datas.get(position).getName())
+                                .putExtra("addr", datas.get(position).getAddr())
+                                .putExtra("longitude", datas.get(position).getPoint().getX())
+                                .putExtra("latitude", datas.get(position).getPoint().getY())
+                                .putExtra("check_point", mCheck_point));
+                    }
+                }
+                finish();
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
+        Logger.i("test setAdapter ============ 成功");
+        // -------------------------- 测试
+        mRecyclerViewGeocoder.setAdapter(mCommonAdapterGeocoder);
+        Logger.i("test notifyDataSetChanged ============ 测试成功");
+        // -------------------------- 测试
+        //            mRecyclerViewGeocoder.setAdapter(mCommonAdapterGeocoder);
+        mRecyclerViewGeocoder.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerViewGeocoder.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));
     }
 
     private PoiSearch mPoiSearch = null;
@@ -230,11 +280,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         } else {
             mCommonAdapterSearch.notifyDataSetChanged();
         }
-    }
-
-    private void initRecyclerView() {
-        mLinearLayoutManager = new LinearLayoutManager(ChooseLocationActivity.this);
-        mRecyclerViewGeocoder.setLayoutManager(mLinearLayoutManager);
     }
 
     /**
@@ -454,62 +499,40 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     }
 
     @Override
-    public void geocoderResultSuccess(String dataString) {
+    public void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> geoCoderResultEntity) {
         Logger.i("test 监听到位置变化 geocoderResultSuccess");
+        //        Logger.i("test 监听到位置变化 dataString = " + dataString);
 
-        String geoCoderResultString = dataString.replace("renderReverse&&renderReverse(", "").replace(")", "");
-        GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
+        //        String geoCoderResultString = dataString.replace("renderReverse&&renderReverse(", "").replace(")", "");
+        //        GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
 
         if (mCommonAdapterGeocoder == null) {
-            mRecyclerViewGeocoderData.addAll(geoCoderResultEntity.getResult().getPois());
-            mCommonAdapterGeocoder = new CommonAdapter<GeoCoderResultEntity.ResultBean.PoisBean>(ChooseLocationActivity.this, R.layout.item_aroundmap, mRecyclerViewGeocoderData) {
-                @Override
-                protected void convert(ViewHolder holder, final GeoCoderResultEntity.ResultBean.PoisBean poisBean, int position) {
+            mRecyclerViewGeocoderData.clear();
+            mRecyclerViewGeocoderData.addAll(geoCoderResultEntity);
+            initRecyclerView();
 
-                    holder.setText(R.id.item_aroundmap_name, poisBean.getName());
-                    holder.setText(R.id.item_aroundmap_address, poisBean.getAddr());
-                    if (position == 0) {
-                        holder.getView(R.id.item_aroundmap_icon).setVisibility(View.VISIBLE);
-                        holder.setTextColor(R.id.item_aroundmap_name, Color.RED);
-                    } else {
-                        holder.getView(R.id.item_aroundmap_icon).setVisibility(View.GONE);
-                        holder.setTextColor(R.id.item_aroundmap_name, Color.BLACK);
-                    }
-
-                }
-            };
-            mCommonAdapterGeocoder.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapterGeocoder.getDatas();
-                    if (datas != null) {
-                        if (datas != null && datas.size() > position) {
-                            setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
-                                    .putExtra("name", datas.get(position).getName())
-                                    .putExtra("addr", datas.get(position).getAddr())
-                                    .putExtra("longitude", datas.get(position).getPoint().getX())
-                                    .putExtra("latitude", datas.get(position).getPoint().getY())
-                                    .putExtra("check_point", mCheck_point));
-                        }
-                    }
-                    finish();
-                }
-
-                @Override
-                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    return false;
-                }
-            });
-            mRecyclerViewGeocoder.setAdapter(mCommonAdapterGeocoder);
-            mRecyclerViewGeocoder.setItemAnimator(new DefaultItemAnimator());
-            mRecyclerViewGeocoder.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));
         } else {
             mRecyclerViewGeocoderData.clear();
-            mRecyclerViewGeocoderData.addAll(geoCoderResultEntity.getResult().getPois());
+            mRecyclerViewGeocoderData.addAll(geoCoderResultEntity);
+            mCommonAdapterGeocoder.setDatas(mRecyclerViewGeocoderData);
             Logger.i("test mRecyclerViewGeocoderData.size = " + mRecyclerViewGeocoderData.size());
-            mCommonAdapterGeocoder.notifyDataSetChanged();
             Logger.i("test notifyDataSetChanged ============ 成功");
+            Logger.i("test notifyDataSetChanged testChangeThread:" + Thread.currentThread().getName());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mCommonAdapterGeocoder.notifyDataSetChanged();
+                    Logger.i("test notifyDataSetChanged testChangeThread:" + Thread.currentThread().getName());
+                }
+            }, 1000);
+
         }
+
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        loadError(throwable);
     }
 
     private AlphaAnimation animation;

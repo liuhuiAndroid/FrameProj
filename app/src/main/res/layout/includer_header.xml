@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="158px"
-    android:id="@+id/relative_layout"
-    android:background="@color/base"
-   >
+<RelativeLayout android:id="@+id/relative_layout"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="158px"
+                android:background="@color/base"
+    >
+
     <ImageView
         android:id="@+id/image_back"
         android:layout_width="wrap_content"
+        android:layout_height="70px"
         android:layout_centerVertical="true"
         android:paddingLeft="44px"
-        android:paddingRight="80px"
-        android:layout_height="70px" />
+        android:paddingRight="80px"/>
 
     <TextView
         android:id="@+id/text_title"
-        android:textSize="18sp"
-        android:textColor="@color/zfb331f"
-        android:text=""
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_height="wrap_content" />
+        android:text=""
+        android:textColor="@color/zfb331f"
+        android:textSize="18sp"/>
 
     <ImageView
         android:id="@+id/image_handle"
         android:layout_width="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:paddingRight="24px"
+        android:layout_centerVertical="true"
         android:paddingLeft="50px"
-        android:layout_height="wrap_content" />
+        android:paddingRight="24px"/>
 
     <TextView
         android:id="@+id/text_handle"
-        android:textSize="18sp"
-        android:textColor="@color/zfb331f"
-        android:text=""
-        android:layout_marginRight="44px"
-        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
-        android:clickable="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_height="wrap_content" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="44px"
+        android:clickable="true"
+        android:text=""
+        android:textColor="@color/zfb331f"
+        android:textSize="18sp"/>
 
 </RelativeLayout>

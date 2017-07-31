@@ -15,6 +15,8 @@ public interface ComfirmOrderContract {
         void hideLoading();
 
         void submitSuccess();
+
+        void onError(Throwable throwable);
     }
 
     interface Presenter extends BasePresenter<View> {

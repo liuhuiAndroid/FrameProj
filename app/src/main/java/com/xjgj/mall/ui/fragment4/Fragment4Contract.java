@@ -19,7 +19,7 @@ public class Fragment4Contract {
 
         void renderCarList(List<CarTypeEntity> orders);
 
-        void onError();
+        void onError(Throwable throwable);
 
     }
 

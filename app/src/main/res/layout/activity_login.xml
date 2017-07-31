@@ -6,7 +6,7 @@
     style="@style/normal_weight_vertical"
     android:gravity="center|top"
     android:background="@color/register_one">
-    <include layout="@layout/include_actionbar" />
+    <include layout="@layout/includer_header" />
 
     <TextView
         android:id="@+id/text_type"
@@ -82,7 +82,7 @@
             android:layout_marginLeft="40px"
             android:layout_marginRight="40px"
             android:maxLength="11"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:gravity="center|left"
             android:textCursorDrawable="@null"
             android:layout_height="match_parent"

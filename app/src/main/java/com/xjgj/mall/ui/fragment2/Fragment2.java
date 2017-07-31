@@ -10,8 +10,11 @@ import android.view.View;
 import com.android.frameproj.library.adapter.SmartFragmentStatePagerAdapter;
 import com.xjgj.mall.R;
 import com.xjgj.mall.ui.BaseFragment;
+import com.xjgj.mall.ui.fragment2.order_cancel.OrderCanceledFragment;
+import com.xjgj.mall.ui.fragment2.order_completed.OrderCompletedFragment;
+import com.xjgj.mall.ui.fragment2.order_evaluated.OrderEvaluatedFragment;
+import com.xjgj.mall.ui.fragment2.order_taking.OrderTakingFragment;
 import com.xjgj.mall.ui.fragment2.order_waiting_accept.OrderWaitingAcceptFragment;
-import com.xjgj.mall.ui.fragment2.order_waiting_evaluate.OrderWaitingEvaluateFragment;
 import com.xjgj.mall.ui.fragment2.order_working.OrderWorkingFragement;
 
 import java.util.ArrayList;
@@ -56,13 +59,16 @@ public class Fragment2 extends BaseFragment {
         showContent(true);
         OrderFragmentPagerAdapter myMainFragmentPagerAdapter = new OrderFragmentPagerAdapter(getChildFragmentManager());
         myMainFragmentPagerAdapter.addFragment(new OrderWaitingAcceptFragment(),"待接单");
+        myMainFragmentPagerAdapter.addFragment(new OrderTakingFragment(),"已接单");
         myMainFragmentPagerAdapter.addFragment(new OrderWorkingFragement(),"服务中");
-        myMainFragmentPagerAdapter.addFragment(new OrderWaitingEvaluateFragment(),"待评价");
+        myMainFragmentPagerAdapter.addFragment(new OrderCompletedFragment(),"已完成");
+        myMainFragmentPagerAdapter.addFragment(new OrderCanceledFragment(),"已取消");
+        myMainFragmentPagerAdapter.addFragment(new OrderEvaluatedFragment(),"已评价");
         mVpTask.setAdapter(myMainFragmentPagerAdapter);
         mTabLayout.setupWithViewPager(mVpTask);
 
         //防止频繁的销毁视图
-        mVpTask.setOffscreenPageLimit(3);
+        mVpTask.setOffscreenPageLimit(6);
     }
 
     @Override

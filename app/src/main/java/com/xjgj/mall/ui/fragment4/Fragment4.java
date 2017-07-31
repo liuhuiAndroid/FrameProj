@@ -183,6 +183,11 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         });
     }
 
+    @Override
+    public void onError(Throwable throwable) {
+        loadError(throwable);
+    }
+
     /**
      * 更新页面上车的重量、体积数据
      *
@@ -220,12 +225,6 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         if (childCount != 0 && (currentItem + 1) < childCount) {
             mViewPager.setCurrentItem(currentItem + 1);
         }
-    }
-
-
-    @Override
-    public void onError() {
-
     }
 
     @Override
@@ -469,5 +468,4 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
             ToastUtil.showToast("请填写地址");
         }
     }
-
 }

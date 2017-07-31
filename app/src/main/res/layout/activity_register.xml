@@ -6,14 +6,14 @@
     style="@style/normal_weight_vertical"
     android:gravity="center|top"
     android:background="@color/register_one">
-    <include layout="@layout/include_actionbar" />
+    <include layout="@layout/includer_header" />
 
     <TextView
         android:id="@+id/text_type"
         android:layout_marginTop="40px"
         android:layout_marginLeft="35px"
         android:layout_width="match_parent"
-        android:text="@string/phone_login"
+        android:text="@string/phone_register"
         android:textSize="14sp"
         android:gravity="left"
         android:textColor="@color/zc3ccc4"
@@ -66,6 +66,74 @@
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/register_one_shuo_ming"
+            android:text="@string/password"
+            android:layout_marginLeft="28px"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editPassWord"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textColor="@color/register_one_shuo_ming"
+            android:textColorHint="@color/zc3ccc4"
+            android:hint="@string/password_hint"
+            android:background="@null"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:maxLength="11"
+            android:inputType="textPassword"
+            android:gravity="center|left"
+            android:textCursorDrawable="@null"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="28px"
+        android:layout_marginLeft="35px"
+        android:layout_marginRight="35px"
+        android:background="@drawable/rectangle_input_phone_corner_bg"
+        android:orientation="horizontal"
+        android:gravity="center|left"
+        android:layout_height="150px">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/register_one_shuo_ming"
+            android:text="@string/nick_name"
+            android:layout_marginLeft="28px"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editNickName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:textColor="@color/register_one_shuo_ming"
+            android:textColorHint="@color/zc3ccc4"
+            android:hint="@string/nick_name_hint"
+            android:background="@null"
+            android:layout_marginLeft="40px"
+            android:layout_marginRight="40px"
+            android:maxLength="11"
+            android:inputType="text"
+            android:gravity="center|left"
+            android:textCursorDrawable="@null"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="28px"
+        android:layout_marginLeft="35px"
+        android:layout_marginRight="35px"
+        android:background="@drawable/rectangle_input_phone_corner_bg"
+        android:orientation="horizontal"
+        android:gravity="center|left"
+        android:layout_height="150px">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/register_one_shuo_ming"
             android:text="@string/yan_zheng_ma"
             android:layout_marginLeft="28px"
             android:layout_height="wrap_content" />
@@ -87,22 +155,22 @@
             android:layout_height="match_parent" />
         <TextView
             android:id="@+id/text_get_verification_code"
-            android:layout_width="210px"
+            android:layout_width="240px"
             android:layout_height="100px"
             android:clickable="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="24px"
-            android:background="@drawable/rectangle_register_phone_corner_bg"
+            android:background="@drawable/rectangle_yzm_corner_bg"
             android:gravity="center"
-            android:text="@string/get_again"
-            android:textColor="@color/base"
+            android:text="获取验证码"
+            android:textColor="@android:color/holo_red_light"
             android:textSize="14sp" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textLogin"
+        android:id="@+id/textRegister"
         android:layout_width="match_parent"
         android:layout_marginLeft="35px"
         android:layout_marginRight="35px"
@@ -110,9 +178,9 @@
         android:gravity="center"
         android:clickable="true"
         android:textColor="@color/white"
-        android:text="@string/login"
+        android:text="@string/register"
         android:textSize="18sp"
-        android:background="@drawable/rectangle_register_phone_corner_bg"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
         android:layout_height="150px" />
 
 </LinearLayout>
