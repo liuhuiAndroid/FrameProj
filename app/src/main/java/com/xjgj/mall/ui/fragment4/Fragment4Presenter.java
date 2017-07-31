@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -35,10 +36,10 @@ public class Fragment4Presenter implements Fragment4Contract.Presenter {
     public void onCarListReceive() {
         disposables.add(mCommonApi.carType()
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .map(new Function<HttpResult<List<CarTypeEntity>>, List<CarTypeEntity>>() {
+                .flatMap(new Function<HttpResult<List<CarTypeEntity>>, ObservableSource<List<CarTypeEntity>>>() {
                     @Override
-                    public List<CarTypeEntity> apply(@io.reactivex.annotations.NonNull HttpResult<List<CarTypeEntity>> listHttpResult) throws Exception {
-                        return listHttpResult.getResultValue();
+                    public ObservableSource<List<CarTypeEntity>> apply(@io.reactivex.annotations.NonNull HttpResult<List<CarTypeEntity>> listHttpResult) throws Exception {
+                        return CommonApi.flatResponse(listHttpResult);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

@@ -4,18 +4,19 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.android.frameproj.library.util.ToastUtil;
+import com.squareup.otto.Bus;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
 import com.xjgj.mall.bean.User;
 import com.xjgj.mall.components.retrofit.UserStorage;
-import com.squareup.otto.Bus;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
@@ -55,10 +56,10 @@ public class LoginPresenter implements LoginContract.Presenter {
         mLoginView.showLoading();
         disposables.add(mCommonApi.mallLogin(userName, password)
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .map(new Function<HttpResult<LoginEntity>, LoginEntity>() {
+                .flatMap(new Function<HttpResult<LoginEntity>, ObservableSource<LoginEntity>>() {
                     @Override
-                    public LoginEntity apply(@io.reactivex.annotations.NonNull HttpResult<LoginEntity> stringHttpResult) throws Exception {
-                        return stringHttpResult.getResultValue();
+                    public ObservableSource<LoginEntity> apply(@io.reactivex.annotations.NonNull HttpResult<LoginEntity> loginEntityHttpResult) throws Exception {
+                        return CommonApi.flatResponse(loginEntityHttpResult);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,10 +70,10 @@ public class LoginPresenter implements LoginContract.Presenter {
                         mUserStorage.setToken(loginEntity.getToken());
                         return mCommonApi.mallInformation();
                     }
-                }).map(new Function<HttpResult<User>, User>() {
+                }).flatMap(new Function<HttpResult<User>, ObservableSource<User>>() {
                     @Override
-                    public User apply(@io.reactivex.annotations.NonNull HttpResult<User> mallInformationEntityHttpResult) throws Exception {
-                        return mallInformationEntityHttpResult.getResultValue();
+                    public ObservableSource<User> apply(@io.reactivex.annotations.NonNull HttpResult<User> userHttpResult) throws Exception {
+                        return CommonApi.flatResponse(userHttpResult);
                     }
                 }).doFinally(new Action() {
                     @Override

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -43,6 +46,52 @@ public class CommonApi {
                         .build();
         mCommonService = retrofit.create(CommonService.class);
     }
+
+    /**
+     * 对网络接口返回的Response进行分割操作
+     *
+     * @param response
+     * @param <T>
+     * @return
+     */
+    public static <T> Observable<T> flatResponse(final HttpResult<T> response) {
+        return Observable.create(new ObservableOnSubscribe<T>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<T> e) throws Exception {
+                if (!e.isDisposed()) {
+                    if (response.isSuccess()) {
+                        e.onNext(response.getResultValue());
+                        e.onComplete();
+                    } else {
+                        e.onError(new APIException(response.getResultStatus().getCode(),
+                                response.getResultStatus().getMessage()));
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 自定义异常，当接口返回的code不为Constants.OK时，需要跑出此异常
+     * eg：登陆时验证码错误；参数为传递等
+     */
+    public static class APIException extends Exception {
+        public int code;
+        public String message;
+
+        public APIException(int code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        @Override
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    // =======================================  API
+
 
     /**
      * 版本更新
@@ -106,7 +155,7 @@ public class CommonApi {
         params.put("address", address);
         params.put("submitType", submitType);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
-        return mCommonService.orderSubmit(currentTimeMillis, sign, params,mUserStorage.getToken()).subscribeOn(Schedulers.io());
+        return mCommonService.orderSubmit(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
 
@@ -117,7 +166,7 @@ public class CommonApi {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
-        return mCommonService.mallInformation(currentTimeMillis, sign,mUserStorage.getToken()).subscribeOn(Schedulers.io());
+        return mCommonService.mallInformation(currentTimeMillis, sign, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
@@ -38,10 +39,10 @@ public class ComfirmOrderPresenter  implements ComfirmOrderContract.Presenter {
         mView.showLoading();
         disposables.add(mCommonApi.orderSubmit(serviceTime,volume,weight,serviceType,carType,remark,counts,address,submitType)
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .map(new Function<HttpResult<String>, String>() {
+                .flatMap(new Function<HttpResult<String>, ObservableSource<String>>() {
                     @Override
-                    public String apply(@io.reactivex.annotations.NonNull HttpResult<String> stringHttpResult) throws Exception {
-                        return stringHttpResult.getResultValue();
+                    public ObservableSource<String> apply(@io.reactivex.annotations.NonNull HttpResult<String> stringHttpResult) throws Exception {
+                        return CommonApi.flatResponse(stringHttpResult);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
