@@ -3,6 +3,7 @@ package com.xjgj.mall.ui.register;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.android.frameproj.library.util.PhoneUtil;
 import com.android.frameproj.library.util.ToastUtil;
 import com.squareup.otto.Bus;
 import com.xjgj.mall.api.common.CommonApi;
@@ -47,6 +48,10 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     public void register(String mobile, String realName, String password, String smsCode) {
         if (TextUtils.isEmpty(mobile)) {
             mRegisterView.showError("请输入手机号");
+            return;
+        }
+        if (!PhoneUtil.isMobile(mobile)) {
+            mRegisterView.showError("手机号码格式不正确");
             return;
         }
         if (TextUtils.isEmpty(password)) {

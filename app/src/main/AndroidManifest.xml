@@ -62,6 +62,10 @@
         <activity android:name=".ui.businesslicence.BusinessLicenceActivity"/>
         <!-- 实名认证 -->
         <activity android:name=".ui.certification.CertificationActivity"/>
+        <!-- 取消订单 -->
+        <activity android:name=".ui.cancelorder.CancelOrderActivity"/>
+        <!-- 订单详情 -->
+        <activity android:name=".ui.orderdetail.OrderDetailActivity"/>
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->
         <meta-data

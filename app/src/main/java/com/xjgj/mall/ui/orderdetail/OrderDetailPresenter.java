@@ -1,13 +1,11 @@
-package com.xjgj.mall.ui.businesslicence;
+package com.xjgj.mall.ui.orderdetail;
 
 import android.support.annotation.NonNull;
 
-import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.bean.HttpResult;
-import com.xjgj.mall.bean.PhotoUploadEntity;
+import com.xjgj.mall.bean.OrderDetailEntity;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -20,34 +18,30 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 /**
- * Created by we-win on 2017/7/31.
+ * Created by we-win on 2017/8/1.
  */
 
-public class BusinessLicencePresenter implements BusinessLicenceContract.Presenter {
+public class OrderDetailPresenter implements OrderDetailContract.Presenter {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
     private CommonApi mCommonApi;
 
-    private BusinessLicenceContract.View mView;
+    private OrderDetailContract.View mView;
 
     @Inject
-    public BusinessLicencePresenter(CommonApi commonApi) {
+    public OrderDetailPresenter(CommonApi commonApi) {
         mCommonApi = commonApi;
     }
 
     @Override
-    public void photoUpload(String photoPath, int type) {
-        if(photoPath == null || photoPath.equals("")){
-            ToastUtil.showToast("请选择营业执照");
-            return;
-        }
+    public void orderDetail(int orderId) {
         mView.showLoading();
-        disposables.add(mCommonApi.photoUpload(new File(photoPath),type)
+        disposables.add(mCommonApi.orderDetail(orderId)
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<HttpResult<PhotoUploadEntity>, ObservableSource<PhotoUploadEntity>>() {
+                .flatMap(new Function<HttpResult<OrderDetailEntity>, ObservableSource<OrderDetailEntity>>() {
                     @Override
-                    public ObservableSource<PhotoUploadEntity> apply(@io.reactivex.annotations.NonNull HttpResult<PhotoUploadEntity> uploadEntityHttpResult) throws Exception {
-                        return CommonApi.flatResponse(uploadEntityHttpResult);
+                    public ObservableSource<OrderDetailEntity> apply(@io.reactivex.annotations.NonNull HttpResult<OrderDetailEntity> orderDetailEntityHttpResult) throws Exception {
+                        return CommonApi.flatResponse(orderDetailEntityHttpResult);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,10 +50,10 @@ public class BusinessLicencePresenter implements BusinessLicenceContract.Present
                     public void run() throws Exception {
                         mView.hideLoading();
                     }
-                }).subscribe(new Consumer<PhotoUploadEntity>() {
+                }).subscribe(new Consumer<OrderDetailEntity>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull PhotoUploadEntity photoUploadEntity) throws Exception {
-                        mView.photoUploadSuccess();
+                    public void accept(@io.reactivex.annotations.NonNull OrderDetailEntity orderDetailEntity) throws Exception {
+                        mView.orderDetailResult(orderDetailEntity);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -70,7 +64,7 @@ public class BusinessLicencePresenter implements BusinessLicenceContract.Present
     }
 
     @Override
-    public void attachView(@NonNull BusinessLicenceContract.View view) {
+    public void attachView(@NonNull OrderDetailContract.View view) {
         mView = view;
     }
 

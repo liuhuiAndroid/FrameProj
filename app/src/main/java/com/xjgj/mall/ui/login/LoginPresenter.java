@@ -3,6 +3,7 @@ package com.xjgj.mall.ui.login;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.android.frameproj.library.util.PhoneUtil;
 import com.android.frameproj.library.util.ToastUtil;
 import com.squareup.otto.Bus;
 import com.xjgj.mall.api.common.CommonApi;
@@ -47,6 +48,10 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void login(String userName, String password) {
         if (TextUtils.isEmpty(userName)) {
             mLoginView.showUserNameError("请输入用户名");
+            return;
+        }
+        if (!PhoneUtil.isMobile(userName)) {
+            mLoginView.showUserNameError("手机号码格式不正确");
             return;
         }
         if (TextUtils.isEmpty(password)) {

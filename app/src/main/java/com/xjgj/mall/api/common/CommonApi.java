@@ -5,11 +5,14 @@ import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
+import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.OrderEntity;
+import com.xjgj.mall.bean.PhotoUploadEntity;
 import com.xjgj.mall.bean.User;
 import com.xjgj.mall.components.retrofit.RequestHelper;
 import com.xjgj.mall.components.storage.UserStorage;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +22,10 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -91,6 +97,34 @@ public class CommonApi {
         }
     }
 
+    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+
+    @android.support.annotation.NonNull
+    public static RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                MediaType.parse(MULTIPART_FORM_DATA), descriptionString);
+    }
+
+    @android.support.annotation.NonNull
+    public static MultipartBody.Part prepareFilePart(String partName, File file) {
+        // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
+        // use the FileUtils to get the actual file by uri
+
+        // create RequestBody instance from file
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file);
+
+        // MultipartBody.Part is used to send also the actual file name
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+    @android.support.annotation.NonNull
+    public static MultipartBody.Part createPartString(String name, String value) {
+        //        RequestBody requestFile =
+        //                RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), value);
+        return MultipartBody.Part.createFormData(name, value);
+    }
+
     // =======================================  API
 
     /**
@@ -109,7 +143,7 @@ public class CommonApi {
     /**
      * 注册
      */
-    public Observable<HttpResult<LoginEntity>> mallRegister(String mobile, String realName,String password,
+    public Observable<HttpResult<LoginEntity>> mallRegister(String mobile, String realName, String password,
                                                             String smsCode) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
@@ -191,14 +225,67 @@ public class CommonApi {
     /**
      * 商户-我的订单
      */
-    public Observable<HttpResult<List<OrderEntity>>> mallOrderList(int page,int type) {
+    public Observable<HttpResult<List<OrderEntity>>> mallOrderList(int page, int type) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
-        params.put("page",page);
-        params.put("pageSize",10);
-        params.put("type",type);
+        params.put("page", page);
+        params.put("pageSize", 10);
+        params.put("type", type);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
-        return mCommonService.mallOrderList(currentTimeMillis, sign,params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+        return mCommonService.mallOrderList(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 上传图片
+     */
+    public Observable<HttpResult<PhotoUploadEntity>> photoUpload(File photo, int type) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        MultipartBody.Part filePart = prepareFilePart("photo", photo);
+        MultipartBody.Part typeUpload = createPartString("type", type + "");
+        params.put("type", type);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.photoUpload(currentTimeMillis, sign, mUserStorage.getToken(), typeUpload, filePart).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 实名认证
+     */
+    public Observable<HttpResult<String>> authRealName(String realName, String identityNo, File frontIdentity, File afterIdentity) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        MultipartBody.Part frontIdentityPart = prepareFilePart("frontIdentity", frontIdentity);
+        MultipartBody.Part afterIdentityPart = prepareFilePart("afterIdentity", afterIdentity);
+        MultipartBody.Part realNamePart = createPartString("realName", realName);
+        MultipartBody.Part identityNoPart = createPartString("identityNo", identityNo);
+        params.put("realName", realName);
+        params.put("identityNo", identityNo);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.authRealName(currentTimeMillis, sign, mUserStorage.getToken(), frontIdentityPart, afterIdentityPart,
+                realNamePart, identityNoPart).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 订单取消
+     */
+    public Observable<HttpResult<String>> orderCancel(int orderId) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("orderId", orderId);
+        params.put("type", 1);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.orderCancel(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 商户-订单详情
+     */
+    public Observable<HttpResult<OrderDetailEntity>> orderDetail(int orderId) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("orderId", orderId);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.orderDetail(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
 }

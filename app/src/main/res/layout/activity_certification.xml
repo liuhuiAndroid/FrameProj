@@ -1,7 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout style="@style/normal_weight_vertical"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@color/register_one"
+                android:fitsSystemWindows="true"
+                android:gravity="center|top">
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearClude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/includer_header"/>
+
+        <View
+            style="@style/ZddddddLineStyle"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearClude"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/normal_weight_vertical"
+            android:background="@color/trans"
+            android:gravity="center|top"
+            >
+
+            <TextView
+                style="@style/normal_sixteen_text"
+                android:layout_gravity="left"
+                android:layout_marginBottom="35px"
+                android:layout_marginLeft="46px"
+                android:layout_marginRight="46px"
+                android:layout_marginTop="35px"
+                android:text="@string/true_name"
+                android:textColor="@color/z262627"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:layout_marginLeft="47px"
+                android:layout_marginRight="47px"
+                android:background="@drawable/rectangle_input_phone_corner_bg"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:background="@null"
+                    android:gravity="center|left"
+                    android:hint="@string/input_name"
+                    android:textColor="@color/z404b53"
+                    android:textColorHint="@color/zc3ccc4"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"/>
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textState"
+                style="@style/normal_sixteen_text"
+                android:layout_gravity="left"
+                android:layout_marginBottom="35px"
+                android:layout_marginLeft="46px"
+                android:layout_marginRight="46px"
+                android:layout_marginTop="35px"
+                android:text="@string/id_card"
+                android:textColor="@color/z262627"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:layout_marginLeft="47px"
+                android:layout_marginRight="47px"
+                android:background="@drawable/rectangle_input_phone_corner_bg"
+                android:gravity="center|left"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editIdCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:layout_marginRight="40px"
+                    android:background="@null"
+                    android:digits="0123456789X"
+                    android:gravity="center|left"
+                    android:hint="@string/input_id_card"
+                    android:maxLength="18"
+                    android:textColor="@color/z404b53"
+                    android:textColorHint="@color/zc3ccc4"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"/>
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68px"
+                android:layout_marginRight="68px"
+                android:layout_marginTop="100px">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|top"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageViewFront"
+                        android:layout_width="wrap_content"
+                        android:layout_height="250px"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/img_upload"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25px"
+                        android:text="@string/upload_front_id_card"
+                        android:textColor="@color/z868788"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center|top"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageViewProis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="250px"
+                        android:src="@drawable/img_upload"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25px"
+                        android:text="@string/upload_pros_id_card"
+                        android:textColor="@color/z868788"
+                        android:textSize="14sp"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/textUpload"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:layout_marginLeft="35px"
+                android:layout_marginRight="35px"
+                android:layout_marginTop="300px"
+                android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/submit_check"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <!-- 加载中 -->
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallPulseIndicator"
+        />
+
+</RelativeLayout>
+
+
+
+

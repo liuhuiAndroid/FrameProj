@@ -5,19 +5,24 @@ import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
+import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.OrderEntity;
+import com.xjgj.mall.bean.PhotoUploadEntity;
 import com.xjgj.mall.bean.User;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.QueryMap;
 
 /**
@@ -37,7 +42,7 @@ public interface CommonService {
     @FormUrlEncoded
     @POST("mall/register")
     Observable<HttpResult<LoginEntity>> mallRegister(@Header("timestamp") long timestamp, @Header("sign") String sign,
-                                                  @FieldMap Map<String, Object> params);
+                                                     @FieldMap Map<String, Object> params);
 
     // 提供从地址到经纬度坐标或者从经纬度坐标到地址的转换服务
     @GET("http://api.map.baidu.com/geocoder/v2/?")
@@ -57,7 +62,7 @@ public interface CommonService {
     @FormUrlEncoded
     @POST("mall/order/list")
     Observable<HttpResult<List<OrderEntity>>> mallOrderList(@Header("timestamp") long timestamp, @Header("sign") String sign,
-                                                      @FieldMap Map<String, Object> params,@Header("token") String token);
+                                                            @FieldMap Map<String, Object> params, @Header("token") String token);
 
     //商户-查询个人信息
     @POST("mall/info/my")
@@ -68,5 +73,29 @@ public interface CommonService {
     @POST("mall/homepage")
     Observable<HttpResult<HomepageEntity>> mallHomepage(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                         @Header("token") String token);
+
+    //上传图片
+    @Multipart
+    @POST("common/photo/upload")
+    Observable<HttpResult<PhotoUploadEntity>> photoUpload(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                          @Header("token") String token, @Part MultipartBody.Part... file);
+
+    //实名认证
+    @Multipart
+    @POST("user/auth/realName")
+    Observable<HttpResult<String>> authRealName(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                @Header("token") String token, @Part MultipartBody.Part... file);
+
+    //订单取消
+    @FormUrlEncoded
+    @POST("order/cancel")
+    Observable<HttpResult<String>> orderCancel(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                               @FieldMap Map<String, Object> params, @Header("token") String token);
+
+    //商户-订单详情
+    @FormUrlEncoded
+    @POST("mall/order/detail")
+    Observable<HttpResult<OrderDetailEntity>> orderDetail(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                          @FieldMap Map<String, Object> params, @Header("token") String token);
 
 }

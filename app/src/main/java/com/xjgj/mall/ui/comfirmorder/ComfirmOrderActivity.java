@@ -147,7 +147,7 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
            public void run() {
                mAvLoadingIndicatorView.hide();
            }
-       },1500);
+       },500);
     }
 
     @Override

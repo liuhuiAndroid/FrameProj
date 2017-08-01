@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
@@ -68,16 +69,16 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @Inject
     com.xjgj.mall.ui.location.ChooseLocationPresenter mPresenter;
     // 阴影布局
-    //    @BindView(R.id.shadeView)
+    @BindView(R.id.shadeView)
     View mShadeView;
     // 搜索控件
-    //    @BindView(searchView)
+    @BindView(R.id.searchView)
     CustomSearchView mSearchView;
     //搜索结果
-    //    @BindView(R.id.list_result)
+    @BindView(R.id.list_result)
     RecyclerView mListResult;
     //搜索结果所在布局
-    //    @BindView(R.id.ll_search_result)
+    @BindView(R.id.ll_search_result)
     LinearLayout mLlSearchResult;
     private BaiduMap mBaiduMap;
     @Inject
@@ -105,7 +106,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         //开始定位
         locationService.start();// 定位SDK
         //初始化搜索
-        //        initBaiduMapPoi();
+        initBaiduMapPoi();
 
     }
 
@@ -198,33 +199,33 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     public void initUiAndListener() {
         mPresenter.attachView(this);
 
-        //        mSearchView.setCityName(selectCity);
-        //        mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
-        //            @Override
-        //            public void onBackButtonClicked() {
-        //                finish();
-        //            }
-        //
-        //            @Override
-        //            public void onEditTextClicked() {
-        //                mSearchView.editTextRequestFocus();
-        //            }
-        //
-        //            @Override
-        //            public void onRightButtonClicked() {
-        //                CommonUtils.hideSoftInput(ChooseLocationActivity.this);
-        //                //TODO 跳转选择城市页面
-        //            }
-        //
-        //            @Override
-        //            public void onQueryChanged(String paramString, int paramInt1, int paramInt2, int paramInt3) {
-        //                searchPlaces(paramString);
-        //            }
-        //
-        //            @Override
-        //            public void afterTextChanged(Editable paramEditable) {
-        //            }
-        //        });
+        mSearchView.setCityName(selectCity);
+        mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
+            @Override
+            public void onBackButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void onEditTextClicked() {
+                mSearchView.editTextRequestFocus();
+            }
+
+            @Override
+            public void onRightButtonClicked() {
+                CommonUtils.hideSoftInput(ChooseLocationActivity.this);
+                //TODO 跳转选择城市页面
+            }
+
+            @Override
+            public void onQueryChanged(String paramString, int paramInt1, int paramInt2, int paramInt3) {
+                searchPlaces(paramString);
+            }
+
+            @Override
+            public void afterTextChanged(Editable paramEditable) {
+            }
+        });
     }
 
     private void searchPlaces(String keystr) {
@@ -248,6 +249,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
 
         @Override
         public void onReceiveLocation(BDLocation location) {
+            Logger.i("onReceiveLocation");
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();

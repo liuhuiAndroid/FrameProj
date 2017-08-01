@@ -27,6 +27,9 @@ public class OrderWaitingAcceptContract {
 
         void onError(Throwable throwable);
 
+        //刷新页面
+        void onRefresh();
+
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -38,6 +41,8 @@ public class OrderWaitingAcceptContract {
         void onLoadMore();
 
         void onOrderClick(int position);
+
+        void orderCancel(int orderId);
 
     }
 
