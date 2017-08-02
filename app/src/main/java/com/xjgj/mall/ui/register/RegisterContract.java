@@ -19,11 +19,15 @@ public class RegisterContract {
         void registerSuccess();
 
         void onError(Throwable throwable);
+
+        void refreshSmsCodeUi();
     }
 
     interface Presenter extends BasePresenter<RegisterContract.View> {
 
         void register(String mobile, String realName,String password,String smsCode);
+
+        void smsCodeSend(String mobile, int type);
 
     }
 

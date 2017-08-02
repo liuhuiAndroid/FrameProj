@@ -15,6 +15,24 @@ public class OrderEntity {
     private double weight;
     private String serviceTime;
     private int status;
+    private String startAddress;
+    private String goalAddress;
+
+    public String getStartAddress() {
+        return startAddress;
+    }
+
+    public void setStartAddress(String startAddress) {
+        this.startAddress = startAddress;
+    }
+
+    public String getGoalAddress() {
+        return goalAddress;
+    }
+
+    public void setGoalAddress(String goalAddress) {
+        this.goalAddress = goalAddress;
+    }
 
     public double getVolume() {
         return volume;
@@ -87,4 +105,5 @@ public class OrderEntity {
     public void setStatus(int status) {
         this.status = status;
     }
+
 }

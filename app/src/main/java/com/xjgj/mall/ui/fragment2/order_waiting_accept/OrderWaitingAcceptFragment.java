@@ -12,7 +12,6 @@ import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
 import com.android.frameproj.library.adapter.wrapper.LoadMoreWrapper;
-import com.android.frameproj.library.util.log.Logger;
 import com.android.frameproj.library.widget.MyPtrClassicFrameLayout;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderEntity;
@@ -37,6 +36,11 @@ import in.srain.cube.views.ptr.PtrHandler;
 public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWaitingAcceptContract.View,
         LoadMoreWrapper.OnLoadMoreListener, PtrHandler {
 
+    public static BaseFragment newInstance() {
+        OrderWaitingAcceptFragment orderWaitingAcceptFragment = new OrderWaitingAcceptFragment();
+        return orderWaitingAcceptFragment;
+    }
+
     @Inject
     OrderWaitingAcceptPresenter mPresenter;
     @BindView(R.id.recyclerView)
@@ -56,7 +60,6 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
 
     @Override
     public void getBundle(Bundle bundle) {
-
     }
 
     private LinearLayoutManager mLinearLayoutManager;
@@ -97,53 +100,26 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
      */
     @Override
     public void renderOrderList(final List<OrderEntity> orderEntities) {
+
         if (mCommonAdapter == null) {
             mCommonAdapter = new CommonAdapter<OrderEntity>(getActivity(), R.layout.item_order, orderEntities) {
                 @Override
                 protected void convert(ViewHolder holder, final OrderEntity orderEntity, int position) {
                     holder.setText(R.id.textTime, orderEntity.getCreateTime().concat("  (").concat(orderEntity.getCarType()).concat(")"));
                     holder.setText(R.id.textState, "待接单");
-                    holder.setText(R.id.textStart, "待接单");
-                    holder.setText(R.id.textEnd, "待接单");
+                    holder.setText(R.id.textStart, orderEntity.getStartAddress());
+                    holder.setText(R.id.textEnd,  orderEntity.getGoalAddress());
 
-                    // 订单状态：0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价 
-                    int status = orderEntity.getStatus();
-                    //待接单 －－－ 取消订单
-                    if (status == 0) {
-                        holder.getView(R.id.textDicuss).setVisibility(View.GONE);
-                        holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
-                        holder.setText(R.id.textShengShu, getResources().getString(R.string.cancle_order));
-                    } else if (status == 2) {
-                        holder.getView(R.id.textDicuss).setVisibility(View.GONE);
-                        holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.textOrderAgain).setVisibility(View.VISIBLE);
-                        holder.setText(R.id.textShengShu, getResources().getString(R.string.cancle_order));
-                        holder.setText(R.id.textOrderAgain, getResources().getString(R.string.order_again));
-                    } else if (status == 3) {
-                        holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.textOrderAgain).setVisibility(View.VISIBLE);
-                        holder.setText(R.id.textDicuss, getResources().getString(R.string.want_discusses));
-                        holder.setText(R.id.textShengShu, getResources().getString(R.string.shen_su));
-                        holder.setText(R.id.textOrderAgain, getResources().getString(R.string.order_again));
-                    } else if (status == 3 || status == 4) {
-                        holder.getView(R.id.textDicuss).setVisibility(View.GONE);
-                        holder.getView(R.id.textShengShu).setVisibility(View.GONE);
-                        holder.getView(R.id.textOrderAgain).setVisibility(View.VISIBLE);
-                        holder.setText(R.id.textOrderAgain, getResources().getString(R.string.order_again));
-                    }
+                    holder.getView(R.id.textDicuss).setVisibility(View.GONE);
+                    holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
+                    holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
+                    holder.setText(R.id.textShengShu, getResources().getString(R.string.cancle_order));
 
                     //取消订单
                     holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Logger.i("textShengShu onClick");
-                            if (orderEntity.getStatus() == 0) {
-                                mPresenter.orderCancel(orderEntity.getOrderId());
-                            } else {
-
-                            }
+                            mPresenter.orderCancel(orderEntity.getOrderId());
                         }
                     });
 
@@ -152,8 +128,8 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
             mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    Intent intent = new Intent(getActivity(),OrderDetailActivity.class);
-                    intent.putExtra("orderId",orderEntities.get(position).getOrderId());
+                    Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                    intent.putExtra("orderId", orderEntities.get(position).getOrderId());
                     startActivity(intent);
                 }
 
@@ -254,4 +230,5 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
     public void onReloadClicked() {
         mPresenter.onRefresh();
     }
+
 }

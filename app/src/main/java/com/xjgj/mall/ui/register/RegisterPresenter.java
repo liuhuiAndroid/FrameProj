@@ -58,6 +58,14 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             mRegisterView.showError("请输入密码");
             return;
         }
+        if (TextUtils.isEmpty(realName)) {
+            mRegisterView.showError("请输入姓名");
+            return;
+        }
+        if (TextUtils.isEmpty(smsCode)) {
+            mRegisterView.showError("请输入验证码");
+            return;
+        }
         mRegisterView.showLoading();
         disposables.add(mCommonApi.mallRegister(mobile,realName,password,smsCode)
                 .debounce(800, TimeUnit.MILLISECONDS)
@@ -94,6 +102,39 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                         } else {
                             ToastUtil.showToast("注册失败，请检查您的网络");
                         }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        mRegisterView.onError(throwable);
+                    }
+                }));
+    }
+
+    @Override
+    public void smsCodeSend(String mobile, int type) {
+        if (TextUtils.isEmpty(mobile)) {
+            mRegisterView.showError("请输入手机号");
+            return;
+        }
+        if (!PhoneUtil.isMobile(mobile)) {
+            mRegisterView.showError("手机号码格式不正确");
+            return;
+        }
+        mRegisterView.refreshSmsCodeUi();
+        disposables.add(mCommonApi.smsCodeSend(mobile,type)
+                .debounce(800, TimeUnit.MILLISECONDS)
+                .flatMap(new Function<HttpResult<String>, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(@io.reactivex.annotations.NonNull HttpResult<String> loginEntityHttpResult) throws Exception {
+                        return CommonApi.flatResponse(loginEntityHttpResult);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull String s) throws Exception {
+                        ToastUtil.showToast(s);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

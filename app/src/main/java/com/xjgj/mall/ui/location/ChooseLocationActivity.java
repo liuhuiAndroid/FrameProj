@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
@@ -40,7 +41,6 @@ import com.xjgj.mall.bean.GeoCoderResultEntity;
 import com.xjgj.mall.bean.SearchItem;
 import com.xjgj.mall.service.LocationService;
 import com.xjgj.mall.ui.BaseActivity;
-import com.xjgj.mall.ui.decoration.DividerGridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -64,10 +64,10 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @BindView(R.id.baiduMapView)
     MapView mBaiduMapView;
     @BindView(R.id.recyclerViewGeocoder)
-    RecyclerView mRecyclerViewGeocoder;
+    ListView mRecyclerViewGeocoder;
 
     @Inject
-    com.xjgj.mall.ui.location.ChooseLocationPresenter mPresenter;
+    ChooseLocationPresenter mPresenter;
     // 阴影布局
     @BindView(R.id.shadeView)
     View mShadeView;
@@ -84,7 +84,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @Inject
     LocationService locationService;
 
-    boolean isFirstLoc = true; // 是否首次定位
+    private boolean isFirstLoc = true; // 是否首次定位
 
     private LinearLayoutManager mLinearLayoutManager;
     private int mCheck_point;
@@ -93,7 +93,8 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     private String selectCity = "上海市";
     private int loadIndex = 0;
     private List<GeoCoderResultEntity.ResultBean.PoisBean> mRecyclerViewGeoCoderData = new ArrayList<>();
-    private ChooseLocationAdapter mCommonAdapterGeocoder;
+    private ChooseLocationListAdapter mChooseLocationListAdapter;
+    //    private ChooseLocationAdapter mCommonAdapterGeocoder;
 
     @Override
     protected void onStart() {
@@ -111,11 +112,11 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     }
 
     private void initRecyclerView() {
-        Logger.i("test initRecyclerView");
-        Logger.i("test mRecyclerViewGeoCoderData.size = " + mRecyclerViewGeoCoderData.size());
-        mLinearLayoutManager = new LinearLayoutManager(ChooseLocationActivity.this);
-        mRecyclerViewGeocoder.setLayoutManager(mLinearLayoutManager);
-        mCommonAdapterGeocoder = new ChooseLocationAdapter(ChooseLocationActivity.this, mRecyclerViewGeoCoderData);
+//        Logger.i("test initRecyclerView");
+//        Logger.i("test mRecyclerViewGeoCoderData.size = " + mRecyclerViewGeoCoderData.size());
+//        mLinearLayoutManager = new LinearLayoutManager(ChooseLocationActivity.this);
+//        mRecyclerViewGeocoder.setLayoutManager(mLinearLayoutManager);
+//        mCommonAdapterGeocoder = new ChooseLocationAdapter(ChooseLocationActivity.this, mRecyclerViewGeoCoderData);
         //        mCommonAdapterGeocoder.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
         //            @Override
         //            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
@@ -138,9 +139,10 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
         //                return false;
         //            }
         //        });
-        mRecyclerViewGeocoder.setAdapter(mCommonAdapterGeocoder);
-        mRecyclerViewGeocoder.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerViewGeocoder.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));
+        mChooseLocationListAdapter = new ChooseLocationListAdapter(ChooseLocationActivity.this,mRecyclerViewGeoCoderData);
+        mRecyclerViewGeocoder.setAdapter(mChooseLocationListAdapter);
+//        mRecyclerViewGeocoder.setItemAnimator(new DefaultItemAnimator());
+//        mRecyclerViewGeocoder.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));
         Logger.i("test setAdapter ============ 结束");
     }
 
@@ -159,6 +161,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
      * 初始化地图
      */
     private void initBaiduMap() {
+        isFirstLoc = true; // 是否首次定位
         mBaiduMapView.setMapCustomEnable(false);
         mBaiduMap = mBaiduMapView.getMap();
         mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(
@@ -198,7 +201,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @Override
     public void initUiAndListener() {
         mPresenter.attachView(this);
-
         mSearchView.setCityName(selectCity);
         mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
             @Override
@@ -354,7 +356,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     public void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> geoCoderResultEntity) {
         Logger.i("test geocoderResultSuccess");
 
-        if (mCommonAdapterGeocoder == null) {
+        if (mChooseLocationListAdapter == null) {
             mRecyclerViewGeoCoderData.clear();
             mRecyclerViewGeoCoderData.addAll(geoCoderResultEntity);
             initRecyclerView();
@@ -366,7 +368,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mCommonAdapterGeocoder.notifyDataSetChanged();
+                    mChooseLocationListAdapter.notifyDataSetChanged();
                     Logger.i("test notifyDataSetChanged testChangeThread:" + Thread.currentThread().getName());
                 }
             }, 1000);

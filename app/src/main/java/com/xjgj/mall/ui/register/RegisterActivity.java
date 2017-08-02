@@ -138,20 +138,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.detachView();
-        if (!isFinishing() && mLoginDialog.isShowing()) {
-            mLoginDialog.dismiss();
-        }
-        mLoginDialog = null;
-    }
-
-    /**
-     * 获取短信验证码
-     */
-    @OnClick(text_get_verification_code)
-    public void mTextGetVerificationCode() {
+    public void refreshSmsCodeUi() {
         int time = 60;
         Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(time + 1)
@@ -194,6 +181,26 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                         mTextGetVerificationCode.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
+        if (!isFinishing() && mLoginDialog.isShowing()) {
+            mLoginDialog.dismiss();
+        }
+        mLoginDialog = null;
+    }
+
+    /**
+     * 获取短信验证码
+     */
+    @OnClick(text_get_verification_code)
+    public void mTextGetVerificationCode() {
+
+        String mUserName = mEditPhone.getText().toString().trim();
+        mPresenter.smsCodeSend(mUserName,1);
     }
 
 }

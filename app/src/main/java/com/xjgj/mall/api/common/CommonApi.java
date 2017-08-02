@@ -288,4 +288,16 @@ public class CommonApi {
         return mCommonService.orderDetail(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
+    /**
+     * 发送短信验证码
+     */
+    public Observable<HttpResult<String>> smsCodeSend(String mobile,int type) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("mobile", mobile);
+        params.put("type", type);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.smsCodeSend(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
+    }
+
 }

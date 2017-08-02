@@ -101,7 +101,8 @@
                 android:id="@+id/imageMoreTarget"
                 android:layout_width="45px"
                 android:layout_height="45px"
-                android:src="@drawable/point_multi"/>
+                android:src="@drawable/point_multi"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

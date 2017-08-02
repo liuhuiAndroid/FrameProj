@@ -1,7 +1,6 @@
 package com.xjgj.mall.ui.orderdetail;
 
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,8 +20,11 @@ import butterknife.BindView;
  * 订单详情
  */
 
-public class OrderDetailActivity extends BaseActivity implements OrderDetailContract.View{
+public class OrderDetailActivity extends BaseActivity implements OrderDetailContract.View {
 
+
+    @Inject
+    OrderDetailPresenter mPresenter;
     @BindView(R.id.image_back)
     ImageView mImageBack;
     @BindView(R.id.text_title)
@@ -65,47 +67,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     LinearLayout mLinearAddXingCheng;
     @BindView(R.id.linearOrderAgain)
     LinearLayout mLinearOrderAgain;
-    @BindView(R.id.starMeBarShow)
-    StarBar mStarMeBarShow;
-    @BindView(R.id.textMeComments)
-    TextView mTextMeComments;
-    @BindView(R.id.linearMeShow)
-    LinearLayout mLinearMeShow;
-    @BindView(R.id.starOthersBarShow)
-    StarBar mStarOthersBarShow;
-    @BindView(R.id.textOthersComments)
-    TextView mTextOthersComments;
-    @BindView(R.id.linearOthersShow)
-    LinearLayout mLinearOthersShow;
-    @BindView(R.id.linearComments)
-    LinearLayout mLinearComments;
-    @BindView(R.id.tetCancelReason)
-    TextView mTetCancelReason;
-    @BindView(R.id.imageOneShow)
-    ImageView mImageOneShow;
-    @BindView(R.id.imageTwoShow)
-    ImageView mImageTwoShow;
-    @BindView(R.id.textShowAgreeTime)
-    TextView mTextShowAgreeTime;
-    @BindView(R.id.textAgreeCancel)
-    TextView mTextAgreeCancel;
-    @BindView(R.id.textDisAgreeCancel)
-    TextView mTextDisAgreeCancel;
-    @BindView(R.id.editDisagree)
-    EditText mEditDisagree;
-    @BindView(R.id.textLimit)
-    TextView mTextLimit;
-    @BindView(R.id.textSubmit)
-    TextView mTextSubmit;
-    @BindView(R.id.linearDisagreeContent)
-    LinearLayout mLinearDisagreeContent;
-    @BindView(R.id.linearOrderCancel)
-    LinearLayout mLinearOrderCancel;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
-
-    @Inject
-    OrderDetailPresenter mPresenter;
 
     @Override
     public int initContentView() {
@@ -133,7 +96,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             }
         });
         mTextTitle.setText("订单详情");
-        mPresenter.orderDetail(getIntent().getIntExtra("orderId",-1));
+        mPresenter.orderDetail(getIntent().getIntExtra("orderId", -1));
     }
 
     @Override
@@ -148,12 +111,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
 
     @Override
     public void orderDetailResult(OrderDetailEntity orderDetailEntity) {
-        if(orderDetailEntity!=null){
+        if (orderDetailEntity != null) {
             mTextCarType.setText(orderDetailEntity.getCarType());
             mTextUseCarTime.setText(orderDetailEntity.getServiceTime());
-            mTextSize.setText(orderDetailEntity.getVolume()+"");
-            mTextWeight.setText(orderDetailEntity.getWeight()+"");
-            mTextOtherCost.setText(orderDetailEntity.getOrderId()+"");
+            mTextSize.setText(orderDetailEntity.getVolume() + "");
+            mTextWeight.setText(orderDetailEntity.getWeight() + "");
+            mTextOtherCost.setText(orderDetailEntity.getOrderId() + "");
         }
     }
 
@@ -167,4 +130,5 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         super.onDestroy();
         mPresenter.detachView();
     }
+
 }
