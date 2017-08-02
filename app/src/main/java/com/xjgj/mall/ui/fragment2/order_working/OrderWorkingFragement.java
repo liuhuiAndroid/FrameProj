@@ -2,12 +2,15 @@ package com.xjgj.mall.ui.fragment2.order_working;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
@@ -110,17 +113,48 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
                     holder.setText(R.id.textStart, orderEntity.getStartAddress());
                     holder.setText(R.id.textEnd,  orderEntity.getGoalAddress());
 
-                    holder.getView(R.id.textDicuss).setVisibility(View.GONE);
+                    holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
                     holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
                     holder.getView(R.id.textOrderAgain).setVisibility(View.VISIBLE);
                     holder.setText(R.id.textShengShu, getResources().getString(R.string.cancle_order));
                     holder.setText(R.id.textOrderAgain, getResources().getString(R.string.order_again));
+                    holder.setText(R.id.textDicuss, getResources().getString(R.string.order_confirm));
 
                     //取消订单
                     holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mPresenter.orderCancel(orderEntity.getOrderId());
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("提示")
+                                    .content("是否确认取消订单？")
+                                    .positiveText("确定")
+                                    .negativeText("取消")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            mPresenter.orderCancel(orderEntity.getOrderId());
+                                        }
+                                    })
+                                    .show();
+                        }
+                    });
+
+                    //确认完成
+                    holder.getView(R.id.textDicuss).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("提示")
+                                    .content("是否确认完成订单？")
+                                    .positiveText("确定")
+                                    .negativeText("取消")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            mPresenter.orderConfirm(orderEntity.getOrderId());
+                                        }
+                                    })
+                                    .show();
                         }
                     });
                 }

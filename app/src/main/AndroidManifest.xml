@@ -66,6 +66,8 @@
         <activity android:name=".ui.cancelorder.CancelOrderActivity"/>
         <!-- 订单详情 -->
         <activity android:name=".ui.orderdetail.OrderDetailActivity"/>
+        <!-- 订单评价 -->
+        <activity android:name=".ui.orderevaluate.OrderEvaluateActivity"/>
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->
         <meta-data

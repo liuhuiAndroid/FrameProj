@@ -46,8 +46,6 @@ public class OrderCompletedContract {
 
         void orderAppeling(int orderId);
 
-        void orderEvaluate(int orderId);
-
     }
 
 }

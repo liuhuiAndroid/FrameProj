@@ -1,6 +1,7 @@
 package com.xjgj.mall.ui.location;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,8 +11,8 @@ import android.text.Editable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
@@ -41,6 +42,7 @@ import com.xjgj.mall.bean.GeoCoderResultEntity;
 import com.xjgj.mall.bean.SearchItem;
 import com.xjgj.mall.service.LocationService;
 import com.xjgj.mall.ui.BaseActivity;
+import com.xjgj.mall.ui.decoration.DividerGridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -57,29 +59,16 @@ import static com.xjgj.mall.Constants.RESULT_CHOOSE_LOCATION_CODE;
 /**
  * 地图选点
  */
-
 public class ChooseLocationActivity extends BaseActivity implements ChooseLocationContract.View {
 
     //百度地图
     @BindView(R.id.baiduMapView)
     MapView mBaiduMapView;
     @BindView(R.id.recyclerViewGeocoder)
-    ListView mRecyclerViewGeocoder;
+    RecyclerView mRecyclerViewGeocoder;
 
     @Inject
     ChooseLocationPresenter mPresenter;
-    // 阴影布局
-    @BindView(R.id.shadeView)
-    View mShadeView;
-    // 搜索控件
-    @BindView(R.id.searchView)
-    CustomSearchView mSearchView;
-    //搜索结果
-    @BindView(R.id.list_result)
-    RecyclerView mListResult;
-    //搜索结果所在布局
-    @BindView(R.id.ll_search_result)
-    LinearLayout mLlSearchResult;
     private BaiduMap mBaiduMap;
     @Inject
     LocationService locationService;
@@ -93,8 +82,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     private String selectCity = "上海市";
     private int loadIndex = 0;
     private List<GeoCoderResultEntity.ResultBean.PoisBean> mRecyclerViewGeoCoderData = new ArrayList<>();
-    private ChooseLocationListAdapter mChooseLocationListAdapter;
-    //    private ChooseLocationAdapter mCommonAdapterGeocoder;
 
     @Override
     protected void onStart() {
@@ -111,38 +98,55 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
 
     }
 
+    private CommonAdapter mCommonAdapterGeocoder;
+
+    /**
+     * 初始化显示所在地附近的位置的RecyclerView
+     */
     private void initRecyclerView() {
-//        Logger.i("test initRecyclerView");
-//        Logger.i("test mRecyclerViewGeoCoderData.size = " + mRecyclerViewGeoCoderData.size());
-//        mLinearLayoutManager = new LinearLayoutManager(ChooseLocationActivity.this);
-//        mRecyclerViewGeocoder.setLayoutManager(mLinearLayoutManager);
-//        mCommonAdapterGeocoder = new ChooseLocationAdapter(ChooseLocationActivity.this, mRecyclerViewGeoCoderData);
-        //        mCommonAdapterGeocoder.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-        //            @Override
-        //            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-        //                List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapterGeocoder.getDatas();
-        //                if (datas != null) {
-        //                    if (datas != null && datas.size() > position) {
-        //                        setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
-        //                                .putExtra("name", datas.get(position).getName())
-        //                                .putExtra("addr", datas.get(position).getAddr())
-        //                                .putExtra("longitude", datas.get(position).getPoint().getX())
-        //                                .putExtra("latitude", datas.get(position).getPoint().getY())
-        //                                .putExtra("check_point", mCheck_point));
-        //                    }
-        //                }
-        //                finish();
-        //            }
-        //
-        //            @Override
-        //            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-        //                return false;
-        //            }
-        //        });
-        mChooseLocationListAdapter = new ChooseLocationListAdapter(ChooseLocationActivity.this,mRecyclerViewGeoCoderData);
-        mRecyclerViewGeocoder.setAdapter(mChooseLocationListAdapter);
-//        mRecyclerViewGeocoder.setItemAnimator(new DefaultItemAnimator());
-//        mRecyclerViewGeocoder.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));
+        mLinearLayoutManager = new LinearLayoutManager(ChooseLocationActivity.this);
+        mRecyclerViewGeocoder.setLayoutManager(mLinearLayoutManager);
+        mCommonAdapterGeocoder = new CommonAdapter<GeoCoderResultEntity.ResultBean.PoisBean>(ChooseLocationActivity.this, R.layout.item_aroundmap, mRecyclerViewGeoCoderData) {
+            @Override
+            protected void convert(ViewHolder holder, final GeoCoderResultEntity.ResultBean.PoisBean poisBean, int position) {
+
+                holder.setText(R.id.item_aroundmap_name, poisBean.getName());
+                holder.setText(R.id.item_aroundmap_address, poisBean.getAddr());
+                if (position == 0) {
+                    holder.getView(R.id.item_aroundmap_icon).setVisibility(View.VISIBLE);
+                    holder.setTextColor(R.id.item_aroundmap_name, Color.RED);
+                } else {
+                    holder.getView(R.id.item_aroundmap_icon).setVisibility(View.GONE);
+                    holder.setTextColor(R.id.item_aroundmap_name, Color.BLACK);
+                }
+
+            }
+        };
+        mCommonAdapterGeocoder.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                List<GeoCoderResultEntity.ResultBean.PoisBean> datas = mCommonAdapterGeocoder.getDatas();
+                if (datas != null) {
+                    if (datas != null && datas.size() > position) {
+                        setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
+                                .putExtra("name", datas.get(position).getName())
+                                .putExtra("addr", datas.get(position).getAddr())
+                                .putExtra("longitude", datas.get(position).getPoint().getX())
+                                .putExtra("latitude", datas.get(position).getPoint().getY())
+                                .putExtra("check_point", mCheck_point));
+                    }
+                }
+                finish();
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
+        mRecyclerViewGeocoder.setAdapter(mCommonAdapterGeocoder);
+        mRecyclerViewGeocoder.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerViewGeocoder.addItemDecoration(new DividerGridItemDecoration(ChooseLocationActivity.this, 0));
         Logger.i("test setAdapter ============ 结束");
     }
 
@@ -201,7 +205,9 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @Override
     public void initUiAndListener() {
         mPresenter.attachView(this);
+
         mSearchView.setCityName(selectCity);
+        //TODO
         mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
             @Override
             public void onBackButtonClicked() {
@@ -256,7 +262,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
                 selectCity = location.getCity();
-                mSearchView.setCityName(selectCity);
+                //                mSearchView.setCityName(selectCity);
                 if (isFirstLoc) {
                     isFirstLoc = false;
                     //                    更新地图位置
@@ -355,21 +361,24 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     @Override
     public void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> geoCoderResultEntity) {
         Logger.i("test geocoderResultSuccess");
-
-        if (mChooseLocationListAdapter == null) {
-            mRecyclerViewGeoCoderData.clear();
-            mRecyclerViewGeoCoderData.addAll(geoCoderResultEntity);
+        mRecyclerViewGeoCoderData.clear();
+        mRecyclerViewGeoCoderData.addAll(geoCoderResultEntity);
+        if (mCommonAdapterGeocoder == null) {
             initRecyclerView();
-
         } else {
-            mRecyclerViewGeoCoderData.clear();
-            mRecyclerViewGeoCoderData.addAll(geoCoderResultEntity);
             Logger.i("test mRecyclerViewGeoCoderData.size = " + mRecyclerViewGeoCoderData.size());
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mChooseLocationListAdapter.notifyDataSetChanged();
+                    mCommonAdapterGeocoder.notifyDataSetChanged();
                     Logger.i("test notifyDataSetChanged testChangeThread:" + Thread.currentThread().getName());
+
+                    MaterialDialog materialDialog = new MaterialDialog.Builder(ChooseLocationActivity.this)
+                            .title("退出登录")
+                            .content("是否确认退出登录？")
+                            .show();
+                    materialDialog.dismiss();
+
                 }
             }, 1000);
 
@@ -384,6 +393,18 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
 
     // ==================================================  搜索模块
     // ==================================================  搜索模块
+    // 阴影布局
+    @BindView(R.id.shadeView)
+    View mShadeView;
+    // 搜索控件
+    @BindView(R.id.searchView)
+    CustomSearchView mSearchView;
+    //搜索结果
+    @BindView(R.id.list_result)
+    RecyclerView mListResult;
+    //搜索结果所在布局
+    @BindView(R.id.ll_search_result)
+    LinearLayout mLlSearchResult;
     private PoiSearch mPoiSearch = null;
 
     /**

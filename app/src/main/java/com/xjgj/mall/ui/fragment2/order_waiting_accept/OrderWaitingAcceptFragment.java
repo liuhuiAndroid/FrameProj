@@ -2,12 +2,15 @@ package com.xjgj.mall.ui.fragment2.order_waiting_accept;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
@@ -119,7 +122,18 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
                     holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mPresenter.orderCancel(orderEntity.getOrderId());
+                            new MaterialDialog.Builder(getActivity())
+                                    .title("提示")
+                                    .content("是否确认取消订单？")
+                                    .positiveText("确定")
+                                    .negativeText("取消")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            mPresenter.orderCancel(orderEntity.getOrderId());
+                                        }
+                                    })
+                                    .show();
                         }
                     });
 

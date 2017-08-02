@@ -91,6 +91,7 @@
     <string name="use_car_on_time">立即用车</string>
     <string name="shen_su">我要申诉</string>
     <string name="order_again">再次下单</string>
+    <string name="order_confirm">确认完成</string>
     <string name="big_car">场外配送</string>
     <string name="small_car">小货车</string>
     <string name="insideSmallCar">场内短驳</string>

@@ -44,6 +44,8 @@ public class OrderWorkingContract {
 
         void orderCancel(int orderId);
 
+        void orderConfirm(int orderId);
+
     }
 
 }

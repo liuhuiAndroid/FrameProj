@@ -8,6 +8,10 @@ import java.util.List;
 
 public class OrderDetailEntity {
 
+    private String contactName;
+    private String contactMobile;
+    private String avatarUrl;
+
     private double amount;
     private int orderId;
     private int counts;
@@ -23,6 +27,30 @@ public class OrderDetailEntity {
     private List<String> serviceType;
     private List<EvaluationBean> evaluation;
     private List<AddressListBean> addressList;
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactMobile() {
+        return contactMobile;
+    }
+
+    public void setContactMobile(String contactMobile) {
+        this.contactMobile = contactMobile;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public double getAmount() {
         return amount;

@@ -1,5 +1,7 @@
 package com.xjgj.mall.ui.orderdetail;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -7,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android.frameproj.library.util.imageloader.ImageLoaderUtil;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.ui.BaseActivity;
@@ -69,6 +72,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     LinearLayout mLinearOrderAgain;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
+    private String mContactMobile;
 
     @Override
     public int initContentView() {
@@ -117,6 +121,24 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             mTextSize.setText(orderDetailEntity.getVolume() + "");
             mTextWeight.setText(orderDetailEntity.getWeight() + "");
             mTextOtherCost.setText(orderDetailEntity.getOrderId() + "");
+
+            if(orderDetailEntity.getStatus() != 0 ) {
+                mUserInfoLayout.setVisibility(View.VISIBLE);
+                ImageLoaderUtil.getInstance().loadImage(orderDetailEntity.getAvatarUrl(), mImageHeader);
+                mTextUserName.setText(orderDetailEntity.getContactName());
+                mContactMobile = orderDetailEntity.getContactMobile();
+                mTextOrderBeiZhu.setText(orderDetailEntity.getRemark());
+                mImageCallPhone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:4006163923"));
+                        startActivity(intent);
+                    }
+                });
+            }else{
+                mUserInfoLayout.setVisibility(View.GONE);
+            }
         }
     }
 

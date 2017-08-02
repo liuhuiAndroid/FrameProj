@@ -104,4 +104,17 @@ public interface CommonService {
     Observable<HttpResult<String>> smsCodeSend(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                           @FieldMap Map<String, Object> params);
 
+    //商户-完成订单
+    @FormUrlEncoded
+    @POST("mall/order/finish")
+    Observable<HttpResult<String>> orderFinish(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                               @FieldMap Map<String, Object> params, @Header("token") String token);
+
+    //订单评价
+    @FormUrlEncoded
+    @POST("order/comment")
+    Observable<HttpResult<String>> orderComment(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                               @FieldMap Map<String, Object> params, @Header("token") String token);
+
+
 }

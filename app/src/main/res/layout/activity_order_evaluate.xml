@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/normal_weight_vertical"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/linearClude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/includer_header"/>
+
+        <View style="@style/ZddddddLineStyle"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearClude"
+        android:background="@color/zf1f2f4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/zffffff"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/userInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="270px"
+                android:background="@color/white"
+                android:paddingLeft="44px"
+                android:paddingRight="44px">
+
+                <ImageView
+                    android:id="@+id/imageHeader"
+                    android:layout_width="180px"
+                    android:layout_height="180px"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20px"
+                    android:src="@drawable/header"/>
+
+                <ImageView
+                    android:id="@+id/imageCallPhone"
+                    android:layout_width="120px"
+                    android:layout_height="120px"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/imageHeader"
+                    android:src="@drawable/icon_tel"/>
+
+                <TextView
+                    android:id="@+id/textUserName"
+                    style="@style/normal_sixteen_text"
+                    android:layout_alignTop="@id/imageHeader"
+                    android:layout_toRightOf="@id/imageHeader"
+                    android:text=""
+                    android:textColor="@color/z262627"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/textUserPhone"
+                    style="@style/normal_sixteen_text"
+                    android:layout_alignTop="@id/textUserName"
+                    android:layout_marginLeft="115px"
+                    android:layout_toRightOf="@id/textUserName"
+                    android:text=""
+                    android:textColor="@color/z262627"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textFwTimes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/imageHeader"
+                    android:layout_marginBottom="10px"
+                    android:layout_toRightOf="@id/imageHeader"
+                    android:text=""
+                    android:textColor="@color/z404b53"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/textPaiZhao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/imageHeader"
+                    android:layout_alignRight="@id/textUserPhone"
+                    android:layout_marginBottom="10px"
+                    android:text=""
+                    android:textColor="@color/z404b53"
+                    android:textSize="12sp"/>
+
+                <com.xjgj.mall.ui.widget.StarBar
+                    android:id="@+id/starBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textUserName"
+                    android:layout_marginTop="5px"
+                    android:layout_toRightOf="@id/imageHeader"
+                    ratingbar:starCount="5"
+                    ratingbar:starDistance="5dp"
+                    ratingbar:starEmpty="@drawable/star_empty"
+                    ratingbar:starFill="@drawable/star_full"
+                    ratingbar:starSize="10dp"/>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="90px"
+                android:paddingRight="90px">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2px"
+                    android:layout_marginRight="22px"
+                    android:layout_weight="1"
+                    android:background="@color/zdfe0e1"/>
+
+            </LinearLayout>
+
+            <com.xjgj.mall.ui.widget.StarBar
+                android:id="@+id/starBarShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textUserName"
+                android:layout_marginTop="5px"
+                android:layout_toRightOf="@id/imageHeader"
+                ratingbar:starCount="5"
+                ratingbar:starDistance="15dp"
+                ratingbar:starEmpty="@drawable/star_empty"
+                ratingbar:starFill="@drawable/star_full"
+                ratingbar:starSize="40dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300px"
+                android:layout_marginBottom="70px"
+                android:layout_marginLeft="44px"
+                android:layout_marginRight="44px"
+                android:layout_marginTop="115px"
+                android:background="@drawable/rectangle_cancle_reason_item_bg">
+
+                <EditText
+                    android:id="@+id/editShaoHua"
+                    android:layout_width="match_parent"
+                    android:layout_height="300px"
+                    android:layout_margin="20px"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="@string/driver_discuss"
+                    android:textColor="@color/z262627"
+                    android:textColorHint="@color/z868788"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/textLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="20px"
+                    android:layout_marginRight="20px"
+                    android:text="60/60"
+                    android:textColor="@color/z868788"
+                    android:textCursorDrawable="@null"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/zf1f2f4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textPendingEvaluation"
+                    android:layout_width="match_parent"
+                    android:layout_height="150px"
+                    android:layout_marginBottom="65px"
+                    android:layout_marginLeft="35px"
+                    android:layout_marginRight="35px"
+                    android:layout_marginTop="65px"
+                    android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/discusses"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 加载中 -->
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallPulseIndicator"
+        />
+
+</RelativeLayout>
+

@@ -291,13 +291,38 @@ public class CommonApi {
     /**
      * 发送短信验证码
      */
-    public Observable<HttpResult<String>> smsCodeSend(String mobile,int type) {
+    public Observable<HttpResult<String>> smsCodeSend(String mobile, int type) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("mobile", mobile);
         params.put("type", type);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.smsCodeSend(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 商户-完成订单
+     */
+    public Observable<HttpResult<String>> orderFinish(int orderId) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("orderId", orderId);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.orderFinish(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 订单评价
+     */
+    public Observable<HttpResult<String>> orderComment(int orderId, String level, String content) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("orderId", orderId);
+        params.put("type", 1);
+        params.put("level", level);
+        params.put("content", content);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.orderComment(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
 }

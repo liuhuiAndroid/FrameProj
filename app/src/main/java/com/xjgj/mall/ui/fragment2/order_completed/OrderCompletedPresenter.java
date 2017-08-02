@@ -149,11 +149,6 @@ public class OrderCompletedPresenter implements OrderCompletedContract.Presenter
     }
 
     @Override
-    public void orderEvaluate(int orderId) {
-
-    }
-
-    @Override
     public void attachView(@NonNull OrderCompletedContract.View view) {
         mView = view;
     }

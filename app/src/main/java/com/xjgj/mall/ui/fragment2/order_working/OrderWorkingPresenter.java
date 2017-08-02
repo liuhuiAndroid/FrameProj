@@ -145,6 +145,31 @@ public class OrderWorkingPresenter implements OrderWorkingContract.Presenter {
     }
 
     @Override
+    public void orderConfirm(int orderId) {
+        disposables.add(mCommonApi.orderFinish(orderId)
+                .debounce(800, TimeUnit.MILLISECONDS)
+                .flatMap(new Function<HttpResult<String>, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(@io.reactivex.annotations.NonNull HttpResult<String> stringHttpResult) throws Exception {
+                        return mCommonApi.flatResponse(stringHttpResult);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull String s) throws Exception {
+                        ToastUtil.showToast(s);
+                        mView.onRefresh();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        loadError(throwable);
+                    }
+                }));
+    }
+
+    @Override
     public void attachView(@NonNull OrderWorkingContract.View view) {
         mView = view;
     }

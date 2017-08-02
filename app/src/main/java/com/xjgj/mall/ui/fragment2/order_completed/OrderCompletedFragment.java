@@ -20,6 +20,7 @@ import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.decoration.DividerGridItemDecoration;
 import com.xjgj.mall.ui.main.MainComponent;
 import com.xjgj.mall.ui.orderdetail.OrderDetailActivity;
+import com.xjgj.mall.ui.orderevaluate.OrderEvaluateActivity;
 
 import java.util.List;
 
@@ -130,7 +131,9 @@ public class OrderCompletedFragment extends BaseFragment implements OrderComplet
                     holder.getView(R.id.textDicuss).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mPresenter.orderCancel(orderEntity.getOrderId());
+                            Intent intent = new Intent(getActivity(),OrderEvaluateActivity.class);
+                            intent.putExtra("orderId",orderEntity.getOrderId());
+                            startActivity(intent);
                         }
                     });
 
