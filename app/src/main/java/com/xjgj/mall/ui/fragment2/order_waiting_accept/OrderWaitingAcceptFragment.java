@@ -83,9 +83,12 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
         mPtrLayout.disableWhenHorizontalMove(true);
     }
 
+    private boolean isFirstShow = true;
+
     @Override
     public void initData() {
         layoutPostDelayed();
+        isFirstShow = false;
     }
 
     @Override

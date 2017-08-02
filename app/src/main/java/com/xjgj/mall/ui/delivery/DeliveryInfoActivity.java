@@ -127,15 +127,16 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.image_back:
                 if (mTerminiEntity != null) {
-                    // 当前页面有内容修改，需要弹出提示
-                    if (!mTerminiEntity.getAddressName().equals(mTextAddress.getText().toString().trim())
-                            || !mTerminiEntity.getAddressDescribeName().equals(mTextDetailsAddress.getText().toString().trim())
-                            || !mTerminiEntity.getReceiverName().equals(mTextPersonalName.getText().toString().trim())
-                            || !mTerminiEntity.getReceiverPhone().equals(mTextContactPhone.getText().toString().trim())) {
-                        isFinish();
-                    } else {
-                        finish();
-                    }
+                    // TODO 当前页面有内容修改，需要弹出提示
+//                    if (!mTerminiEntity.getAddressName().equals(mTextAddress.getText().toString().trim())
+//                            || !mTerminiEntity.getAddressDescribeName().equals(mTextDetailsAddress.getText().toString().trim())
+//                            || !mTerminiEntity.getReceiverName().equals(mTextPersonalName.getText().toString().trim())
+//                            || !mTerminiEntity.getReceiverPhone().equals(mTextContactPhone.getText().toString().trim())) {
+//                        isFinish();
+//                    } else {
+//                        finish();
+//                    }
+                    finish();
                 } else {
                     finish();
                 }
@@ -185,10 +186,6 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
      * @param view
      */
     public void ok(View view) {
-        mTextAddress.setText("111");
-        mTextDetailsAddress.setText("111");
-        mTextPersonalName.setText("111");
-        mTextContactPhone.setText("15300909090");
 
         String name = mTextAddress.getText().toString().trim();
         String detailName = mTextDetailsAddress.getText().toString().trim();

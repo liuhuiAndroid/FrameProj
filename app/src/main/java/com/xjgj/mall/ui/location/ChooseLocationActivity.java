@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
@@ -372,12 +371,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
                 public void run() {
                     mCommonAdapterGeocoder.notifyDataSetChanged();
                     Logger.i("test notifyDataSetChanged testChangeThread:" + Thread.currentThread().getName());
-
-                    MaterialDialog materialDialog = new MaterialDialog.Builder(ChooseLocationActivity.this)
-                            .title("退出登录")
-                            .content("是否确认退出登录？")
-                            .show();
-                    materialDialog.dismiss();
 
                 }
             }, 1000);

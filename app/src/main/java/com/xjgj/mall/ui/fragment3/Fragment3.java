@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.util.imageloader.ImageLoaderUtil;
-import com.luck.picture.lib.entity.LocalMedia;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.components.storage.UserStorage;
@@ -24,14 +23,12 @@ import com.xjgj.mall.ui.businesslicence.BusinessLicenceActivity;
 import com.xjgj.mall.ui.certification.CertificationActivity;
 import com.xjgj.mall.ui.main.MainComponent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.xjgj.mall.Constants.REQUEST_BUSINESS_LICENCE_CODE;
 import static com.xjgj.mall.Constants.REQUEST_CERTIFICATION_CODE;
@@ -44,7 +41,7 @@ import static com.xjgj.mall.Constants.REQUEST_CERTIFICATION_CODE;
 public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
 
     @BindView(R.id.roundImageView)
-    ImageView mRoundImageView;
+    CircleImageView mRoundImageView;
 
     @Inject
     Fragment3Presenter mPresenter;

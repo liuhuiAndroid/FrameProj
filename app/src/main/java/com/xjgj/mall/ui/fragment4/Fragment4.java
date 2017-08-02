@@ -42,7 +42,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.REQUEST_DELIVERY_INFO_CODE;
+import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE;
 import static com.xjgj.mall.Constants.RESULT_DELIVERY_INFO_CODE;
+import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE;
 import static com.xjgj.mall.R.id.viewPager;
 
 /**
@@ -325,7 +327,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         int i = paramLinearLayout.getChildCount();
         SuperEditTextPlus localSuperEditTextPlus = (SuperEditTextPlus) localLinearLayout2.getChildAt(0);
         localSuperEditTextPlus.setTag(Integer.valueOf(i));
-        localSuperEditTextPlus.setHintText("按此输入目的地" + i);
+        localSuperEditTextPlus.setHintText("按此输入目的地");
         localSuperEditTextPlus.setRightBtnIcon(R.drawable.ic_strike_out);
         RelativeLayout localRelativeLayout = (RelativeLayout) ((LinearLayout) paramLinearLayout.getChildAt(-1 + paramLinearLayout.getChildCount())).getChildAt(0);
         ((ImageView) localRelativeLayout.getChildAt(1)).setImageDrawable(localContext.getResources().getDrawable(R.drawable.ic_waypt));
@@ -400,7 +402,9 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            mSeStPtOF.setTopText(location.getAddrStr());
+                            //TODO
+//                            mSeStPtOF.setTopText(location.getAddrStr());
+
                             //                            TerminiEntity terminiEntity = new TerminiEntity()
                             //                            tempTerminiEntity.put(0, terminiEntity);
                         }
@@ -428,6 +432,20 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                 localSuperEditTextPlus.setMiddleText(terminiEntity.getAddressDescribeName());
                 tempTerminiEntity.put(position, terminiEntity);
             }
+        } else if(requestCode == REQUEST_IMPROVE_ORDER_CODE && resultCode ==RESULT_IMPROVE_ORDER_CODE){
+            if(superEditTextsMap!=null){
+                for (int i = 0; i < superEditTextsMap.size(); i++) {
+                    SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(i);
+                    tempTerminiEntity.clear();
+                    localSuperEditTextPlus.setTopText("");
+                    localSuperEditTextPlus.setMiddleText("");
+                    if(i == 0) {
+                        localSuperEditTextPlus.setHintText("按此输入起点");
+                    }else{
+                        localSuperEditTextPlus.setHintText("按此输入目的地");
+                    }
+                }
+            }
         }
     }
 
@@ -446,7 +464,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
             if (mVehiclePagerAdapter != null && mVehiclePagerAdapter.getCarTypeEntities() != null) {
                 List<CarTypeEntity> carTypeEntities = mVehiclePagerAdapter.getCarTypeEntities();
                 if (carTypeEntities.size() > currentItem) {
-                    intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
+                    intent.putExtra("cartypeName", carTypeEntities.get(currentItem).getCarTypeName() + "");
                     intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
                     Logger.i("选择 cartype = " + carTypeEntities.get(currentItem).getCarTypeId() + "" +
                             ";carname = " + carTypeEntities.get(currentItem).getCarTypeName());
@@ -457,7 +475,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     }
                     bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent,REQUEST_IMPROVE_ORDER_CODE);
                 } else {
                     ToastUtil.showToast("车型数据有误");
                 }

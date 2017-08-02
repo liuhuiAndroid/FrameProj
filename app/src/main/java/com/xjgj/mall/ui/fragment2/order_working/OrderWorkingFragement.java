@@ -88,6 +88,19 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
         layoutPostDelayed();
     }
 
+    /**
+     * 判断fragment是否是被用户可见
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            Logger.i("test setUserVisibleHint true");
+            layoutPostDelayed();
+        }
+    }
+
     @Override
     public void showLoading() {
 
@@ -95,6 +108,7 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
 
     @Override
     public void hideLoading() {
+        Logger.i("test hideLoading");
         showContent(true);
     }
 
@@ -257,6 +271,7 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
 
     @Override
     public void onRefreshBegin(PtrFrameLayout frame) {
+        Logger.i("test onRefreshBegin");
         mPresenter.onRefresh();
     }
 

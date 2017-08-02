@@ -25,7 +25,6 @@ import butterknife.BindView;
 
 public class OrderDetailActivity extends BaseActivity implements OrderDetailContract.View {
 
-
     @Inject
     OrderDetailPresenter mPresenter;
     @BindView(R.id.image_back)
@@ -120,9 +119,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             mTextUseCarTime.setText(orderDetailEntity.getServiceTime());
             mTextSize.setText(orderDetailEntity.getVolume() + "");
             mTextWeight.setText(orderDetailEntity.getWeight() + "");
-            mTextOtherCost.setText(orderDetailEntity.getOrderId() + "");
+            mTextOtherCost.setText(orderDetailEntity.getServiceType());
 
-            if(orderDetailEntity.getStatus() != 0 ) {
+            if(orderDetailEntity.getStatus() != 0) {
                 mUserInfoLayout.setVisibility(View.VISIBLE);
                 ImageLoaderUtil.getInstance().loadImage(orderDetailEntity.getAvatarUrl(), mImageHeader);
                 mTextUserName.setText(orderDetailEntity.getContactName());

@@ -24,9 +24,17 @@ public class OrderDetailEntity {
     private String carType;
     private String createTime;
     private int status;
-    private List<String> serviceType;
+    private String serviceType;
     private List<EvaluationBean> evaluation;
     private List<AddressListBean> addressList;
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
 
     public String getContactName() {
         return contactName;
@@ -146,14 +154,6 @@ public class OrderDetailEntity {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public List<String> getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(List<String> serviceType) {
-        this.serviceType = serviceType;
     }
 
     public List<EvaluationBean> getEvaluation() {

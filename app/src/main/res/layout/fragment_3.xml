@@ -20,7 +20,7 @@
                 android:background="@drawable/personal_background"
                 android:clickable="true">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/roundImageView"
                     android:layout_width="250px"
                     android:layout_height="250px"

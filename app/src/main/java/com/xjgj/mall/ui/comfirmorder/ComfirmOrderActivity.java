@@ -112,6 +112,12 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
         mOrderCarInfo = (OrderCarInfo) bundle.getSerializable("orderCarInfo");
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
 
+        String cartypeName = getIntent().getStringExtra("cartypeName");
+        mTextUseCarTime.setText(mOrderCarInfo.getServiceTime());
+        mTextCarType.setText(cartypeName);
+        mTextSizeShow.setText(mOrderCarInfo.getVolume()+"立方");
+        mTextWeightShow.setText(mOrderCarInfo.getWeight()+"公斤");
+
         if (tempTerminiEntity != null && tempTerminiEntity.size() > 0) {
             for (int i = 0; i < tempTerminiEntity.size(); i++) {
                 View view = LayoutInflater.from(this).inflate(R.layout.item_termini, null);

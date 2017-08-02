@@ -81,9 +81,23 @@ public class OrderEvaluatedFragment extends BaseFragment implements OrderEvaluat
         mPtrLayout.disableWhenHorizontalMove(true);
     }
 
+
     @Override
     public void initData() {
         layoutPostDelayed();
+    }
+
+    /**
+     * 判断fragment是否是被用户可见
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Logger.i("test setUserVisibleHint = "+isVisibleToUser);
+        if(isVisibleToUser){
+            layoutPostDelayed();
+        }
     }
 
     @Override

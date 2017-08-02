@@ -83,7 +83,19 @@ public class OrderCanceledFragment extends BaseFragment implements OrderCanceled
 
     @Override
     public void initData() {
-        layoutPostDelayed();
+
+    }
+
+    /**
+     * 判断fragment是否是被用户可见
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            layoutPostDelayed();
+        }
     }
 
     @Override

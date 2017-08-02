@@ -150,9 +150,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else if (throwable instanceof UnknownHostException) {
             ToastUtil.showToast(getResources().getString(R.string.error_network));
         } else if (throwable instanceof SocketTimeoutException) {    //超时
-            ToastUtil.showToast(getResources().getString(R.string.error_overtime));
+//            ToastUtil.showToast(getResources().getString(R.string.error_overtime));
         } else {
-            ToastUtil.showToast(getResources().getString(R.string.error_unknow));
+//            ToastUtil.showToast(getResources().getString(R.string.error_unknow));
         }
     }
 

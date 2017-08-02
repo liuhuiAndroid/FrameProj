@@ -37,6 +37,7 @@ import static com.xjgj.mall.Constants.REQUEST_EXTRA_SERVICE_CODE;
 import static com.xjgj.mall.Constants.REQUEST_WRITE_SENTENCE_CODE;
 import static com.xjgj.mall.Constants.RESULT_CONFIRM_ORDER_CODE;
 import static com.xjgj.mall.Constants.RESULT_EXTRA_SERVICE_CODE;
+import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE;
 import static com.xjgj.mall.Constants.RESULT_WRITE_SENTENCE_CODE;
 import static com.xjgj.mall.R.id.editTiJi;
 import static com.xjgj.mall.R.id.textExtraService;
@@ -88,6 +89,7 @@ public class ImproveOrderActivity extends BaseActivity {
     private String huiKuan = "";
     private String huikuanMoney = "";
     private String mCartype;
+    private String mCartypeName;
     private List<TerminiEntity> tempTerminiEntity;
 
     @Override
@@ -109,6 +111,7 @@ public class ImproveOrderActivity extends BaseActivity {
         setImgBack(mImageBack);
         mTextTitle.setText("完善订单信息");
         mCartype = getIntent().getStringExtra("cartype");
+        mCartypeName = getIntent().getStringExtra("cartypeName");
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
     }
 
@@ -320,6 +323,7 @@ public class ImproveOrderActivity extends BaseActivity {
                 }
             }
         } else if (requestCode == REQUEST_CONFIRM_ORDER_CODE && resultCode == RESULT_CONFIRM_ORDER_CODE) {
+            setResult(RESULT_IMPROVE_ORDER_CODE);
             finish();
         }
     }
@@ -374,6 +378,7 @@ public class ImproveOrderActivity extends BaseActivity {
 
         Intent intent = new Intent(this, ComfirmOrderActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putSerializable("cartypeName", mCartypeName);
         bundle.putSerializable("orderCarInfo", orderCarInfo);
         bundle.putSerializable("tempTerminiEntity", (Serializable) tempTerminiEntity);
         intent.putExtras(bundle);
