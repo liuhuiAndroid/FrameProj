@@ -1,7 +1,6 @@
-package com.xjgj.mall.ui.cancelorder.my_reasons;
+package com.xjgj.mall.ui.orderappeal;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -24,14 +24,10 @@ import com.luck.picture.lib.compress.Luban;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.DictionaryEntity;
-import com.xjgj.mall.ui.BaseFragment;
-import com.xjgj.mall.ui.cancelorder.CancelOrderComponent;
-import com.xjgj.mall.util.CommonEvent;
+import com.xjgj.mall.ui.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,18 +37,28 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static android.app.Activity.RESULT_OK;
-
-
 /**
- * Created by we-win on 2017/8/3.
+ * 订单申诉
  */
 
-public class MyReasonsFragment extends BaseFragment implements MyReasonsContract.View {
-
+public class OrderAppealActivity extends BaseActivity implements OrderAppealContract.View {
 
     @Inject
-    MyReasonsPresenter mPresenter;
+    OrderAppealPresenter mPresenter;
+    @BindView(R.id.image_back)
+    ImageView mImageBack;
+    @BindView(R.id.text_title)
+    TextView mTextTitle;
+    @BindView(R.id.image_handle)
+    ImageView mImageHandle;
+    @BindView(R.id.text_handle)
+    TextView mTextHandle;
+    @BindView(R.id.relative_layout)
+    RelativeLayout mRelativeLayout;
+    @BindView(R.id.linearClude)
+    LinearLayout mLinearClude;
+    @BindView(R.id.textCancleOrder)
+    TextView mTextCancleOrder;
     @BindView(R.id.linearAdd)
     LinearLayout mLinearAdd;
     @BindView(R.id.imageOne)
@@ -65,9 +71,6 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
     TextView mTextLimit;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
-
-    @Inject
-    Bus mBus;
     @BindView(R.id.avLoadingIndicatorView)
     AVLoadingIndicatorView mAvLoadingIndicatorView;
 
@@ -75,36 +78,36 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
     private int length = 60;
     private int mOrderId;
 
-    public static BaseFragment newInstance(int orderId) {
-        MyReasonsFragment myReasonsFragment = new MyReasonsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("orderId", orderId);
-        myReasonsFragment.setArguments(bundle);
-        return myReasonsFragment;
+    @Override
+    public int initContentView() {
+        return R.layout.activity_order_appeal;
     }
-
 
     @Override
     public void initInjector() {
-        getComponent(CancelOrderComponent.class).inject(this);
+        DaggerOrderAppealComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build()
+                .inject(this);
     }
 
     @Override
-    public int initContentView() {
-        return R.layout.fragment_reasons;
-    }
-
-    @Override
-    public void getBundle(Bundle bundle) {
-        mOrderId = bundle.getInt("orderId");
-    }
-
-    @Override
-    public void initUI(View view) {
-        showContent(true);
+    public void initUiAndListener() {
+        mOrderId = getIntent().getIntExtra("orderId",-1);
         mPresenter.attachView(this);
-        mBus.register(this);
         mPresenter.dictionaryQuery();
+        mImageBack.setImageResource(R.drawable.btn_back);
+        mImageBack.setVisibility(View.VISIBLE);
+        mImageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        mTextTitle.setText("订单申诉");
+
+        mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
         mEditShaoHua.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
@@ -161,18 +164,13 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
             }
 
         });
-
         mTextLimit.setText("0/60");
-        mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
-    }
-
-    @Override
-    public void initData() {
     }
 
     @Override
     public void showLoading() {
         mAvLoadingIndicatorView.show();
+        mTextCancleOrder.setClickable(false);
     }
 
     @Override
@@ -183,13 +181,21 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
                 mAvLoadingIndicatorView.hide();
             }
         },500);
+        mTextCancleOrder.setClickable(true);
     }
+
+    @Override
+    public void orderAppealSuccess() {
+        finish();
+    }
+
+    private int appealType = -1;
 
     @Override
     public void dictionaryQuerySuccess(List<DictionaryEntity> dictionaryEntitieList) {
         DictionaryEntity dictionaryEntity = dictionaryEntitieList.get(0);
         for (int i = 0; i < dictionaryEntity.getData().size(); i++) {
-            View v = View.inflate(getActivity(), R.layout.cancle_reason_item, null);
+            View v = View.inflate(OrderAppealActivity.this, R.layout.cancle_reason_item, null);
             ((TextView) v.findViewById(R.id.textContent)).setText(dictionaryEntity.getData().get(i).getDictionaryName());
             ((TextView) v.findViewById(R.id.textContent)).setTag(dictionaryEntity.getData().get(i).getDictionaryId());
             v.setTag(i);
@@ -202,16 +208,11 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
                         ((ImageView) mLinearAdd.getChildAt(j).findViewById(R.id.imageShow)).setImageResource(R.drawable.chkbox_null);
                     }
                     ((ImageView) mLinearAdd.getChildAt(tag).findViewById(R.id.imageShow)).setImageResource(R.drawable.chkbox_chk);
-                    cancelType = (int) mLinearAdd.getChildAt(tag).findViewById(R.id.textContent).getTag();
+                    appealType = (int) mLinearAdd.getChildAt(tag).findViewById(R.id.textContent).getTag();
                 }
             });
             mLinearAdd.addView(v);
         }
-    }
-
-    @Override
-    public void cancelOrderSuccess() {
-        getActivity().finish();
     }
 
     @Override
@@ -220,10 +221,9 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
-        mBus.unregister(this);
     }
 
     private int currentChoose; // 1  2
@@ -249,7 +249,7 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
     }
 
     private void choosePhoto() {
-        PictureSelector.create(getActivity())
+        PictureSelector.create(OrderAppealActivity.this)
                 .openGallery(PictureMimeType.ofImage()) //图片
                 .theme(R.style.picture_default_style) // 主题样式
                 .maxSelectNum(1) // 最大图片选择数量
@@ -299,30 +299,24 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
         }
     }
 
-    //取消类型
-    private int cancelType = -1;
-
     /**
-     * 取消订单事件
+     * 申诉
      */
-    @Subscribe
-    public void onTabSelectedEvent(CommonEvent.CancleOrderEvent event) {
-        if (event.getPosition() == 0) {
-            if (cancelType == -1) {
-                ToastUtil.showToast("请选择取消原因");
-                return;
-            }
-            int reasonType = 1;
-            String remark = mEditShaoHua.getText().toString();
-            List<String> pathList = new ArrayList<>();
-            if (mCompressPathTwo != null && !TextUtils.isEmpty(mCompressPathTwo)) {
-                pathList.add(mCompressPathTwo);
-            }
-            if (mCompressPathOne != null && !TextUtils.isEmpty(mCompressPathOne)) {
-                pathList.add(mCompressPathOne);
-            }
-            mPresenter.cancelOrder(mOrderId, reasonType, cancelType, remark, pathList);
+    @OnClick(R.id.textCancleOrder)
+    public void mTextCancleOrder(){
+        if (appealType == -1) {
+            ToastUtil.showToast("请选择取消原因");
+            return;
         }
+        String remark = mEditShaoHua.getText().toString();
+        List<String> pathList = new ArrayList<>();
+        if (mCompressPathTwo != null && !TextUtils.isEmpty(mCompressPathTwo)) {
+            pathList.add(mCompressPathTwo);
+        }
+        if (mCompressPathOne != null && !TextUtils.isEmpty(mCompressPathOne)) {
+            pathList.add(mCompressPathOne);
+        }
+        mPresenter.orderAppeal(mOrderId, appealType, remark, pathList);
     }
 
 }

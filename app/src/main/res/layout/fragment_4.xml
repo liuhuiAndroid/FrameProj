@@ -115,15 +115,15 @@
                             android:src="@drawable/btn_vehicles_right_arrow"/>
                     </LinearLayout>
 
-                    <!-- 车的描述信息-->
+                    <!-- 车的描述信息 32.0dp android:layout_marginBottom="16.0dip"-->
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="32.0dip"
-                        android:layout_marginBottom="16.0dip"
+                        android:layout_height="0dip"
                         android:layout_marginLeft="16.0dip"
                         android:layout_marginRight="16.0dip"
                         android:layout_marginTop="16.0dip"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="invisible">
 
                         <LinearLayout
                             android:layout_width="fill_parent"

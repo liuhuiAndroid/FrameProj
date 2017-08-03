@@ -135,4 +135,9 @@ public interface CommonService {
     Observable<HttpResult<List<DictionaryEntity>>> dictionaryQuery(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                                    @Header("token") String token, @FieldMap Map<String, Object> params);
 
+    //订单申诉
+    @Multipart
+    @POST("order/complain")
+    Observable<HttpResult<String>> orderComplain(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                               @Header("token") String token, @Part List<MultipartBody.Part> partList);
 }

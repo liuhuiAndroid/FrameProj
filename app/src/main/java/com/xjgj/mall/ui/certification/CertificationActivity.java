@@ -19,6 +19,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
+import com.xjgj.mall.bean.RealNameEntity;
 import com.xjgj.mall.ui.BaseActivity;
 
 import java.util.List;
@@ -90,6 +91,7 @@ public class CertificationActivity extends BaseActivity implements Certification
         });
         mTextTitle.setText("实名认证");
         mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
+        mPresenter.realNameQuery();
     }
 
     @Override
@@ -107,13 +109,22 @@ public class CertificationActivity extends BaseActivity implements Certification
                 mAvLoadingIndicatorView.hide();
                 mTextUpload.setClickable(true);
             }
-        },500);
+        }, 500);
     }
 
     @Override
     public void authRealNameSuccess(String string) {
         ToastUtil.showToast(string);
         finish();
+    }
+
+    @Override
+    public void realNameQuerySuccess(RealNameEntity realNameEntity) {
+        mEditName.setText(realNameEntity.getRealName());
+        mEditIdCard.setText(realNameEntity.getIdentityNo());
+
+        ImageLoaderUtil.getInstance().loadImage(realNameEntity.getAfterIdentityPath(),mImageViewFront);
+        ImageLoaderUtil.getInstance().loadImage(realNameEntity.getFrontIdentityPath(),mImageViewProis);
     }
 
     @Override
@@ -124,17 +135,18 @@ public class CertificationActivity extends BaseActivity implements Certification
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       mPresenter.detachView();
+        mPresenter.detachView();
     }
 
     private int currentChoose; // 1 正面 2 反面
     private String mCompressPathFront;// 正面
     private String mCompressPathProis;// 反面
+
     /**
      * 选择身份证正面
      */
     @OnClick(R.id.imageViewFront)
-    public void mImageViewFront(){
+    public void mImageViewFront() {
         currentChoose = 1;
         choosePhoto();
     }
@@ -143,7 +155,7 @@ public class CertificationActivity extends BaseActivity implements Certification
      * 选择身份证反面
      */
     @OnClick(R.id.imageViewProis)
-    public void mImageViewProis(){
+    public void mImageViewProis() {
         currentChoose = 2;
         choosePhoto();
     }
@@ -183,10 +195,10 @@ public class CertificationActivity extends BaseActivity implements Certification
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
                     if (selectList != null && selectList.size() > 0) {
                         LocalMedia localMedia = selectList.get(0);
-                        if(currentChoose == 1) {
+                        if (currentChoose == 1) {
                             mCompressPathFront = localMedia.getCompressPath();
                             ImageLoaderUtil.getInstance().loadImage(localMedia.getCompressPath(), mImageViewFront);
-                        }else if(currentChoose == 2){
+                        } else if (currentChoose == 2) {
                             mCompressPathProis = localMedia.getCompressPath();
                             ImageLoaderUtil.getInstance().loadImage(localMedia.getCompressPath(), mImageViewProis);
                         }
@@ -203,10 +215,10 @@ public class CertificationActivity extends BaseActivity implements Certification
      * 上传实名验证信息
      */
     @OnClick(R.id.textUpload)
-    public void mTextUpload(){
+    public void mTextUpload() {
         String name = mEditName.getText().toString().trim();
         String idCard = mEditIdCard.getText().toString().trim();
-        mPresenter.authRealName(name,idCard,mCompressPathFront,mCompressPathProis);
+        mPresenter.authRealName(name, idCard, mCompressPathFront, mCompressPathProis);
     }
 
 }

@@ -20,6 +20,7 @@ import com.android.frameproj.library.widget.MyPtrClassicFrameLayout;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.ui.BaseFragment;
+import com.xjgj.mall.ui.cancelorder.CancelOrderActivity;
 import com.xjgj.mall.ui.decoration.DividerGridItemDecoration;
 import com.xjgj.mall.ui.main.MainComponent;
 import com.xjgj.mall.ui.orderdetail.OrderDetailActivity;
@@ -85,9 +86,9 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
 
     @Override
     public void initData() {
-        layoutPostDelayed();
     }
 
+    private boolean isFirst = true;
     /**
      * 判断fragment是否是被用户可见
      * @param isVisibleToUser
@@ -95,10 +96,19 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            Logger.i("test setUserVisibleHint true");
-            layoutPostDelayed();
+        if(isVisibleToUser) {
+            if (!isFirst) {
+                layoutPostDelayed();
+            } else {
+                isFirst = false;
+            }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        layoutPostDelayed();
     }
 
     @Override
@@ -138,18 +148,9 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
                     holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new MaterialDialog.Builder(getActivity())
-                                    .title("提示")
-                                    .content("是否确认取消订单？")
-                                    .positiveText("确定")
-                                    .negativeText("取消")
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            mPresenter.orderCancel(orderEntity.getOrderId());
-                                        }
-                                    })
-                                    .show();
+                            Intent intent = new Intent(getActivity(), CancelOrderActivity.class);
+                            intent.putExtra("orderId",orderEntity.getOrderId());
+                            startActivity(intent);
                         }
                     });
 

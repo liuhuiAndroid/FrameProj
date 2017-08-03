@@ -25,8 +25,17 @@ public class OrderDetailEntity {
     private String createTime;
     private int status;
     private String serviceType;
+    private String carNo;
     private List<EvaluationBean> evaluation;
     private List<AddressListBean> addressList;
+
+    public String getCarNo() {
+        return carNo;
+    }
+
+    public void setCarNo(String carNo) {
+        this.carNo = carNo;
+    }
 
     public String getServiceType() {
         return serviceType;

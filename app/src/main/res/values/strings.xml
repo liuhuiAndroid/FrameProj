@@ -157,6 +157,7 @@
     <string name="personal_shou_name">请输入收货人姓名(必填)</string>
     <string name="contact_phone">请输入联系电话(必填)</string>
     <string name="ship_info">发货信息</string>
+    <string name="ship_info2">收货信息</string>
     <string name="switch_earth_address">切换地图选点</string>
     <string name="input_begin_d">请输入始发地</string>
     <string name="input_target_d">请输入目的地</string>

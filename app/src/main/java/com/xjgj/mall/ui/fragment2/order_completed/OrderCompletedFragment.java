@@ -19,6 +19,7 @@ import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.decoration.DividerGridItemDecoration;
 import com.xjgj.mall.ui.main.MainComponent;
+import com.xjgj.mall.ui.orderappeal.OrderAppealActivity;
 import com.xjgj.mall.ui.orderdetail.OrderDetailActivity;
 import com.xjgj.mall.ui.orderevaluate.OrderEvaluateActivity;
 
@@ -84,9 +85,9 @@ public class OrderCompletedFragment extends BaseFragment implements OrderComplet
 
     @Override
     public void initData() {
-        layoutPostDelayed();
     }
 
+    private boolean isFirst = true;
     /**
      * 判断fragment是否是被用户可见
      * @param isVisibleToUser
@@ -94,10 +95,21 @@ public class OrderCompletedFragment extends BaseFragment implements OrderComplet
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            layoutPostDelayed();
+        if(isVisibleToUser) {
+            if (!isFirst) {
+                layoutPostDelayed();
+            } else {
+                isFirst = false;
+            }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        layoutPostDelayed();
+    }
+
 
     @Override
     public void showLoading() {
@@ -135,7 +147,9 @@ public class OrderCompletedFragment extends BaseFragment implements OrderComplet
                     holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mPresenter.orderCancel(orderEntity.getOrderId());
+                            Intent intent = new Intent(getActivity(),OrderAppealActivity.class);
+                            intent.putExtra("orderId",orderEntity.getOrderId());
+                            startActivity(intent);
                         }
                     });
 

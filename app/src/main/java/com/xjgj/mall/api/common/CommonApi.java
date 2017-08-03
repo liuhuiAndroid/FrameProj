@@ -191,7 +191,9 @@ public class CommonApi {
                                                       String carType, String remark, String counts, String address, String submitType) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
-        params.put("serviceTime", serviceTime);
+        if(!serviceTime.equals("")) {
+            params.put("serviceTime", serviceTime);
+        }
         params.put("volume", volume);
         params.put("weight", weight);
         params.put("serviceType", serviceType);
@@ -382,6 +384,35 @@ public class CommonApi {
         params.put("dictionaryType", dictionaryType);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.dictionaryQuery(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 订单取消
+     */
+    public Observable<HttpResult<String>> orderAppeal(int orderId,int complainType,String content,
+                                                      List<String> pathList) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        if(pathList!=null && pathList.size()>0) {
+            for (int i = 0; i < pathList.size(); i++) {
+                File file  = new File(pathList.get(i));
+                MultipartBody.Part filePart = prepareFilePart("photo", file);
+                partList.add(filePart);
+            }
+        }
+        MultipartBody.Part orderIdPart = createPartString("orderId", orderId+"");
+        MultipartBody.Part complainTypePart = createPartString("complainType", complainType+"");
+        MultipartBody.Part contentPart = createPartString("content", content);
+        partList.add(orderIdPart);
+        partList.add(complainTypePart);
+        partList.add(contentPart);
+
+        params.put("orderId", orderId);
+        params.put("complainType", complainType);
+        params.put("content", content);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.orderComplain(currentTimeMillis, sign, mUserStorage.getToken(),partList).subscribeOn(Schedulers.io());
     }
 
 }

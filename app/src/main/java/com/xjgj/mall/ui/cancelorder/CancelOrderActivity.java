@@ -149,7 +149,6 @@ public class CancelOrderActivity extends BaseActivity implements HasComponent<Ca
                         if(myReasonsFragment!=null) {
                             myReasonsFragment.onActivityResult(requestCode, resultCode, data);
                         }
-
                         DriverReasonsFragment driverReasonsFragment = (DriverReasonsFragment) mMyMainFragmentPagerAdapter.getRegisteredFragment(1);
                         if(driverReasonsFragment!=null) {
                             driverReasonsFragment.onActivityResult(requestCode, resultCode, data);

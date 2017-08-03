@@ -6,10 +6,13 @@ import android.text.TextUtils;
 import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.bean.HttpResult;
+import com.xjgj.mall.bean.RealNameEntity;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
+
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -74,6 +77,34 @@ public class CertificationPresenter implements CertificationContract.Presenter {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull String s) throws Exception {
                         mView.authRealNameSuccess(s);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                    }
+                }));
+    }
+
+    @Override
+    public void realNameQuery() {
+        disposables.add(mCommonApi.realNameQuery()
+                .debounce(800, TimeUnit.MILLISECONDS)
+                .flatMap(new Function<HttpResult<RealNameEntity>, ObservableSource<RealNameEntity>>() {
+                    @Override
+                    public ObservableSource<RealNameEntity> apply(@io.reactivex.annotations.NonNull HttpResult<RealNameEntity> RealNameEntityHttpResult) throws Exception {
+                        return CommonApi.flatResponse(RealNameEntityHttpResult);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RealNameEntity>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull RealNameEntity realNameEntity) throws Exception {
+                        if (realNameEntity != null) {
+                            mView.realNameQuerySuccess(realNameEntity);
+                        } else {
+
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override

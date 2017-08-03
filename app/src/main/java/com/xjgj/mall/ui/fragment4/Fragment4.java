@@ -23,7 +23,9 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.GeoCoderResultEntity;
 import com.xjgj.mall.bean.TerminiEntity;
+import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.service.LocationService;
 import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.delivery.DeliveryInfoActivity;
@@ -33,6 +35,7 @@ import com.xjgj.mall.ui.main.MainComponent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +89,9 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     @Inject
     LocationService locationService;
 
+    @Inject
+    UserStorage mUserStorage;
+
     /**
      * 存放起始地、途径地和终点
      */
@@ -93,7 +99,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     /**
      * 存放起始地、途径地和终点的信息
      */
-    public Map<Integer, TerminiEntity> tempTerminiEntity = new HashMap();
+    public Map<Integer, TerminiEntity> tempTerminiEntity = new LinkedHashMap();
     private int startIndex = 0;
     private int nextIndex = 1;
     //最大8个
@@ -188,6 +194,24 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     @Override
     public void onError(Throwable throwable) {
         loadError(throwable);
+    }
+
+    @Override
+    public void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> poisBeanList) {
+        if(poisBeanList!=null && poisBeanList.size()>0){
+            GeoCoderResultEntity.ResultBean.PoisBean poisBean = poisBeanList.get(0);
+            if(tempTerminiEntity!=null){
+                mSeStPtOF.setTopText(poisBean.getName());
+                TerminiEntity terminiEntity = new TerminiEntity();
+                terminiEntity.setLatitude(poisBean.getPoint().getY());
+                terminiEntity.setLongitude(poisBean.getPoint().getX());
+                terminiEntity.setReceiverName(mUserStorage.getUser().getRealName());
+                terminiEntity.setReceiverPhone(mUserStorage.getUser().getMobile());
+                terminiEntity.setAddressDescribeName(poisBean.getAddr());
+                terminiEntity.setAddressName(poisBean.getName());
+                tempTerminiEntity.put(0, terminiEntity);
+            }
+        }
     }
 
     /**
@@ -302,6 +326,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
      */
     private void toPickLocation(View paramView, int paramInt) {
         TerminiEntity terminiEntity = new TerminiEntity();
+        terminiEntity = tempTerminiEntity.get(Integer.valueOf(paramInt));
         Intent intent = new Intent(getActivity(), DeliveryInfoActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("termini_info", (Serializable) terminiEntity);
@@ -402,11 +427,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            //TODO
-//                            mSeStPtOF.setTopText(location.getAddrStr());
-
-                            //                            TerminiEntity terminiEntity = new TerminiEntity()
-                            //                            tempTerminiEntity.put(0, terminiEntity);
+                            mFragment4Presenter.geocoderApi(location.getLatitude() + "," + location.getLongitude());
                         }
                     });
                     stopLocationService();

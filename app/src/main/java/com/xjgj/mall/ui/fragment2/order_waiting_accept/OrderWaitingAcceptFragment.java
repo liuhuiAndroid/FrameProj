@@ -2,15 +2,12 @@ package com.xjgj.mall.ui.fragment2.order_waiting_accept;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.adapter.CommonAdapter;
 import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
 import com.android.frameproj.library.adapter.base.ViewHolder;
@@ -19,6 +16,7 @@ import com.android.frameproj.library.widget.MyPtrClassicFrameLayout;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.ui.BaseFragment;
+import com.xjgj.mall.ui.cancelorder.CancelOrderActivity;
 import com.xjgj.mall.ui.decoration.DividerGridItemDecoration;
 import com.xjgj.mall.ui.main.MainComponent;
 import com.xjgj.mall.ui.orderdetail.OrderDetailActivity;
@@ -83,12 +81,10 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
         mPtrLayout.disableWhenHorizontalMove(true);
     }
 
-    private boolean isFirstShow = true;
 
     @Override
     public void initData() {
-        layoutPostDelayed();
-        isFirstShow = false;
+
     }
 
     @Override
@@ -125,18 +121,9 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
                     holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new MaterialDialog.Builder(getActivity())
-                                    .title("提示")
-                                    .content("是否确认取消订单？")
-                                    .positiveText("确定")
-                                    .negativeText("取消")
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            mPresenter.orderCancel(orderEntity.getOrderId());
-                                        }
-                                    })
-                                    .show();
+                            Intent intent = new Intent(getActivity(), CancelOrderActivity.class);
+                            intent.putExtra("orderId",orderEntity.getOrderId());
+                            startActivity(intent);
                         }
                     });
 
@@ -247,5 +234,29 @@ public class OrderWaitingAcceptFragment extends BaseFragment implements OrderWai
     public void onReloadClicked() {
         mPresenter.onRefresh();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        layoutPostDelayed();
+    }
+
+    private boolean isFirst = true;
+    /**
+     * 判断fragment是否是被用户可见
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser) {
+            if (!isFirst) {
+                layoutPostDelayed();
+            } else {
+                isFirst = false;
+            }
+        }
+    }
+
 
 }

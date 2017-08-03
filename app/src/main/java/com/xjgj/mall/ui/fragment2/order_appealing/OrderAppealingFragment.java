@@ -83,9 +83,9 @@ public class OrderAppealingFragment extends BaseFragment implements OrderAppeali
 
     @Override
     public void initData() {
-        layoutPostDelayed();
     }
 
+    private boolean isFirst = true;
     /**
      * 判断fragment是否是被用户可见
      * @param isVisibleToUser
@@ -93,11 +93,18 @@ public class OrderAppealingFragment extends BaseFragment implements OrderAppeali
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
+        if(isVisibleToUser && !isFirst) {
             layoutPostDelayed();
+        }else{
+            isFirst = false;
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        layoutPostDelayed();
+    }
 
     @Override
     public void showLoading() {

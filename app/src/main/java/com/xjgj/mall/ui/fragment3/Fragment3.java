@@ -99,6 +99,11 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
     public void initUI(View view) {
         showContent(true);
         mPresenter.attachView(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mPresenter.onLoadHomepageInfo();
     }
 

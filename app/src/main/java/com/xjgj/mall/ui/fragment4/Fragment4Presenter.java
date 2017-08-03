@@ -3,8 +3,10 @@ package com.xjgj.mall.ui.fragment4;
 import android.support.annotation.NonNull;
 
 import com.android.frameproj.library.util.ToastUtil;
+import com.google.gson.Gson;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.GeoCoderResultEntity;
 import com.xjgj.mall.bean.HttpResult;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import okhttp3.ResponseBody;
 
 /**
  * Created by we-win on 2017/7/25.
@@ -52,6 +55,26 @@ public class Fragment4Presenter implements Fragment4Contract.Presenter {
                         } else {
                             ToastUtil.showToast("没有查询到车型");
                         }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                    }
+                }));
+    }
+
+    @Override
+    public void geocoderApi(String latLng) {
+        disposables.add(mCommonApi.geocoderApi(latLng)
+                .debounce(800, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResponseBody>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull ResponseBody responseBody) throws Exception {
+                        String geoCoderResultString = responseBody.string().replace("renderReverse&&renderReverse(", "").replace(")", "");
+                        GeoCoderResultEntity geoCoderResultEntity = new Gson().fromJson(geoCoderResultString, GeoCoderResultEntity.class);
+                        mView.geocoderResultSuccess(geoCoderResultEntity.getResult().getPois());
                     }
                 }, new Consumer<Throwable>() {
                     @Override

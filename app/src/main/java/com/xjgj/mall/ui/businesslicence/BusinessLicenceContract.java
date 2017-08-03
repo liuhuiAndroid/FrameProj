@@ -1,5 +1,6 @@
 package com.xjgj.mall.ui.businesslicence;
 
+import com.xjgj.mall.bean.PhotoUploadEntity;
 import com.xjgj.mall.ui.BasePresenter;
 import com.xjgj.mall.ui.BaseView;
 
@@ -16,12 +17,16 @@ public class BusinessLicenceContract {
 
         void photoUploadSuccess();
 
+        void photoQuerySuccess(PhotoUploadEntity photoUploadEntity);
+
         void onError(Throwable throwable);
     }
 
     interface Presenter extends BasePresenter<BusinessLicenceContract.View> {
 
         void photoUpload(String photoPath,int type);
+
+        void photoQuery();
 
     }
 

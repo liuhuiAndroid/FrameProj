@@ -84,9 +84,9 @@ public class OrderEvaluatedFragment extends BaseFragment implements OrderEvaluat
 
     @Override
     public void initData() {
-        layoutPostDelayed();
     }
 
+    private boolean isFirst = true;
     /**
      * 判断fragment是否是被用户可见
      * @param isVisibleToUser
@@ -94,10 +94,19 @@ public class OrderEvaluatedFragment extends BaseFragment implements OrderEvaluat
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Logger.i("test setUserVisibleHint = "+isVisibleToUser);
-        if(isVisibleToUser){
-            layoutPostDelayed();
+        if(isVisibleToUser) {
+            if (!isFirst) {
+                layoutPostDelayed();
+            } else {
+                isFirst = false;
+            }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        layoutPostDelayed();
     }
 
     @Override

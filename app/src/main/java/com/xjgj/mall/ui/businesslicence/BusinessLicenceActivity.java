@@ -17,6 +17,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
+import com.xjgj.mall.bean.PhotoUploadEntity;
 import com.xjgj.mall.ui.BaseActivity;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class BusinessLicenceActivity extends BaseActivity implements BusinessLic
         mTextTitle.setText("营业执照");
         mTextState.setText("营业执照扫描件照片");
         mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
-
+        mPresenter.photoQuery();
 
     }
 
@@ -177,6 +178,11 @@ public class BusinessLicenceActivity extends BaseActivity implements BusinessLic
     public void photoUploadSuccess() {
         ToastUtil.showToast("营业执照上传成功");
         finish();
+    }
+
+    @Override
+    public void photoQuerySuccess(PhotoUploadEntity photoUploadEntity) {
+        ImageLoaderUtil.getInstance().loadImage(photoUploadEntity.getPath(),mImageCard);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.xjgj.mall.ui.certification;
 
+import com.xjgj.mall.bean.RealNameEntity;
 import com.xjgj.mall.ui.BasePresenter;
 import com.xjgj.mall.ui.BaseView;
 
@@ -16,12 +17,16 @@ public class CertificationContract {
 
         void authRealNameSuccess(String string);
 
+        void realNameQuerySuccess(RealNameEntity realNameEntity);
+
         void onError(Throwable throwable);
     }
 
     interface Presenter extends BasePresenter<CertificationContract.View> {
 
         void authRealName(String realName, String identityNo, String frontIdentity, String afterIdentity);
+
+        void realNameQuery();
 
     }
 

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/normal_weight_f1f2f4_vertical"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearClude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/includer_header"/>
+
+        <View
+            style="@style/ZddddddLineStyle"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textCancleOrder"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="35px"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/shen_su"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearClude"
+        android:layout_above="@id/textCancleOrder">
+
+        <LinearLayout
+            style="@style/normal_weight_f1f2f4_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25px"
+                android:layout_marginLeft="47px"
+                android:layout_marginTop="47px"
+                android:text="上传图片"
+                android:textColor="@color/z868788"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="47px">
+
+                <ImageView
+                    android:id="@+id/imageOne"
+                    android:layout_width="150px"
+                    android:layout_height="150px"
+                    android:layout_marginRight="20px"
+                    android:src="@drawable/btn_upfile"/>
+
+                <ImageView
+                    android:id="@+id/imageTwo"
+                    android:layout_width="150px"
+                    android:layout_height="150px"
+                    android:layout_marginRight="20px"
+                    android:src="@drawable/btn_upfile"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300px"
+                android:layout_marginBottom="157px"
+                android:layout_marginLeft="44px"
+                android:layout_marginRight="44px"
+                android:layout_marginTop="115px"
+                android:background="@drawable/rectangle_cancle_reason_item_bg">
+
+                <EditText
+                    android:id="@+id/editShaoHua"
+                    android:layout_width="match_parent"
+                    android:layout_height="300px"
+                    android:layout_margin="20px"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="@string/all_no"
+                    android:textColor="@color/z262627"
+                    android:textColorHint="@color/z868788"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/textLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="20px"
+                    android:layout_marginRight="20px"
+                    android:text="60/60"
+                    android:textColor="@color/z868788"
+                    android:textCursorDrawable="@null"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <!-- 加载中 -->
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallPulseIndicator"
+        />
+</RelativeLayout>
+

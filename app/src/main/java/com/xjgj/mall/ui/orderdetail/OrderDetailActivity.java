@@ -120,13 +120,14 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             mTextSize.setText(orderDetailEntity.getVolume() + "");
             mTextWeight.setText(orderDetailEntity.getWeight() + "");
             mTextOtherCost.setText(orderDetailEntity.getServiceType());
+            mTextOrderBeiZhu.setText(orderDetailEntity.getRemark());
+
 
             if(orderDetailEntity.getStatus() != 0) {
                 mUserInfoLayout.setVisibility(View.VISIBLE);
                 ImageLoaderUtil.getInstance().loadImage(orderDetailEntity.getAvatarUrl(), mImageHeader);
                 mTextUserName.setText(orderDetailEntity.getContactName());
                 mContactMobile = orderDetailEntity.getContactMobile();
-                mTextOrderBeiZhu.setText(orderDetailEntity.getRemark());
                 mImageCallPhone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -135,8 +136,35 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                         startActivity(intent);
                     }
                 });
+                mTextPaiZhao.setText(orderDetailEntity.getCarNo());
+                mTextUserPhone.setText(orderDetailEntity.getContactMobile());
             }else{
                 mUserInfoLayout.setVisibility(View.GONE);
+            }
+
+            if(orderDetailEntity.getAddressList()!=null){
+                mLinearOrderAgain.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        Intent intent = new Intent(baseActivity, ImproveOrderActivity.class);
+//                        int currentItem = mViewPager.getCurrentItem();
+//                        if (mVehiclePagerAdapter != null && mVehiclePagerAdapter.getCarTypeEntities() != null) {
+//                            List<CarTypeEntity> carTypeEntities = mVehiclePagerAdapter.getCarTypeEntities();
+//                            if (carTypeEntities.size() > currentItem) {
+//                                intent.putExtra("cartypeName", carTypeEntities.get(currentItem).getCarTypeName() + "");
+//                                intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
+//                                Logger.i("选择 cartype = " + carTypeEntities.get(currentItem).getCarTypeId() + "" +
+//                                        ";carname = " + carTypeEntities.get(currentItem).getCarTypeName());
+//                                Bundle bundle = new Bundle();
+//                                List<TerminiEntity> terminiEntities = new ArrayList<TerminiEntity>();
+//                                for (Integer integer : tempTerminiEntity.keySet()) {
+//                                    terminiEntities.add(tempTerminiEntity.get(integer));
+//                                }
+//                                bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
+//                                intent.putExtras(bundle);
+//                                startActivityForResult(intent,REQUEST_IMPROVE_ORDER_CODE);
+                    }
+                });
             }
         }
     }
@@ -149,7 +177,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.detachView();
+       mPresenter.detachView();
     }
 
 }

@@ -115,7 +115,6 @@ public class ImproveOrderActivity extends BaseActivity {
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
     }
 
-
     // ==========================   时间选择控件  =================================
     private static final String[] HOUR =
             new String[]{
@@ -195,7 +194,7 @@ public class ImproveOrderActivity extends BaseActivity {
                     }
 
                 }
-                for (int l = position + 1; l < HOUR.length; l++) {
+                for (int l = position ; l < HOUR.length; l++) {
 
                     List<Info> minutList = new ArrayList<Info>();
                     // 上面一个if没用，暂时不需要立即用车
@@ -334,44 +333,32 @@ public class ImproveOrderActivity extends BaseActivity {
     @OnClick(R.id.textNext)
     public void mTextNext() {
         String serviceTime = mTextShowTime.getText().toString().trim();
-        if (TextUtils.isEmpty(serviceTime)) {
-            ToastUtil.showToast("请选择用车时间");
-            return;
+        if(!serviceTime.equals("现在")) {
+            // 格式化时间
+            if (serviceTime.contains("今天")) {
+                String currentTime = TimeUtils.getCurrentTimeMillis();
+                String otherTime = (Long.valueOf(currentTime) + 0 * 60 * 60 * 24) + "";
+                String yearAndDay = TimeUtils.getYearAndDay(otherTime);
+                serviceTime = serviceTime.replace("今天", yearAndDay);
+            } else if (serviceTime.contains("明天")) {
+                String currentTime = TimeUtils.getCurrentTimeMillis();
+                String otherTime = (Long.valueOf(currentTime) + 1 * 60 * 60 * 24) + "";
+                String yearAndDay = TimeUtils.getYearAndDay(otherTime);
+                serviceTime = serviceTime.replace("明天", yearAndDay);
+            } else {
+                serviceTime.replace("月", "-").replace("日", "-");
+                String currentTime = TimeUtils.getCurrentTimeMillis();
+                String otherTime = (Long.valueOf(currentTime) + 0 * 60 * 60 * 24) + "";
+                serviceTime = TimeUtils.getYear(otherTime).concat("-").concat(serviceTime);
+            }
+            serviceTime = serviceTime.concat(":00");
+        }else{
+            serviceTime = "";
         }
-        // 格式化时间
-        if (serviceTime.contains("今天")) {
-            String currentTime = TimeUtils.getCurrentTimeMillis();
-            String otherTime = (Long.valueOf(currentTime) + 0 * 60 * 60 * 24) + "";
-            String yearAndDay = TimeUtils.getYearAndDay(otherTime);
-            serviceTime = serviceTime.replace("今天", yearAndDay);
-        } else if (serviceTime.contains("明天")) {
-            String currentTime = TimeUtils.getCurrentTimeMillis();
-            String otherTime = (Long.valueOf(currentTime) + 1 * 60 * 60 * 24) + "";
-            String yearAndDay = TimeUtils.getYearAndDay(otherTime);
-            serviceTime = serviceTime.replace("明天", yearAndDay);
-        } else {
-            serviceTime.replace("月", "-").replace("日", "-");
-            String currentTime = TimeUtils.getCurrentTimeMillis();
-            String otherTime = (Long.valueOf(currentTime) + 0 * 60 * 60 * 24) + "";
-            serviceTime = TimeUtils.getYear(otherTime).concat("-").concat(serviceTime);
-        }
-        serviceTime = serviceTime.concat(":00");
 
         String volume = mEditTiJi.getText().toString().trim();
-        if (TextUtils.isEmpty(volume)) {
-            ToastUtil.showToast("请填写体积");
-            return;
-        }
         String weight = mEditWeight.getText().toString().trim();
-        if (TextUtils.isEmpty(weight)) {
-            ToastUtil.showToast("请填写重量");
-            return;
-        }
         String count = mEditCount.getText().toString().trim();
-        if (TextUtils.isEmpty(count)) {
-            ToastUtil.showToast("请填写数量");
-            return;
-        }
         String serviceType = mTextExtraService.getText().toString().trim();
 
         OrderCarInfo orderCarInfo = new OrderCarInfo(serviceTime, volume, weight, serviceType, mCartype, sentenceToDriver, count);

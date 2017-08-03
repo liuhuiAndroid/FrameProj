@@ -63,7 +63,8 @@
         <!-- 完善订单信息 -->
         <activity
             android:name=".ui.improveorder.ImproveOrderActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- 给司机捎句话 -->
         <activity
             android:name=".ui.sentence.WriteSentenceActivity"
@@ -101,6 +102,12 @@
         <activity
             android:name=".ui.orderevaluate.OrderEvaluateActivity"
             android:screenOrientation="portrait"/>
+        <!-- 订单申诉 -->
+        <activity
+            android:name=".ui.orderappeal.OrderAppealActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->
         <meta-data

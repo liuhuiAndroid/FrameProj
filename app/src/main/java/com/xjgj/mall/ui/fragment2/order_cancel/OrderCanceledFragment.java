@@ -86,6 +86,7 @@ public class OrderCanceledFragment extends BaseFragment implements OrderCanceled
 
     }
 
+    private boolean isFirst = true;
     /**
      * 判断fragment是否是被用户可见
      * @param isVisibleToUser
@@ -93,10 +94,21 @@ public class OrderCanceledFragment extends BaseFragment implements OrderCanceled
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            layoutPostDelayed();
+        if(isVisibleToUser) {
+            if (!isFirst) {
+                layoutPostDelayed();
+            } else {
+                isFirst = false;
+            }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        layoutPostDelayed();
+    }
+
 
     @Override
     public void showLoading() {

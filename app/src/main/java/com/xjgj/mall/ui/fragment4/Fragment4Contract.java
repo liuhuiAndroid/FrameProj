@@ -1,6 +1,7 @@
 package com.xjgj.mall.ui.fragment4;
 
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.GeoCoderResultEntity;
 import com.xjgj.mall.ui.BasePresenter;
 import com.xjgj.mall.ui.BaseView;
 
@@ -21,11 +22,14 @@ public class Fragment4Contract {
 
         void onError(Throwable throwable);
 
+        void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> poisBeanList);
     }
 
     interface Presenter extends BasePresenter<Fragment4Contract.View> {
 
         void onCarListReceive();
+
+        void geocoderApi(String latLng);
 
     }
 

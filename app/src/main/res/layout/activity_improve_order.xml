@@ -108,13 +108,14 @@
                     android:layout_weight="1"
                     android:textColor="@color/red"
                     android:textSize="16sp"
+                    android:text="现在"
                     />
 
 
                 <TextView
                     style="@style/normal_sixteen_text"
                     android:layout_marginRight="30px"
-                    android:text="@string/click_update"
+                    android:text="预约"
                     android:textColor="@color/red"
                     android:textSize="14sp"/>
 
@@ -157,7 +158,6 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center"
-                    android:hint="@string/hint_tiJi"
                     android:singleLine="true"
                     android:textColor="@color/red"
                     android:textColorHint="@color/z535455"
@@ -165,6 +165,11 @@
                     android:inputType="numberDecimal"
                     />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="立方"
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 
@@ -204,13 +209,18 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center"
-                    android:hint="@string/hint_weight"
                     android:singleLine="true"
                     android:textColor="@color/red"
                     android:textColorHint="@color/z535455"
                     android:textSize="12sp"
                     android:inputType="numberDecimal"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="公斤"/>
 
             </LinearLayout>
 
@@ -250,13 +260,18 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center"
-                    android:hint="数量为个数"
                     android:singleLine="true"
                     android:textColor="@color/red"
                     android:textColorHint="@color/z535455"
                     android:textSize="12sp"
                     android:inputType="number"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="箱数"
+                    android:layout_marginLeft="5dp"/>
 
             </LinearLayout>
 

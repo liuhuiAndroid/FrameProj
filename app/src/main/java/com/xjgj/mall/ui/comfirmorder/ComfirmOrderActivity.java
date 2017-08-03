@@ -125,9 +125,9 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
                 TextView textMuDiDi = (TextView) view.findViewById(R.id.textMuDiDi);
                 String edtalName = tempTerminiEntity.get(i).getAddressDescribeName();
                 if (TextUtils.isEmpty(edtalName)) {
-                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressDescribeName());
+                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressName());
                 } else {
-                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressDescribeName() + "(" + tempTerminiEntity.get(i).getAddressName() + ")");
+                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressName() + "(" + tempTerminiEntity.get(i).getAddressDescribeName() + ")");
                 }
                 if (i == 0) {
                     t.setText(getResources().getString(R.string.begin_d));

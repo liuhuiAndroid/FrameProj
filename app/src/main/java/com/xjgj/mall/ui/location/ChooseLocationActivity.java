@@ -81,6 +81,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     private String selectCity = "上海市";
     private int loadIndex = 0;
     private List<GeoCoderResultEntity.ResultBean.PoisBean> mRecyclerViewGeoCoderData = new ArrayList<>();
+    private String mSearchString;
 
     @Override
     protected void onStart() {
@@ -233,6 +234,8 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
             public void afterTextChanged(Editable paramEditable) {
             }
         });
+
+
     }
 
     private void searchPlaces(String keystr) {
@@ -371,7 +374,6 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
                 public void run() {
                     mCommonAdapterGeocoder.notifyDataSetChanged();
                     Logger.i("test notifyDataSetChanged testChangeThread:" + Thread.currentThread().getName());
-
                 }
             }, 1000);
 
@@ -426,6 +428,8 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
 
             }
         });
+        mSearchString = getIntent().getStringExtra("searchString");
+        mSearchView.setEditTextContent(mSearchString);
     }
 
     /**
@@ -526,7 +530,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
     /**
      * 点击阴影隐藏搜索布局
      */
-    //    @OnClick(R.id.shadeView)
+    @OnClick(R.id.shadeView)
     public void mShadeView() {
         mSearchView.clearQueryContent();
         mSearchView.setEditTextFocus(false);
