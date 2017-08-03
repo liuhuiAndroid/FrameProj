@@ -2,17 +2,20 @@ package com.xjgj.mall.api.common;
 
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.DictionaryEntity;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
 import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.bean.PhotoUploadEntity;
+import com.xjgj.mall.bean.RealNameEntity;
 import com.xjgj.mall.bean.User;
 import com.xjgj.mall.components.retrofit.RequestHelper;
 import com.xjgj.mall.components.storage.UserStorage;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -268,13 +271,36 @@ public class CommonApi {
     /**
      * 订单取消
      */
-    public Observable<HttpResult<String>> orderCancel(int orderId) {
+    public Observable<HttpResult<String>> orderCancel(int orderId,int reasonType,int cancelType,
+                                                      String remark,List<String> pathList) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        if(pathList!=null && pathList.size()>0) {
+            for (int i = 0; i < pathList.size(); i++) {
+                File file  = new File(pathList.get(i));
+                MultipartBody.Part filePart = prepareFilePart("photo", file);
+                partList.add(filePart);
+            }
+        }
+        MultipartBody.Part orderIdPart = createPartString("orderId", orderId+"");
+        MultipartBody.Part reasonTypePart = createPartString("reasonType", reasonType+"");
+        MultipartBody.Part cancelTypePart = createPartString("cancelType", cancelType+"");
+        MultipartBody.Part remarkPart = createPartString("remark", remark);
+        MultipartBody.Part userTypePart = createPartString("userType", 1+"");
+        partList.add(orderIdPart);
+        partList.add(reasonTypePart);
+        partList.add(cancelTypePart);
+        partList.add(remarkPart);
+        partList.add(userTypePart);
+
         params.put("orderId", orderId);
-        params.put("type", 1);
+        params.put("reasonType", reasonType);
+        params.put("cancelType", cancelType);
+        params.put("remark", remark);
+        params.put("userType", 1);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
-        return mCommonService.orderCancel(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+        return mCommonService.orderCancel(currentTimeMillis, sign, mUserStorage.getToken(),partList).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -323,6 +349,39 @@ public class CommonApi {
         params.put("content", content);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.orderComment(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 查看实名认证
+     */
+    public Observable<HttpResult<RealNameEntity>> realNameQuery() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.realNameQuery(currentTimeMillis, sign, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 查看图片
+     */
+    public Observable<HttpResult<List<PhotoUploadEntity>>> photoQuery(int type) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        MultipartBody.Part typeUpload = createPartString("type", type + "");
+        params.put("type", type);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.photoQuery(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 查看图片
+     */
+    public Observable<HttpResult<List<DictionaryEntity>>> dictionaryQuery(int dictionaryType) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("dictionaryType", dictionaryType);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.dictionaryQuery(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
     }
 
 }

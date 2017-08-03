@@ -19,6 +19,7 @@ public class SPUtil {
 
     private final String IS_LOGIN = "is_login";
     private final String TOKNE = "token";
+    private final String USER = "user";
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -90,6 +91,14 @@ public class SPUtil {
 
     public String getTOKNE() {
         return getString(TOKNE);
+    }
+
+    public void setUSER(String user) {
+        save(USER, user);
+    }
+
+    public String getUSER() {
+        return getString(USER);
     }
 
 }

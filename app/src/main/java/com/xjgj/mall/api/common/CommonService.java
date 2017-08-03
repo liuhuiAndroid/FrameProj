@@ -2,12 +2,14 @@ package com.xjgj.mall.api.common;
 
 
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.DictionaryEntity;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
 import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.bean.PhotoUploadEntity;
+import com.xjgj.mall.bean.RealNameEntity;
 import com.xjgj.mall.bean.User;
 
 import java.util.List;
@@ -87,10 +89,10 @@ public interface CommonService {
                                                 @Header("token") String token, @Part MultipartBody.Part... file);
 
     //订单取消
-    @FormUrlEncoded
+    @Multipart
     @POST("order/cancel")
     Observable<HttpResult<String>> orderCancel(@Header("timestamp") long timestamp, @Header("sign") String sign,
-                                               @FieldMap Map<String, Object> params, @Header("token") String token);
+                                               @Header("token") String token, @Part List<MultipartBody.Part> partList);
 
     //商户-订单详情
     @FormUrlEncoded
@@ -116,5 +118,21 @@ public interface CommonService {
     Observable<HttpResult<String>> orderComment(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                @FieldMap Map<String, Object> params, @Header("token") String token);
 
+    //查看图片
+    @FormUrlEncoded
+    @POST("common/photo/query")
+    Observable<HttpResult<List<PhotoUploadEntity>>> photoQuery(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                               @Header("token") String token,@FieldMap Map<String, Object> params);
+
+    //查看实名认证
+    @POST("user/auth/realName/query")
+    Observable<HttpResult<RealNameEntity>> realNameQuery(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                         @Header("token") String token);
+
+    //查询字典
+    @FormUrlEncoded
+    @POST("common/dictionary/query")
+    Observable<HttpResult<List<DictionaryEntity>>> dictionaryQuery(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                                   @Header("token") String token, @FieldMap Map<String, Object> params);
 
 }

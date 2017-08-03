@@ -3,6 +3,7 @@ package com.xjgj.mall.components.storage;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.xjgj.mall.bean.User;
 import com.xjgj.mall.util.SPUtil;
 
@@ -39,11 +40,19 @@ public class UserStorage {
     }
 
     public User getUser() {
-        return user;
+        if(user!=null) {
+            return user;
+        }else{
+            String userString = mSPUtil.getUSER();
+            this.user = new Gson().fromJson(userString,User.class);
+            return this.user;
+        }
     }
 
     public void setUser(User user) {
         this.user = user;
+        String userJson = new Gson().toJson(user);
+        mSPUtil.setUSER(userJson);
     }
 
     public boolean isLogin() {

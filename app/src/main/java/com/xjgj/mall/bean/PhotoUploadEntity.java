@@ -6,15 +6,15 @@ package com.xjgj.mall.bean;
 
 public class PhotoUploadEntity {
 
-    private String filePath;
+    private String path;
     private String uuid;
 
-    public String getFilePath() {
-        return filePath;
+    public String getPath() {
+        return path;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getUuid() {

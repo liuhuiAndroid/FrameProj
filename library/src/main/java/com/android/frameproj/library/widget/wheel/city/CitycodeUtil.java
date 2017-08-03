@@ -20,9 +20,9 @@ public class CitycodeUtil {
 	private ArrayList<String> province_list = new ArrayList<String>();
 	private ArrayList<String> city_list = new ArrayList<String>();
 	private ArrayList<String> couny_list = new ArrayList<String>();
-	public ArrayList<String> province_list_code = new ArrayList<String>();
-	public ArrayList<String> city_list_code = new ArrayList<String>();
-	public ArrayList<String> couny_list_code = new ArrayList<String>();
+	private ArrayList<String> province_list_code = new ArrayList<String>();
+	private ArrayList<String> city_list_code = new ArrayList<String>();
+	private ArrayList<String> couny_list_code = new ArrayList<String>();
 	/** 单例 */
 	public static CitycodeUtil model;
 	private Context context;
@@ -38,21 +38,11 @@ public class CitycodeUtil {
 		return city_list_code;
 	}
 
-	public void setCity_list_code(ArrayList<String> city_list_code) {
-		this.city_list_code = city_list_code;
-	}
-
 	public ArrayList<String> getCouny_list_code() {
+		if(province_list_code == null){
+			return null;
+		}
 		return couny_list_code;
-	}
-
-	public void setCouny_list_code(ArrayList<String> couny_list_code) {
-		this.couny_list_code = couny_list_code;
-	}
-
-	public void setProvince_list_code(ArrayList<String> province_list_code) {
-
-		this.province_list_code = province_list_code;
 	}
 
 	/**
@@ -125,6 +115,6 @@ public class CitycodeUtil {
 			couny_list_code.add(couny.get(i).getId());
 		}
 		return couny_list;
-
 	}
+
 }

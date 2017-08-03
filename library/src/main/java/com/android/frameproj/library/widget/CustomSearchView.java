@@ -123,6 +123,12 @@ public class CustomSearchView extends LinearLayout implements View.OnClickListen
         }
     }
 
+    public void setEditTextContent(String content) {
+        if (this.et_search_content != null) {
+            this.et_search_content.setText(content);
+        }
+    }
+
     /**
      * 清除数据
      */

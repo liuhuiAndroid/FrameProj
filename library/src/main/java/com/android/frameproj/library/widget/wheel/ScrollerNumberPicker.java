@@ -538,8 +538,10 @@ public class ScrollerNumberPicker extends View {
      * @param index
      */
     public void setDefault(int index) {
-        float move = itemList.get(index).moveToSelected();
-        defaultMove((int) move);
+        if(itemList!=null && itemList.size()>index) {
+            float move = itemList.get(index).moveToSelected();
+            defaultMove((int) move);
+        }
     }
 
     /**

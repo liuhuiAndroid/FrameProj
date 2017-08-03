@@ -33,6 +33,7 @@ public class TimePickerPopWindow extends PopupWindow {
         this.context = context;
         initWindow(title, province, city, couny, provincePosition);
 
+
     }
 
 
@@ -48,6 +49,7 @@ public class TimePickerPopWindow extends PopupWindow {
         text_title = (TextView) dateView.findViewById(R.id.text_title);
         text_cancle = (TextView) dateView.findViewById(R.id.text_cancle);
         text_yes = (TextView) dateView.findViewById(R.id.text_yes);
+
 
         productPicker = (TimePicker) dateView.findViewById(R.id.citypicker);
         productPicker.initDatas(province, city, couny, provincePosition);

@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout style="@style/normal_weight_f1f2f4_vertical"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/includer_header"/>
+
+    <View
+        style="@style/ZddddddLineStyle"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/md_white_1000"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabIndicatorHeight="2dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="@color/md_grey_500"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/textCancleOrder"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_margin="35px"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/cancle_order"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
 
 </LinearLayout>
