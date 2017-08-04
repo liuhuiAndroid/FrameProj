@@ -1,5 +1,7 @@
 package com.xjgj.mall.ui.orderevaluate;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.android.frameproj.library.util.imageloader.ImageLoaderUtil;
 import com.android.frameproj.library.util.log.Logger;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
@@ -101,6 +105,24 @@ public class OrderEvaluateActivity extends BaseActivity implements OrderEvaluate
     public void initUiAndListener() {
 
         mOrderId = getIntent().getIntExtra("orderId",-1);
+        String contactName = getIntent().getStringExtra("contactName");
+        final String contactMobile = getIntent().getStringExtra("contactMobile");
+        String avatarUrl = getIntent().getStringExtra("avatarUrl");
+        String carNo = getIntent().getStringExtra("carNo");
+        ImageLoaderUtil.getInstance().loadImage(avatarUrl, mImageHeader);
+        mTextUserName.setText(contactName);
+        mImageCallPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+contactMobile));
+                startActivity(intent);
+            }
+        });
+        mTextPaiZhao.setText(carNo);
+        mTextUserPhone.setText(contactMobile);
+
+
         mPresenter.attachView(this);
         mImageBack.setImageResource(R.drawable.btn_back);
         mImageBack.setVisibility(View.VISIBLE);

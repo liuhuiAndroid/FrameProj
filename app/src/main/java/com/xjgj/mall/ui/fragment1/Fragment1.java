@@ -134,12 +134,18 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
      * 自动下拉刷新
      */
     public void layoutPostDelayed() {
-        mPtrLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPtrLayout.autoRefresh();
-            }
-        }, 100);
+
+        if (mPtrLayout != null && mPtrLayout.isRefreshing()) {
+            mFragment1Presenter.onRefresh(currentType);
+        } else {
+            mPtrLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Logger.i("test mPtrLayout.autoRefresh();");
+                    mPtrLayout.autoRefresh();
+                }
+            }, 100);
+        }
     }
 
 
@@ -233,6 +239,11 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                             public void onClick(View v) {
                                 Intent intent = new Intent(getActivity(), OrderEvaluateActivity.class);
                                 intent.putExtra("orderId", orderEntity.getOrderId());
+                                intent.putExtra("contactName", orderEntity.getContactName());
+                                intent.putExtra("contactMobile", orderEntity.getContactMobile());
+                                intent.putExtra("avatarUrl", orderEntity.getAvatarUrl());
+                                intent.putExtra("carNo", orderEntity.getCarNo());
+
                                 startActivity(intent);
                             }
                         });
@@ -271,10 +282,12 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
             mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    OrderEntity orderEntity = datas.get(position);
-                    Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-                    intent.putExtra("orderId", orderEntity.getOrderId());
-                    startActivity(intent);
+                    if (datas != null && datas.size() > position) {
+                        OrderEntity orderEntity = datas.get(position);
+                        Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                        intent.putExtra("orderId", orderEntity.getOrderId());
+                        startActivity(intent);
+                    }
                 }
 
                 @Override
@@ -293,17 +306,21 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
         } else {
             mLoadMoreWrapper.notifyDataSetChanged();
         }
-        if (mPtrLayout != null && mPtrLayout.isShown()) {
+        if (mPtrLayout != null && mPtrLayout.isRefreshing()) {
             mPtrLayout.refreshComplete();
+            Logger.i("test refreshComplete刷新完成");
         }
+        showContent(true);
     }
 
     @Override
     public void onError(Throwable throwable) {
         loadError(throwable);
-        if (mPtrLayout != null && mPtrLayout.isShown()) {
+        if (mPtrLayout != null && mPtrLayout.isRefreshing()) {
             mPtrLayout.refreshComplete();
+            Logger.i("test refreshComplete刷新完成");
         }
+        showError(true);
     }
 
     /**
@@ -317,6 +334,12 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
     @Override
     public void onEmpty(int currentType) {
         // 订单类型：0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价,6 申诉中
+        if (mPtrLayout != null && mPtrLayout.isRefreshing()) {
+            mPtrLayout.refreshComplete();
+            Logger.i("test refreshComplete刷新完成");
+        } else {
+            Logger.i("test no refresh");
+        }
         if (currentType == -1) {
             setEmptyText("暂无订单");
         } else if (currentType == 0) {
@@ -365,6 +388,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
 
     @Override
     public void onRefreshBegin(PtrFrameLayout frame) {
+        Logger.i("test 请求onRefresh");
         mFragment1Presenter.onRefresh(currentType);
     }
 
@@ -379,11 +403,15 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
     }
 
     @Subscribe
-    public void orderTypeChangeEvent(CommonEvent.OrderTypeChangeEvent orderTypeChangeEvent){
-        showContent(true);
+    public void orderTypeChangeEvent(CommonEvent.OrderTypeChangeEvent orderTypeChangeEvent) {
+        Logger.i("test 收到orderTypeChangeEvent，currentType = " + currentType);
         currentType = orderTypeChangeEvent.getType();
         layoutPostDelayed();
     }
 
+    @Override
+    public void onReloadClicked() {
+        mFragment1Presenter.onRefresh(currentType);
+    }
 
 }

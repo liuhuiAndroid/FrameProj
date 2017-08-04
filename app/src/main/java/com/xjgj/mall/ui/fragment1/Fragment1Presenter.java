@@ -41,8 +41,8 @@ public class Fragment1Presenter implements Fragment1Contract.Presenter {
     @Override
     public void onThreadReceive() {
         disposables.add(mCommonApi.mallOrderList(page,currentType)
-                .debounce(800, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .switchMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
                     @Override
                     public ObservableSource<List<OrderEntity>> apply(@io.reactivex.annotations.NonNull HttpResult<List<OrderEntity>> listHttpResult) throws Exception {
                         return CommonApi.flatResponse(listHttpResult);
@@ -67,8 +67,6 @@ public class Fragment1Presenter implements Fragment1Contract.Presenter {
                             mView.onRefreshCompleted(mOrderListPublicEntities);
                             mView.onLoadCompleted(orderListEntities.size() == 10 ? true : false);
                         }
-
-
                     }
                 }, new Consumer<Throwable>() {
                     @Override
