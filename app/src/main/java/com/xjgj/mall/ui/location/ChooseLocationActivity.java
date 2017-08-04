@@ -259,7 +259,7 @@ public class ChooseLocationActivity extends BaseActivity implements ChooseLocati
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            Logger.i("onReceiveLocation");
+            Logger.i("test onReceiveLocation 收到定位");
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
