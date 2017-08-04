@@ -6,7 +6,17 @@
     style="@style/normal_weight_vertical"
     android:gravity="center|top"
     android:background="@color/register_one">
-    <include layout="@layout/includer_header" />
+
+    <LinearLayout
+        android:id="@+id/linearClude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/includer_header"/>
+
+        <View style="@style/ZddddddLineStyle"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/text_type"

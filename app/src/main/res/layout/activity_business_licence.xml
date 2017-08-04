@@ -20,11 +20,22 @@
 
     </LinearLayout>
 
+    <!-- 加载中 -->
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallPulseIndicator"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearClude"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:layout_below="@id/linearClude">
 
         <LinearLayout
             style="@style/normal_weight_vertical"
@@ -50,34 +61,25 @@
                 android:layout_marginTop="30px"
                 android:src="@drawable/card_add"/>
 
-
-            <TextView
-                android:id="@+id/textUpload"
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:layout_marginLeft="35px"
-                android:layout_marginRight="35px"
-                android:layout_marginTop="28px"
-                android:background="@drawable/rectangle_register_phone_lv_corner_bg"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/upload"
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
         </LinearLayout>
 
     </ScrollView>
 
-    <!-- 加载中 -->
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avLoadingIndicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        app:indicatorColor="@color/colorAccent"
-        app:indicatorName="BallPulseIndicator"
-        />
+    <TextView
+        android:id="@+id/textUpload"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="35px"
+        android:layout_marginRight="35px"
+        android:layout_marginTop="28px"
+        android:layout_marginBottom="28px"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/upload"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
 
 </RelativeLayout>
 

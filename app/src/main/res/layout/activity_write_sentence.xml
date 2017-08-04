@@ -48,7 +48,7 @@
     <TextView
         android:id="@+id/textOk"
         android:layout_width="match_parent"
-        android:layout_height="150px"
+        android:layout_height="50dp"
         android:layout_marginBottom="28px"
         android:layout_marginLeft="44px"
         android:layout_marginRight="44px"

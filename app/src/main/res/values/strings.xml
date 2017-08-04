@@ -171,10 +171,10 @@
     <string name="call_friends">拨打电话</string>
     <string name="bo_da">拨打</string>
     <string name="cancel">取消</string>
-    <string name="tiJi">体积</string>
+    <string name="tiJi">体积(立方)</string>
     <string name="hint_tiJi">体积为立方</string>
     <string name="hint_weight">重量为公斤</string>
-    <string name="weight">重量</string>
+    <string name="weight">重量(公斤)</string>
     <string name="confirm">确定</string>
     <string name="self_reason">本人原因</string>
     <string name="driver_reason">司机原因</string>

@@ -30,6 +30,7 @@ public interface MainContract {
 
         void initFragment();
 
+
     }
 
 }

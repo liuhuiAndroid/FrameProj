@@ -26,8 +26,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE;
+import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL;
+import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL;
 
 /**
  * 订单详情
@@ -81,6 +83,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     LinearLayout mLinearOrderAgain;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
+    @BindView(R.id.textCount)
+    TextView mTextCount;
     private String mContactMobile;
 
     @Override
@@ -128,26 +132,32 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         if (orderDetailEntity != null) {
             mTextCarType.setText(orderDetailEntity.getCarName());
             mTextUseCarTime.setText(orderDetailEntity.getServiceTime());
-            if(TextUtils.isEmpty(orderDetailEntity.getServiceType())){
+            if (TextUtils.isEmpty(orderDetailEntity.getServiceType())) {
                 mTextOtherCost.setText("暂无");
-            }else {
+            } else {
                 mTextOtherCost.setText(orderDetailEntity.getServiceType());
             }
-            if(TextUtils.isEmpty(orderDetailEntity.getRemark())){
+            if (TextUtils.isEmpty(orderDetailEntity.getRemark())) {
                 mTextOrderBeiZhu.setText("暂无");
-            }else {
+            } else {
                 mTextOrderBeiZhu.setText(orderDetailEntity.getRemark());
             }
 
-            if(orderDetailEntity.getVolume() ==0){
+            if (orderDetailEntity.getVolume() == 0) {
                 mTextSize.setText("暂无");
-            }else{
-                mTextSize.setText(orderDetailEntity.getVolume()+"立方");
+            } else {
+                mTextSize.setText(orderDetailEntity.getVolume() + "立方");
             }
-            if(orderDetailEntity.getWeight() == 0){
+            if (orderDetailEntity.getWeight() == 0) {
                 mTextWeight.setText("暂无");
-            }else{
-                mTextWeight.setText(orderDetailEntity.getWeight()+"公斤");
+            } else {
+                mTextWeight.setText(orderDetailEntity.getWeight() + "公斤");
+            }
+
+            if (orderDetailEntity.getCounts() == 0) {
+                mTextCount.setText("暂无");
+            } else {
+                mTextCount.setText(orderDetailEntity.getCounts() + "个");
             }
 
             if (orderDetailEntity.getStatus() != 0 && !TextUtils.isEmpty(orderDetailEntity.getContactMobile())) {
@@ -159,7 +169,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:"+mContactMobile));
+                        intent.setData(Uri.parse("tel:" + mContactMobile));
                         startActivity(intent);
                     }
                 });
@@ -170,10 +180,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             }
 
             // 0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价,6 申诉中
-            if(orderDetailEntity.getStatus() == 3 || orderDetailEntity.getStatus() == 4
-                    || orderDetailEntity.getStatus() == 5){
+            if (orderDetailEntity.getStatus() == 3 || orderDetailEntity.getStatus() == 4
+                    || orderDetailEntity.getStatus() == 5) {
                 mLinearOrderAgain.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 mLinearOrderAgain.setVisibility(View.GONE);
             }
 
@@ -186,19 +196,28 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                         Bundle bundle = new Bundle();
                         for (int i = 0; i < orderDetailEntity.getAddressList().size(); i++) {
                             OrderDetailEntity.AddressListBean addressListBean = orderDetailEntity.getAddressList().get(i);
-                            TerminiEntity terminiEntity = new TerminiEntity(addressListBean.getAddress(),addressListBean.getAddressName(),
-                                    addressListBean.getLongitude(),addressListBean.getLatitude(),
-                                    addressListBean.getReceiverName(),addressListBean.getReceiverPhone());
+                            TerminiEntity terminiEntity = new TerminiEntity(addressListBean.getAddress(), addressListBean.getAddressName(),
+                                    addressListBean.getLongitude(), addressListBean.getLatitude(),
+                                    addressListBean.getReceiverName(), addressListBean.getReceiverPhone());
                             terminiEntities.add(terminiEntity);
                         }
                         bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
                         intent.putExtras(bundle);
                         intent.putExtra("cartypeName", orderDetailEntity.getCarName() + "");
-                        intent.putExtra("cartype", orderDetailEntity.getCarType()+"");
-                        startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE);
+                        intent.putExtra("cartype", orderDetailEntity.getCarType() + "");
+                        intent.putExtra("comefrom",1);// 1代表从订单详情进入，2代表从找车进入
+                        startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL);
                     }
                 });
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL && resultCode == RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL){
+            finish();
         }
     }
 
@@ -213,4 +232,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         mPresenter.detachView();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

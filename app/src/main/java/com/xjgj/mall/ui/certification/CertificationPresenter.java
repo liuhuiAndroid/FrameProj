@@ -43,7 +43,7 @@ public class CertificationPresenter implements CertificationContract.Presenter {
             return;
         }
         if(TextUtils.isEmpty(identityNo)){
-            ToastUtil.showToast("请选择身份证号");
+            ToastUtil.showToast("请填写身份证号");
             return;
         }
         if (!identityNo.matches("^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$")) {

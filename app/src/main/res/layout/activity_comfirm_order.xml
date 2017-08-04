@@ -155,10 +155,35 @@
                     android:textColor="@color/z262627"
                     android:textSize="14sp"/>
 
+
+                <TextView
+                    android:id="@+id/textCount"
+                    android:layout_width="170px"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textWeight"
+                    android:layout_marginLeft="44px"
+                    android:layout_marginTop="20px"
+                    android:gravity="right"
+                    android:text="箱        数"
+                    android:textColor="@color/z868788"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/textCountShow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textWeight"
+                    android:layout_marginLeft="44px"
+                    android:layout_marginTop="20px"
+                    android:layout_toRightOf="@id/textSize"
+                    android:text=""
+                    android:textColor="@color/z262627"
+                    android:textSize="14sp"/>
+
                 <View
                     android:id="@+id/view1"
                     style="@style/ZddddddLineOneStyle"
-                    android:layout_below="@id/textWeight"
+                    android:layout_below="@id/textCount"
                     android:layout_marginLeft="44px"
                     android:layout_marginTop="35px"
                     />

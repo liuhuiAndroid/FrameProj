@@ -11,9 +11,9 @@ public class Constants {
 
     public static String LH_LOG_PATH = "/LH/Log/";// 日志默认保存目录
 
-    public static final String BASE_URL = "http://192.168.1.130:8080/";
+//    public static final String BASE_URL = "http://192.168.1.130:8080/";
 //    public static final String BASE_URL = "http://we-win.3322.org:18080/nhy/";
-//    public static final String BASE_URL = "http://121.41.103.166:18080/nhy/";
+    public static final String BASE_URL = "http://121.41.103.166:18080/nhy/";
 
     // app类型：1:ios,2:andriod
     public static final int APPTYPE = 2;
@@ -52,5 +52,7 @@ public class Constants {
     public static final int RESULT_BUSINESS_LICENCE_CODE = 115;
     public static final int REQUEST_CERTIFICATION_CODE = 116;
     public static final int RESULT_CERTIFICATION_CODE = 117;
+    public static final int REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL = 118;
+    public static final int RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL = 119;
 
 }

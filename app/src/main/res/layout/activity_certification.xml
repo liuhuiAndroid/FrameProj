@@ -166,19 +166,6 @@
             </RelativeLayout>
 
 
-            <TextView
-                android:id="@+id/textUpload"
-                android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:layout_marginLeft="35px"
-                android:layout_marginRight="35px"
-                android:layout_marginTop="300px"
-                android:background="@drawable/rectangle_register_phone_lv_corner_bg"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/submit_check"
-                android:textColor="@color/white"
-                android:textSize="18sp"/>
         </LinearLayout>
     </ScrollView>
 
@@ -193,6 +180,21 @@
         app:indicatorColor="@color/colorAccent"
         app:indicatorName="BallPulseIndicator"
         />
+
+    <TextView
+        android:id="@+id/textUpload"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="35px"
+        android:layout_marginRight="35px"
+        android:layout_marginBottom="28px"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/submit_check"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
 
 </RelativeLayout>
 

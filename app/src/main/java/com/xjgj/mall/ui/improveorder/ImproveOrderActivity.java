@@ -38,6 +38,7 @@ import static com.xjgj.mall.Constants.REQUEST_WRITE_SENTENCE_CODE;
 import static com.xjgj.mall.Constants.RESULT_CONFIRM_ORDER_CODE;
 import static com.xjgj.mall.Constants.RESULT_EXTRA_SERVICE_CODE;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE;
+import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL;
 import static com.xjgj.mall.Constants.RESULT_WRITE_SENTENCE_CODE;
 import static com.xjgj.mall.R.id.editTiJi;
 import static com.xjgj.mall.R.id.textExtraService;
@@ -91,6 +92,7 @@ public class ImproveOrderActivity extends BaseActivity {
     private String mCartype;
     private String mCartypeName;
     private List<TerminiEntity> tempTerminiEntity;
+    private int mComeFrom;
 
     @Override
     public int initContentView() {
@@ -105,6 +107,7 @@ public class ImproveOrderActivity extends BaseActivity {
     @Override
     public void initUiAndListener() {
         //初始化时间选择器数据
+        mComeFrom = getIntent().getIntExtra("comefrom", -1);
         initUpdateTime();
         mImageBack.setImageResource(R.drawable.btn_back);
         mImageBack.setVisibility(View.VISIBLE);
@@ -322,7 +325,11 @@ public class ImproveOrderActivity extends BaseActivity {
                 }
             }
         } else if (requestCode == REQUEST_CONFIRM_ORDER_CODE && resultCode == RESULT_CONFIRM_ORDER_CODE) {
-            setResult(RESULT_IMPROVE_ORDER_CODE);
+            if(mComeFrom == 1) { // 1代表从订单详情进入，2代表从找车进入
+                setResult(RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL);
+            }else if(mComeFrom == 2){
+                setResult(RESULT_IMPROVE_ORDER_CODE);
+            }
             finish();
         }
     }

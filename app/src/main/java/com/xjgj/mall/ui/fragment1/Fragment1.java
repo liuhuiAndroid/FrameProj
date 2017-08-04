@@ -271,7 +271,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
 
                     holder.setText(R.id.textStart, orderEntity.getStartAddress());
                     holder.setText(R.id.textEnd, orderEntity.getGoalAddress());
-                    holder.setText(R.id.textTime, orderEntity.getCreateTime().concat("  (").concat(orderEntity.getCarType()).concat(")"));
+                    holder.setText(R.id.textTime, orderEntity.getCreateTime().concat("  ").concat(orderEntity.getCarType()));
                     if (orderEntity.getOrderType() == 1) {
                         holder.setImageResource(R.id.imageState, R.drawable.icon_real);
                     } else if (orderEntity.getOrderType() == 2) {

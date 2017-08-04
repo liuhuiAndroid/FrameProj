@@ -23,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.RESULT_CONFIRM_ORDER_CODE;
@@ -73,9 +74,13 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     LinearLayout mLinearD;
 
     @Inject
-    com.xjgj.mall.ui.comfirmorder.ComfirmOrderPresenter mComfirmOrderPresenter;
+    ComfirmOrderPresenter mComfirmOrderPresenter;
     @BindView(R.id.avLoadingIndicatorView)
     AVLoadingIndicatorView mAvLoadingIndicatorView;
+    @BindView(R.id.textCount)
+    TextView mTextCount;
+    @BindView(R.id.textCountShow)
+    TextView mTextCountShow;
     /**
      * 订单信息
      */
@@ -113,23 +118,27 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
 
         String cartypeName = getIntent().getStringExtra("cartypeName");
-        if(!TextUtils.isEmpty(mOrderCarInfo.getServiceTime())) {
+        if (!TextUtils.isEmpty(mOrderCarInfo.getServiceTime())) {
             mTextUseCarTime.setText(mOrderCarInfo.getServiceTime());
-        }else{
+        } else {
             mTextUseCarTime.setText("现在");
         }
         mTextCarType.setText(cartypeName);
-        if(!TextUtils.isEmpty(mOrderCarInfo.getVolume())){
-            mTextSizeShow.setText(mOrderCarInfo.getVolume()+"立方");
-        }else{
+        if (!TextUtils.isEmpty(mOrderCarInfo.getVolume())) {
+            mTextSizeShow.setText(mOrderCarInfo.getVolume() + "立方");
+        } else {
             mTextSizeShow.setText("暂无");
         }
-        if(!TextUtils.isEmpty(mOrderCarInfo.getWeight())){
-            mTextWeightShow.setText(mOrderCarInfo.getWeight()+"公斤");
-        }else{
+        if (!TextUtils.isEmpty(mOrderCarInfo.getWeight())) {
+            mTextWeightShow.setText(mOrderCarInfo.getWeight() + "公斤");
+        } else {
             mTextWeightShow.setText("暂无");
         }
-
+        if (!TextUtils.isEmpty(mOrderCarInfo.getCounts())) {
+            mTextCountShow.setText(mOrderCarInfo.getCounts() + "个");
+        } else {
+            mTextCountShow.setText("暂无");
+        }
 
         if (tempTerminiEntity != null && tempTerminiEntity.size() > 0) {
             for (int i = 0; i < tempTerminiEntity.size(); i++) {
@@ -161,12 +170,12 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
 
     @Override
     public void hideLoading() {
-       new Handler().postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               mAvLoadingIndicatorView.hide();
-           }
-       },500);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAvLoadingIndicatorView.hide();
+            }
+        }, 500);
     }
 
     @Override
@@ -198,4 +207,10 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
                 mOrderCarInfo.getRemark(), mOrderCarInfo.getCounts(), new Gson().toJson(tempTerminiEntity), "1");
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

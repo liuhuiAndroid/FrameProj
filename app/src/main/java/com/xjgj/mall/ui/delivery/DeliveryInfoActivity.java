@@ -90,12 +90,12 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         mImageBack.setImageResource(R.drawable.btn_back);
         mImageBack.setVisibility(View.VISIBLE);
         mImageBack.setOnClickListener(this);
-        mTextHandle.setText(getString(R.string.switch_earth_address));
-        mTextHandle.setTextSize(14);
-        mTextHandle.setTextColor(getResources().getColor(R.color.z5b5b5b));
-        mTextHandle.setClickable(true);
-        mTextHandle.setOnClickListener(this);
-        mTextHandle.setVisibility(View.VISIBLE);
+        //        mTextHandle.setText(getString(R.string.switch_earth_address));
+        //        mTextHandle.setTextSize(14);
+        //        mTextHandle.setTextColor(getResources().getColor(R.color.z5b5b5b));
+        //        mTextHandle.setClickable(true);
+        //        mTextHandle.setOnClickListener(this);
+        //        mTextHandle.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -160,12 +160,12 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
 
-            case R.id.text_handle:
-                Intent localIntent = new Intent(DeliveryInfoActivity.this, ChooseLocationActivity.class);
-                //如果之前有定位需要先定位在之前的位置上,暂时不做吧
-                localIntent.putExtra("searchString",mTextAddress.getText().toString().trim());
-                startActivityForResult(localIntent, REQUEST_CHOOSE_LOCATION_CODE);
-                break;
+            //            case R.id.text_handle:
+            //                Intent localIntent = new Intent(DeliveryInfoActivity.this, ChooseLocationActivity.class);
+            //                //如果之前有定位需要先定位在之前的位置上,暂时不做吧
+            //                localIntent.putExtra("searchString",mTextAddress.getText().toString().trim());
+            //                startActivityForResult(localIntent, REQUEST_CHOOSE_LOCATION_CODE);
+            //                break;
         }
     }
 
@@ -177,8 +177,11 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             String addr = data.getStringExtra("addr");
             longitude = data.getDoubleExtra("longitude", 0.0);
             latitude = data.getDoubleExtra("latitude", 0.0);
+
+            if (!mTextAddress.getText().toString().trim().equals(name)) {
+                mTextDetailsAddress.setText(addr);
+            }
             mTextAddress.setText(name);
-            mTextDetailsAddress.setText(addr);
         }
     }
 
@@ -256,10 +259,10 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
      * 选择位置
      */
     @OnClick(R.id.textAddress)
-    public void mTextAddress(){
+    public void mTextAddress() {
         Intent localIntent = new Intent(DeliveryInfoActivity.this, ChooseLocationActivity.class);
         //如果之前有定位需要先定位在之前的位置上,暂时不做吧
-        localIntent.putExtra("searchString",mTextAddress.getText().toString().trim());
+        localIntent.putExtra("searchString", mTextAddress.getText().toString().trim());
         startActivityForResult(localIntent, REQUEST_CHOOSE_LOCATION_CODE);
     }
 

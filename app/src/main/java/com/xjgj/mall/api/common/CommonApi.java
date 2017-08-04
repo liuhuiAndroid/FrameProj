@@ -417,4 +417,12 @@ public class CommonApi {
         return mCommonService.orderComplain(currentTimeMillis, sign, mUserStorage.getToken(), partList).subscribeOn(Schedulers.io());
     }
 
+    /**
+     * 查看图片
+     */
+    public Observable<ResponseBody> uploadErrorFiles(String appId,String deviceType,
+                                             String osVersion,String deviceModel,String log) {
+        return mCommonService.uploadErrorFiles(appId, deviceType, osVersion, deviceModel,log).subscribeOn(Schedulers.io());
+    }
+
 }

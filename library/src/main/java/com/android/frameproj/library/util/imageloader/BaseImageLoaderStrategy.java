@@ -11,7 +11,7 @@ import com.android.frameproj.library.util.imageloader.listener.SourceReadyListen
 /**
  * Created by soulrelay on 2016/10/11.
  * Class Note:
- * abstract class/interface defined to load image
+ * abstract class/interf defined to load image
  * (Strategy Pattern used here)
  * 图片加载的基础接口
  * 当封装的方法参数比较少时可以下面这样进行抽象，如果需要传递的参数较多，可以考虑使用建造者模式

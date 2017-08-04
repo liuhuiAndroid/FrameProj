@@ -60,6 +60,7 @@ public class MainPresenter implements MainContract.Presenter {
         changeTab();
     }
 
+
     private void changeTab() {
         if (preSelect != -1) {
             mMainView.hideFragment(fragmentTabMap.get(preSelect));
@@ -93,5 +94,7 @@ public class MainPresenter implements MainContract.Presenter {
             mMainView.showFragment(mFragment);
         }
     }
+
+
 
 }

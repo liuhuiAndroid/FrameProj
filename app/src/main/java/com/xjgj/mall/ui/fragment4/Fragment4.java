@@ -10,12 +10,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.frameproj.library.interf.CallbackChangeFragment;
 import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.util.WindowUtil;
 import com.android.frameproj.library.util.log.Logger;
@@ -43,7 +43,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.REQUEST_DELIVERY_INFO_CODE;
@@ -89,6 +88,8 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
     @Inject
     UserStorage mUserStorage;
+
+    CallbackChangeFragment mCallbackChangeFragment;
 
     /**
      * 存放起始地、途径地和终点
@@ -453,10 +454,14 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                 tempTerminiEntity.put(position, terminiEntity);
             }
         } else if (requestCode == REQUEST_IMPROVE_ORDER_CODE && resultCode == RESULT_IMPROVE_ORDER_CODE) {
-            if (superEditTextsMap != null) {
-                for (int i = 0; i < superEditTextsMap.size(); i++) {
+            if (superEditTextsMap != null && superEditTextsMap.size() > 0) {
+                for (int i = 1; i < superEditTextsMap.size(); i++) {
                     SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(i);
-                    tempTerminiEntity.clear();
+                    if(tempTerminiEntity!=null && tempTerminiEntity.size()>0) {
+                        TerminiEntity terminiEntity = tempTerminiEntity.get(0);
+                        tempTerminiEntity.clear();
+                        tempTerminiEntity.put(0,terminiEntity);
+                    }
                     localSuperEditTextPlus.setTopText("");
                     localSuperEditTextPlus.setMiddleText("");
                     if (i == 0) {
@@ -466,6 +471,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     }
                 }
             }
+            mCallbackChangeFragment.changeFragment(1);
         }
     }
 
@@ -495,6 +501,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     }
                     bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
                     intent.putExtras(bundle);
+                    intent.putExtra("comefrom",2);// 1代表从订单详情进入，2代表从找车进入
                     startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE);
                 } else {
                     ToastUtil.showToast("车型数据有误");
@@ -508,10 +515,8 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbackChangeFragment = (CallbackChangeFragment) context;
     }
 }

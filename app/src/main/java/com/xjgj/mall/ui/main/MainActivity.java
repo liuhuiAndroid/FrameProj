@@ -1,6 +1,7 @@
 package com.xjgj.mall.ui.main;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -13,13 +14,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.frameproj.library.interf.CallbackChangeFragment;
+import com.android.frameproj.library.util.NetWorkUtils;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.otto.Bus;
+import com.xjgj.mall.Constants;
+import com.xjgj.mall.MyApplication;
 import com.xjgj.mall.R;
+import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.injector.HasComponent;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.util.CommonEvent;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +36,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends BaseActivity implements MainContract.View
-        , HasComponent<MainComponent> {
+        , HasComponent<MainComponent>,CallbackChangeFragment {
 
     @BindView(R.id.frame_layout)
     FrameLayout mFrameLayout;
@@ -49,6 +60,9 @@ public class MainActivity extends BaseActivity implements MainContract.View
     TextView mTextHandle;
     @BindView(R.id.relative_layout)
     RelativeLayout mRelativeLayout;
+
+    @Inject
+    CommonApi mCommonApi;
 
     @Inject
     Bus mBus;
@@ -179,6 +193,11 @@ public class MainActivity extends BaseActivity implements MainContract.View
                 .show();
     }
 
+    @Override
+    public void changeFragment(int which) {
+        mBottomNavigationViewEx.setCurrentItem(which);
+    }
+
     class Type {
         public Type(int id, String name) {
             this.id = id;
@@ -208,4 +227,81 @@ public class MainActivity extends BaseActivity implements MainContract.View
             return name;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uploadLog();
+    }
+
+    /**
+     * TODO 有空吧这个放到Presenter里面去
+     */
+    private void uploadLog() {
+        //检查是否有日志文件 要是有的话上传
+        String savePath = "";
+        File logDir = null;
+        if (NetWorkUtils.isNetworkConnected(MainActivity.this)) {
+            try {
+                //判断是否挂载了SD卡
+                String storageState = Environment.getExternalStorageState();
+                if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+                    savePath = MyApplication.getContext().getExternalCacheDir() + Constants.LH_LOG_PATH;
+                    logDir = new File(savePath);
+                    if (!logDir.exists()) {
+                        logDir.mkdirs();
+                    }
+                    if (logDir.list().length > 0) {
+                        File[] files = logDir.listFiles();
+                        if (null == files) {
+                            return;
+                        } else {
+                            for (final File file :
+                                    files) {
+
+                                FileInputStream fin = new FileInputStream(file);
+                                int length = fin.available();
+                                byte[] buffer = new byte[length];
+                                fin.read(buffer);
+                                final String res = new String(buffer, "UTF-8");
+                                fin.close();
+
+                               mCommonApi.uploadErrorFiles(MainActivity.this.getPackageName(),"android",
+                                       android.os.Build.VERSION.RELEASE, android.os.Build.MODEL,res)
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<ResponseBody>() {
+                                            @Override
+                                            public void accept(@io.reactivex.annotations.NonNull ResponseBody responseBody) throws Exception {
+                                                if (file.exists()) {
+                                                    if (file.isFile()) {
+                                                        file.delete();
+                                                    }
+                                                }
+                                            }
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                                                throwable.printStackTrace();
+                                            }
+                                        });
+                            }
+
+                        }
+                    } else {
+
+                    }
+                    //没有挂载SD卡，无法写文件
+                    if (logDir == null || !logDir.exists() || !logDir.canWrite()) {
+                        return;
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+
+            }
+        }
+    }
+
 }
