@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:text="2016-10-18 12:20  (金杯)"
                 android:textColor="@color/z262627"
-                android:textSize="16sp"/>
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/textState"

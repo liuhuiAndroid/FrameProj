@@ -14,7 +14,7 @@
     android:orientation="vertical"
     >
 
-    <include layout="@layout/include_actionbar"/>
+    <include layout="@layout/includer_header"/>
 
     <include layout="@layout/content_main"/>
 

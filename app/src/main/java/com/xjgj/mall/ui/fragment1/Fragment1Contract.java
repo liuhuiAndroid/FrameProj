@@ -1,5 +1,7 @@
 package com.xjgj.mall.ui.fragment1;
 
+
+import com.xjgj.mall.bean.OrderEntity;
 import com.xjgj.mall.ui.BasePresenter;
 import com.xjgj.mall.ui.BaseView;
 
@@ -12,18 +14,30 @@ import java.util.List;
  */
 public interface Fragment1Contract {
 
-    interface  View extends BaseView{
+    interface  View extends BaseView {
 
-        void onRefreshCompleted(List<String> data);
+        void onRefreshCompleted(List<OrderEntity> orderListEntities);
 
-    }
+        void onLoadCompleted(boolean isLoadAll);
 
-    interface Presenter extends BasePresenter<View>{
-        void onThreadReceive();
+        void onError(Throwable throwable);
 
         void onRefresh();
 
-        void onReload();
+        void onEmpty(int currentType);
+
+    }
+
+    interface Presenter extends BasePresenter<View> {
+
+        void onThreadReceive();
+
+        void onRefresh(int type);
+
+        void onLoadMore();
+
+        void orderConfirm(int orderId);
+
     }
 
 }

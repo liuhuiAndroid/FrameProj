@@ -113,10 +113,23 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
 
         String cartypeName = getIntent().getStringExtra("cartypeName");
-        mTextUseCarTime.setText(mOrderCarInfo.getServiceTime());
+        if(!TextUtils.isEmpty(mOrderCarInfo.getServiceTime())) {
+            mTextUseCarTime.setText(mOrderCarInfo.getServiceTime());
+        }else{
+            mTextUseCarTime.setText("现在");
+        }
         mTextCarType.setText(cartypeName);
-        mTextSizeShow.setText(mOrderCarInfo.getVolume()+"立方");
-        mTextWeightShow.setText(mOrderCarInfo.getWeight()+"公斤");
+        if(!TextUtils.isEmpty(mOrderCarInfo.getVolume())){
+            mTextSizeShow.setText(mOrderCarInfo.getVolume()+"立方");
+        }else{
+            mTextSizeShow.setText("暂无");
+        }
+        if(!TextUtils.isEmpty(mOrderCarInfo.getWeight())){
+            mTextWeightShow.setText(mOrderCarInfo.getWeight()+"公斤");
+        }else{
+            mTextWeightShow.setText("暂无");
+        }
+
 
         if (tempTerminiEntity != null && tempTerminiEntity.size() > 0) {
             for (int i = 0; i < tempTerminiEntity.size(); i++) {

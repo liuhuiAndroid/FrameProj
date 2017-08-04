@@ -17,6 +17,15 @@ public class OrderEntity {
     private int status;
     private String startAddress;
     private String goalAddress;
+    private int orderType;
+
+    public int getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
+    }
 
     public String getStartAddress() {
         return startAddress;

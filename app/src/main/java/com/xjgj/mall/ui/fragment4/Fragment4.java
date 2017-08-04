@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -42,13 +43,13 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.REQUEST_DELIVERY_INFO_CODE;
 import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE;
 import static com.xjgj.mall.Constants.RESULT_DELIVERY_INFO_CODE;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE;
-import static com.xjgj.mall.R.id.viewPager;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
@@ -62,8 +63,6 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
-    @BindView(viewPager)
-    ViewPager mViewPager;
     @BindView(R.id.vehicleWeight)
     TextView mVehicleWeight;
     @BindView(R.id.vehicleSize)
@@ -74,7 +73,6 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
     ImageView mLIndicator;
     @BindView(R.id.rIndicator)
     ImageView mRIndicator;
-
     // 发货起点
     @BindView(R.id.seStPtOF)
     SuperEditTextPlus mSeStPtOF;
@@ -100,6 +98,8 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
      * 存放起始地、途径地和终点的信息
      */
     public Map<Integer, TerminiEntity> tempTerminiEntity = new LinkedHashMap();
+    @BindView(R.id.viewPager)
+    ViewPager mViewPager;
     private int startIndex = 0;
     private int nextIndex = 1;
     //最大8个
@@ -131,7 +131,6 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         showContent(true);
 
         tempTerminiEntity.clear();
-
         mSeStPtOF.setHintText("按此输入起点");
         mNextDestOF.setHintText("按此输入目的地");
         mSeStPtOF.setTag(startIndex);
@@ -198,9 +197,9 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
     @Override
     public void geocoderResultSuccess(List<GeoCoderResultEntity.ResultBean.PoisBean> poisBeanList) {
-        if(poisBeanList!=null && poisBeanList.size()>0){
+        if (poisBeanList != null && poisBeanList.size() > 0) {
             GeoCoderResultEntity.ResultBean.PoisBean poisBean = poisBeanList.get(0);
-            if(tempTerminiEntity!=null){
+            if (tempTerminiEntity != null) {
                 mSeStPtOF.setTopText(poisBean.getName());
                 TerminiEntity terminiEntity = new TerminiEntity();
                 terminiEntity.setLatitude(poisBean.getPoint().getY());
@@ -453,16 +452,16 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                 localSuperEditTextPlus.setMiddleText(terminiEntity.getAddressDescribeName());
                 tempTerminiEntity.put(position, terminiEntity);
             }
-        } else if(requestCode == REQUEST_IMPROVE_ORDER_CODE && resultCode ==RESULT_IMPROVE_ORDER_CODE){
-            if(superEditTextsMap!=null){
+        } else if (requestCode == REQUEST_IMPROVE_ORDER_CODE && resultCode == RESULT_IMPROVE_ORDER_CODE) {
+            if (superEditTextsMap != null) {
                 for (int i = 0; i < superEditTextsMap.size(); i++) {
                     SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(i);
                     tempTerminiEntity.clear();
                     localSuperEditTextPlus.setTopText("");
                     localSuperEditTextPlus.setMiddleText("");
-                    if(i == 0) {
+                    if (i == 0) {
                         localSuperEditTextPlus.setHintText("按此输入起点");
-                    }else{
+                    } else {
                         localSuperEditTextPlus.setHintText("按此输入目的地");
                     }
                 }
@@ -496,7 +495,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     }
                     bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
                     intent.putExtras(bundle);
-                    startActivityForResult(intent,REQUEST_IMPROVE_ORDER_CODE);
+                    startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE);
                 } else {
                     ToastUtil.showToast("车型数据有误");
                 }
@@ -506,5 +505,13 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         } else {
             ToastUtil.showToast("请填写地址");
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

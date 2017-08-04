@@ -6,24 +6,32 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.squareup.otto.Bus;
 import com.xjgj.mall.R;
 import com.xjgj.mall.injector.HasComponent;
 import com.xjgj.mall.ui.BaseActivity;
+import com.xjgj.mall.util.CommonEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements MainContract.View
         , HasComponent<MainComponent> {
 
-    @BindView(R.id.tv_title)
-    TextView mToolbarTitle;
     @BindView(R.id.frame_layout)
     FrameLayout mFrameLayout;
     @BindView(R.id.bnve)
@@ -31,6 +39,19 @@ public class MainActivity extends BaseActivity implements MainContract.View
 
     @Inject
     MainPresenter mPresenter;
+    @BindView(R.id.image_back)
+    ImageView mImageBack;
+    @BindView(R.id.text_title)
+    TextView mTextTitle;
+    @BindView(R.id.image_handle)
+    ImageView mImageHandle;
+    @BindView(R.id.text_handle)
+    TextView mTextHandle;
+    @BindView(R.id.relative_layout)
+    RelativeLayout mRelativeLayout;
+
+    @Inject
+    Bus mBus;
 
     private MainComponent mMainComponent;
 
@@ -61,6 +82,13 @@ public class MainActivity extends BaseActivity implements MainContract.View
     @Override
     public void initUiAndListener() {
         ButterKnife.bind(this);
+
+        mTextHandle.setText("全部订单");
+        mTextHandle.setTextSize(14);
+        mTextHandle.setTextColor(getResources().getColor(R.color.z5b5b5b));
+        mTextHandle.setClickable(true);
+        mTextHandle.setVisibility(View.VISIBLE);
+
         // 禁止所有动画效果
         mBottomNavigationViewEx.enableAnimation(false);
         mBottomNavigationViewEx.enableShiftingMode(false);
@@ -90,11 +118,19 @@ public class MainActivity extends BaseActivity implements MainContract.View
         mPresenter.initFragment();
     }
 
-
     @Override
-    public void setTitle(String title) {
-        mToolbarTitle.setText(title);
+    public void setTitle(int position, String title) {
+        mTextTitle.setText(title);
+        if(position == 1){
+            mTextHandle.setVisibility(View.VISIBLE);
+        }else{
+            mTextHandle.setVisibility(View.GONE);
+        }
     }
+
+    /**
+     * 筛选条件
+     */
 
     @Override
     public void addFragment(Fragment fragment) {
@@ -116,4 +152,60 @@ public class MainActivity extends BaseActivity implements MainContract.View
         return mMainComponent;
     }
 
+
+    @OnClick(R.id.text_handle)
+    public void mTextHandle() {
+        // 0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价,6 申诉中
+        final List<Type> typeList = new ArrayList<>();
+        typeList.add(new Type(-1, "全部订单"));
+        typeList.add(new Type(0, "待接单"));
+        typeList.add(new Type(1, "已接单"));
+        typeList.add(new Type(2, "服务中"));
+        typeList.add(new Type(3, "已完成"));
+        typeList.add(new Type(4, "已取消"));
+        typeList.add(new Type(5, "已评价"));
+        typeList.add(new Type(6, "申诉中"));
+        new MaterialDialog.Builder(MainActivity.this)
+                .title("筛选条件")
+                .items(typeList)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        Type type = typeList.get(which);
+                        mBus.post(new CommonEvent().new OrderTypeChangeEvent(type.getId(),type.getName()));
+                        mTextHandle.setText(type.getName());
+                    }
+                })
+                .show();
+    }
+
+    class Type {
+        public Type(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+        private int id;
+        private String name;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 }

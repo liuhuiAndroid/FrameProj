@@ -40,13 +40,12 @@ import static com.xjgj.mall.Constants.REQUEST_CERTIFICATION_CODE;
  */
 public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
 
-    @BindView(R.id.roundImageView)
-    CircleImageView mRoundImageView;
-
     @Inject
     Fragment3Presenter mPresenter;
     @Inject
     UserStorage mUserStorage;
+    @BindView(R.id.roundImageView)
+    CircleImageView mRoundImageView;
     @BindView(R.id.textName)
     TextView mTextName;
     @BindView(R.id.imageSex)
@@ -141,23 +140,22 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
     }
 
 
-
     /**
      * 营业执照
      */
     @OnClick(R.id.relativeGoYyzz)
     public void mRelativeGoYyzz() {
         Intent intent = new Intent(getActivity(), BusinessLicenceActivity.class);
-        startActivityForResult(intent,REQUEST_BUSINESS_LICENCE_CODE);
+        startActivityForResult(intent, REQUEST_BUSINESS_LICENCE_CODE);
     }
 
     /**
      * 实名认证
      */
     @OnClick(R.id.relativeGoSmrr)
-    public void mRelativeGoSmrr(){
+    public void mRelativeGoSmrr() {
         Intent intent = new Intent(getActivity(), CertificationActivity.class);
-        startActivityForResult(intent,REQUEST_CERTIFICATION_CODE);
+        startActivityForResult(intent, REQUEST_CERTIFICATION_CODE);
     }
 
 

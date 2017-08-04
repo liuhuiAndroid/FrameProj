@@ -15,7 +15,7 @@ public interface MainContract {
 
     interface View extends BaseView{
 
-        void setTitle(String title);
+        void setTitle(int position,String title);
 
         void addFragment(Fragment fragment);
 

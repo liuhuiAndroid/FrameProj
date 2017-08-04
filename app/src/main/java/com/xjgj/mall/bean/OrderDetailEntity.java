@@ -21,13 +21,30 @@ public class OrderDetailEntity {
     private String remark;
     private String serviceTime;
     private double volume;
-    private String carType;
+    private int carType;
+    private String carName;
     private String createTime;
     private int status;
     private String serviceType;
     private String carNo;
     private List<EvaluationBean> evaluation;
     private List<AddressListBean> addressList;
+
+    public int getCarType() {
+        return carType;
+    }
+
+    public void setCarType(int carType) {
+        this.carType = carType;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
 
     public String getCarNo() {
         return carNo;
@@ -139,14 +156,6 @@ public class OrderDetailEntity {
 
     public void setVolume(double volume) {
         this.volume = volume;
-    }
-
-    public String getCarType() {
-        return carType;
-    }
-
-    public void setCarType(String carType) {
-        this.carType = carType;
     }
 
     public String getCreateTime() {

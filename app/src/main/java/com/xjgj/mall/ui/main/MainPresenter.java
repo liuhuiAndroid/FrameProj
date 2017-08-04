@@ -6,7 +6,7 @@ import android.util.SparseArray;
 
 import com.xjgj.mall.injector.PerActivity;
 import com.xjgj.mall.ui.BaseFragment;
-import com.xjgj.mall.ui.fragment2.Fragment2;
+import com.xjgj.mall.ui.fragment1.Fragment1;
 import com.xjgj.mall.ui.fragment3.Fragment3;
 import com.xjgj.mall.ui.fragment4.Fragment4;
 
@@ -68,20 +68,20 @@ public class MainPresenter implements MainContract.Presenter {
         mFragment = fragmentTabMap.get(nowSelect);
         switch (nowSelect) {
             case 0:
-                mMainView.setTitle("找车");
+                mMainView.setTitle(0,"找车");
                 break;
             case 1:
-                mMainView.setTitle("订单");
+                mMainView.setTitle(1,"订单");
                 break;
             case 2:
-                mMainView.setTitle("我");
+                mMainView.setTitle(2,"我");
                 break;
         }
         if (mFragment == null) {
             if (nowSelect == 0) {
                 mFragment = Fragment4.newInstance();
             } else if (nowSelect == 1) {
-                mFragment = Fragment2.newInstance();
+                mFragment = Fragment1.newInstance();
             } else if (nowSelect == 2) {
                 mFragment = Fragment3.newInstance();
             }

@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:background="@drawable/retry_button_background"
-            android:text="重试"
+            android:text="刷新"
             android:textColor="?android:attr/textColorSecondary"
             android:visibility="visible" />
 

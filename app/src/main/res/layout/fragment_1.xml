@@ -4,8 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <in.srain.cube.views.ptr.PtrFrameLayout
-        android:id="@+id/material_style_ptr_frame"
+    <com.android.frameproj.library.widget.MyPtrClassicFrameLayout
+        android:id="@+id/ptr_layout"
         xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +22,6 @@
             android:layout_height="wrap_content"
             />
 
-    </in.srain.cube.views.ptr.PtrFrameLayout>
+    </com.android.frameproj.library.widget.MyPtrClassicFrameLayout>
 
 </LinearLayout>

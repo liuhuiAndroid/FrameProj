@@ -310,7 +310,8 @@
                 android:layout_marginTop="30px"
                 android:background="@color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="52px"
