@@ -92,6 +92,13 @@ public class CertificationActivity extends BaseActivity implements Certification
         mTextTitle.setText("实名认证");
         mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
         mPresenter.realNameQuery();
+
+        int noUpload = getIntent().getIntExtra("noUpload", -1);
+        if(noUpload == 1){
+            mTextUpload.setVisibility(View.GONE);
+        }else{
+            mTextUpload.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

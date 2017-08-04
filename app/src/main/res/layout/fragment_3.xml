@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/md_white_1000">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,17 +23,17 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/roundImageView"
-                    android:layout_width="250px"
-                    android:layout_height="250px"
-                    android:layout_marginLeft="60px"
+                    android:layout_width="83dp"
+                    android:layout_height="83dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="45px"
-                    android:layout_marginTop="100px"
+                    android:layout_marginTop="33dp"
                     android:src="@drawable/header" />
 
                 <TextView
                     android:id="@+id/textName"
                     style="@style/normal_white_sixteen_text"
-                    android:layout_marginTop="115px"
+                    android:layout_marginTop="38dp"
                     android:layout_toRightOf="@id/roundImageView"
                     android:text="" />
 
@@ -50,7 +51,7 @@
                     android:id="@+id/textPhone"
                     style="@style/normal_white_sixteen_text"
                     android:layout_below="@id/textName"
-                    android:layout_marginTop="15px"
+                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/roundImageView"
                     android:text="" />
 
@@ -58,7 +59,7 @@
                     android:id="@+id/textShopName"
                     style="@style/normal_white_sixteen_text"
                     android:layout_below="@id/textPhone"
-                    android:layout_marginTop="20px"
+                    android:layout_marginTop="7dp"
                     android:layout_toRightOf="@id/roundImageView"
                     android:text="" />
 
@@ -66,7 +67,7 @@
                     android:id="@+id/textShopAddress"
                     style="@style/normal_white_sixteen_text"
                     android:layout_below="@id/textShopName"
-                    android:layout_marginTop="25px"
+                    android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/roundImageView"
                     android:text="" />
 
@@ -76,11 +77,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25px"
+                android:layout_marginTop="8dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingLeft="55px"
-                android:paddingRight="55px">
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,8 +101,8 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="120px"
-                        android:layout_height="120px"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/icon_personal_reg" />
 
                     <RelativeLayout
@@ -121,7 +122,7 @@
                             android:id="@+id/text_yyzz_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/text_y_y_z_z"
                             android:background="@drawable/rectangle_card_checked_corner_bg"
                             android:paddingBottom="2dp"
@@ -163,8 +164,8 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="120px"
-                        android:layout_height="120px"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:src="@drawable/icon_personal_name" />
 
                     <RelativeLayout
@@ -184,7 +185,7 @@
                             android:id="@+id/text_smrz_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="10dp"
                             android:layout_toRightOf="@id/text_s_m_r_z"
                             android:background="@drawable/rectangle_card_checked_corner_bg"
                             android:paddingBottom="2dp"
@@ -217,8 +218,8 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="187px"
-                android:layout_marginTop="25px"
-                android:layout_marginBottom="25px"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:id="@+id/btn_exit"
                 android:textSize="18sp"
                 android:background="@color/white"

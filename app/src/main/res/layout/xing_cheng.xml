@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/normal_weight_f1f2f4_vertical"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+    <TextView
+        android:id="@+id/textD"
+        android:layout_marginTop="7dp"
+        android:textColor="@color/z868788"
+        android:layout_width="wrap_content"
+        android:text="@string/begin_d"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textDAddress"
+        android:layout_toRightOf="@id/textD"
+        android:layout_alignTop="@id/textD"
+        android:textColor="@color/z262627"
+        android:layout_width="wrap_content"
+        android:text="日月光测有限公司"
+        android:layout_marginLeft="12dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textDetailsAddress"
+        android:layout_toRightOf="@id/textD"
+        android:layout_below="@id/textDAddress"
+        android:textColor="@color/z868788"
+        android:layout_width="wrap_content"
+        android:text="22幢8单元23室"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5px"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textConstantUser"
+        android:layout_toRightOf="@id/textD"
+        android:layout_below="@id/textDetailsAddress"
+        android:textColor="@color/z868788"
+        android:layout_width="wrap_content"
+        android:text="联系人"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5px"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textConstantUserName"
+        android:layout_toRightOf="@id/textConstantUser"
+        android:layout_below="@id/textDetailsAddress"
+        android:layout_marginBottom="7dp"
+        android:textColor="@color/z868788"
+        android:layout_width="wrap_content"
+        android:text="18815287534"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5px"
+        android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/viewShow"
+        android:layout_toRightOf="@id/textD"
+        android:layout_below="@id/textConstantUserName"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="12dp"
+        android:background="@color/zdfe0e1" />
+
+</RelativeLayout>

@@ -34,18 +34,18 @@
             <TextView
                 style="@style/normal_sixteen_text"
                 android:layout_gravity="left"
-                android:layout_marginBottom="35px"
-                android:layout_marginLeft="46px"
-                android:layout_marginRight="46px"
-                android:layout_marginTop="35px"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
                 android:text="@string/true_name"
                 android:textColor="@color/z262627"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
-                android:layout_marginLeft="47px"
-                android:layout_marginRight="47px"
+                android:layout_height="33dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:background="@drawable/rectangle_input_phone_corner_bg"
                 android:gravity="center|left"
                 android:orientation="horizontal">
@@ -54,8 +54,8 @@
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="40px"
-                    android:layout_marginRight="40px"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
                     android:background="@null"
                     android:gravity="center|left"
                     android:hint="@string/input_name"
@@ -72,18 +72,18 @@
                 android:id="@+id/textState"
                 style="@style/normal_sixteen_text"
                 android:layout_gravity="left"
-                android:layout_marginBottom="35px"
-                android:layout_marginLeft="46px"
-                android:layout_marginRight="46px"
-                android:layout_marginTop="35px"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
                 android:text="@string/id_card"
                 android:textColor="@color/z262627"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
-                android:layout_marginLeft="47px"
-                android:layout_marginRight="47px"
+                android:layout_height="33dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:background="@drawable/rectangle_input_phone_corner_bg"
                 android:gravity="center|left"
                 android:orientation="horizontal">
@@ -92,8 +92,8 @@
                     android:id="@+id/editIdCard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="40px"
-                    android:layout_marginRight="40px"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
                     android:background="@null"
                     android:digits="0123456789X"
                     android:gravity="center|left"
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="68px"
                 android:layout_marginRight="68px"
-                android:layout_marginTop="100px">
+                android:layout_marginTop="33dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -124,14 +124,14 @@
                     <ImageView
                         android:id="@+id/imageViewFront"
                         android:layout_width="wrap_content"
-                        android:layout_height="250px"
+                        android:layout_height="83dp"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/img_upload"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="25px"
+                        android:layout_marginTop="8dp"
                         android:text="@string/upload_front_id_card"
                         android:textColor="@color/z868788"
                         android:textSize="14sp"/>
@@ -149,13 +149,13 @@
                     <ImageView
                         android:id="@+id/imageViewProis"
                         android:layout_width="wrap_content"
-                        android:layout_height="250px"
+                        android:layout_height="83dp"
                         android:src="@drawable/img_upload"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="25px"
+                        android:layout_marginTop="8dp"
                         android:text="@string/upload_pros_id_card"
                         android:textColor="@color/z868788"
                         android:textSize="14sp"/>
@@ -185,9 +185,9 @@
         android:id="@+id/textUpload"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="35px"
-        android:layout_marginRight="35px"
-        android:layout_marginBottom="28px"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="9dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/rectangle_register_phone_lv_corner_bg"
         android:clickable="true"

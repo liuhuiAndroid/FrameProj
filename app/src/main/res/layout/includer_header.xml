@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="70px"
         android:layout_centerVertical="true"
-        android:paddingLeft="44px"
+        android:paddingLeft="15dp"
         android:paddingRight="80px"/>
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:paddingLeft="50px"
+        android:paddingLeft="17dp"
         android:paddingRight="24px"/>
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="44px"
+        android:layout_marginRight="15dp"
         android:clickable="true"
         android:text=""
         android:textColor="@color/zfb331f"

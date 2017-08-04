@@ -47,18 +47,18 @@
                 android:id="@+id/textState"
                 style="@style/normal_sixteen_text"
                 android:layout_gravity="left"
-                android:layout_marginBottom="15px"
-                android:layout_marginLeft="44px"
-                android:layout_marginRight="44px"
-                android:layout_marginTop="15px"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
                 android:text=""/>
 
             <ImageView
                 android:id="@+id/imageCard"
-                android:layout_width="700px"
-                android:layout_height="700px"
-                android:layout_marginBottom="30px"
-                android:layout_marginTop="30px"
+                android:layout_width="233dp"
+                android:layout_height="233dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/card_add"/>
 
         </LinearLayout>
@@ -69,10 +69,10 @@
         android:id="@+id/textUpload"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="35px"
-        android:layout_marginRight="35px"
-        android:layout_marginTop="28px"
-        android:layout_marginBottom="28px"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="9dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/rectangle_register_phone_lv_corner_bg"
         android:clickable="true"

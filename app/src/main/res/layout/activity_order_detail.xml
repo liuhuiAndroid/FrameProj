@@ -26,21 +26,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="270px"
                 android:background="@color/white"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageHeader"
                     android:layout_width="180px"
                     android:layout_height="180px"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="20px"
+                    android:layout_marginRight="7dp"
                     android:src="@drawable/header"/>
 
                 <ImageView
                     android:id="@+id/imageCallPhone"
-                    android:layout_width="120px"
-                    android:layout_height="120px"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@id/imageHeader"
                     android:src="@drawable/icon_tel"/>
@@ -58,7 +58,7 @@
                     android:id="@+id/textUserPhone"
                     style="@style/normal_sixteen_text"
                     android:layout_alignTop="@id/textUserName"
-                    android:layout_marginLeft="115px"
+                    android:layout_marginLeft="38dp"
                     android:layout_toRightOf="@id/textUserName"
                     android:text=""
                     android:textColor="@color/z262627"
@@ -105,17 +105,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="33dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingLeft="90px"
-                android:paddingRight="90px">
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="2px"
-                    android:layout_marginRight="22px"
+                    android:layout_marginRight="7dp"
                     android:layout_weight="1"
                     android:background="@color/zdfe0e1"/>
 
@@ -129,7 +129,7 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="2px"
-                    android:layout_marginLeft="22px"
+                    android:layout_marginLeft="7dp"
                     android:layout_weight="1"
                     android:background="@color/zdfe0e1"/>
             </LinearLayout>
@@ -139,9 +139,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="44px"
-                android:paddingRight="44px"
-                android:paddingTop="50px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="17dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
                     android:id="@+id/textCarType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35px"
+                    android:layout_marginLeft="12dp"
                     android:text=""
                     android:textColor="@color/z262627"/>
             </LinearLayout>
@@ -163,9 +163,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="44px"
-                android:paddingRight="44px"
-                android:paddingTop="20px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                     android:id="@+id/textUseCarTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35px"
+                    android:layout_marginLeft="12dp"
                     android:text=""
                     android:textColor="@color/z262627"/>
             </LinearLayout>
@@ -187,9 +187,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="44px"
-                android:paddingRight="44px"
-                android:paddingTop="20px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -201,7 +201,7 @@
                     android:id="@+id/textSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35px"
+                    android:layout_marginLeft="12dp"
                     android:text=""
                     android:textColor="@color/z262627"/>
             </LinearLayout>
@@ -212,9 +212,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="44px"
-                android:paddingRight="44px"
-                android:paddingTop="20px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -226,7 +226,7 @@
                     android:id="@+id/textWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35px"
+                    android:layout_marginLeft="12dp"
                     android:text=""
                     android:textColor="@color/z262627"/>
             </LinearLayout>
@@ -236,9 +236,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="44px"
-                android:paddingRight="44px"
-                android:paddingTop="20px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -250,7 +250,7 @@
                     android:id="@+id/textCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35px"
+                    android:layout_marginLeft="12dp"
                     android:text=""
                     android:textColor="@color/z262627"/>
             </LinearLayout>
@@ -260,9 +260,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="44px"
-                android:paddingRight="44px"
-                android:paddingTop="20px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -274,7 +274,7 @@
                     android:id="@+id/textOtherCost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35px"
+                    android:layout_marginLeft="12dp"
                     android:text=""
                     android:textColor="@color/z262627"/>
             </LinearLayout>
@@ -285,10 +285,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="30px"
-                android:paddingLeft="44px"
-                android:paddingRight="44px"
-                android:paddingTop="20px">
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -300,7 +300,7 @@
                     android:id="@+id/textOrderBeiZhu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35px"
+                    android:layout_marginLeft="12dp"
                     android:text=""
                     android:textColor="@color/z262627"/>
             </LinearLayout>
@@ -316,10 +316,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
-
-            </LinearLayout>
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -329,24 +327,107 @@
             <LinearLayout
                 android:id="@+id/linearOrderAgain"
                 android:layout_width="match_parent"
-                android:layout_height="120px"
-                android:layout_marginBottom="15px"
-                android:layout_marginTop="30px"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
                 <ImageView
-                    android:layout_width="52px"
-                    android:layout_height="52px"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
                     android:src="@drawable/icon_add"/>
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="30px"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/order_again"
                     android:textColor="@color/z535455"/>
+            </LinearLayout>
+
+
+            <!-- 评价 -->
+            <LinearLayout
+                android:id="@+id/linearComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linearMeShow"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:paddingTop="20px"
+                        android:text="@string/me_to_driver_comment"
+                        android:textColor="@color/z535455"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.xjgj.mall.ui.widget.StarBar
+                        android:id="@+id/starMeBarShow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        ratingbar:starCount="5"
+                        android:layout_marginTop="45px"
+                        android:layout_marginBottom="30px"
+                        ratingbar:starDistance="15dp"
+                        ratingbar:starEmpty="@drawable/star_empty"
+                        ratingbar:starFill="@drawable/star_full"
+                        ratingbar:starSize="40dp" />
+                    <TextView
+                        android:id="@+id/textMeComments"
+                        android:textSize="16sp"
+                        android:text=""
+                        android:textColor="@color/z535455"
+                        android:layout_marginBottom="15px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearOthersShow"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_marginTop="30px"
+                    android:layout_marginBottom="30px"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:paddingTop="20px"
+                        android:text="@string/driver_to_me_comment"
+                        android:textColor="@color/z535455"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.xjgj.mall.ui.widget.StarBar
+                        android:id="@+id/starOthersBarShow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        ratingbar:starCount="5"
+                        android:layout_marginTop="45px"
+                        android:layout_marginBottom="30px"
+                        ratingbar:starDistance="15dp"
+                        ratingbar:starEmpty="@drawable/star_empty"
+                        ratingbar:starFill="@drawable/star_full"
+                        ratingbar:starSize="40dp" />
+                    <TextView
+                        android:id="@+id/textOthersComments"
+                        android:layout_marginBottom="15px"
+                        android:textSize="16sp"
+                        android:text=""
+                        android:textColor="@color/z535455"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
 

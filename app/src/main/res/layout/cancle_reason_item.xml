@@ -6,10 +6,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="115px"
-        android:layout_marginLeft="42px"
-        android:layout_marginRight="42px"
-        android:layout_marginTop="25px"
+        android:layout_height="38dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rectangle_cancle_reason_item_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -17,9 +17,9 @@
         <ImageView
             android:id="@+id/imageShow"
             android:clickable="false"
-            android:layout_width="40px"
-            android:layout_height="40px"
-            android:layout_marginLeft="25px"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="45px"
             android:src="@drawable/chkbox_null" />
         <TextView

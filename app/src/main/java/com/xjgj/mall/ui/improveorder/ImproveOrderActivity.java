@@ -116,12 +116,13 @@ public class ImproveOrderActivity extends BaseActivity {
         mCartype = getIntent().getStringExtra("cartype");
         mCartypeName = getIntent().getStringExtra("cartypeName");
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
+
+        mEditTiJi.requestFocus();
     }
 
     // ==========================   时间选择控件  =================================
     private static final String[] HOUR =
-            new String[]{
-                    "00时", "01时", "02时", "03时", "04时", "05时", "06时", "07时",
+            new String[]{"00时", "01时", "02时", "03时", "04时", "05时", "06时", "07时",
                     "08时", "09时", "10时", "11时", "12时", "13时", "14时", "15时",
                     "16时", "17时", "18时", "19时", "20时", "21时", "22时", "23时"};
 
@@ -151,7 +152,7 @@ public class ImproveOrderActivity extends BaseActivity {
 
                     } else {
                         dayPosition = Integer.parseInt(dayPo);
-                        if (showContent.contains("立即用车")) {
+                        if (showContent.contains("现在")) {
                             mTextShowTime.setText("现在");
                         } else {
                             String con = showContent.replace("时", "").replace("分", "");
@@ -204,7 +205,7 @@ public class ImproveOrderActivity extends BaseActivity {
                     if (position == l) {
                         Info info = new Info();
                         info.setId(dayTime + HOUR[l]);
-                        info.setCity_name("立即用车");
+                        info.setCity_name("现在");
                         dayList.add(info);
                         Info info3 = new Info();
                         info3.setId("");

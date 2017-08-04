@@ -58,7 +58,7 @@
         <item name="android:textColor">@color/z262627</item>
         <item name="android:textSize">14sp</item>
         <item name="android:background">@null</item>
-        <item name="android:layout_marginLeft">30px</item>
+        <item name="android:layout_marginLeft">10dp</item>
         <item name="android:textColorHint">@color/z868788</item>
         <item name="android:singleLine">true</item>
         <item name="android:textCursorDrawable">@null</item>
@@ -83,8 +83,8 @@
         <item name="android:textColorHint">@color/z868788</item>
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center|left</item>
-        <item name="android:layout_marginLeft">125px</item>
-        <item name="android:layout_marginRight">30px</item>
+        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:layout_marginRight">10dp</item>
     </style>
 
     <style name="bottom_text" parent="normal_sixteen_text">

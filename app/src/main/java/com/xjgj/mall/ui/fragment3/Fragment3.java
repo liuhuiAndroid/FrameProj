@@ -3,9 +3,7 @@ package com.xjgj.mall.ui.fragment3;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +24,6 @@ import com.xjgj.mall.ui.main.MainComponent;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -170,7 +167,48 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
             mImageSex.setImageResource(R.drawable.icon_girl);
         }
         showState(homepageEntity.getFlgAuthBusiness(), mTextYyzzState);
+
+        // 营业执照
+        if( homepageEntity.getFlgAuthBusiness() == 0 || homepageEntity.getFlgAuthBusiness() == 3){
+            mRelativeGoYyzz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), BusinessLicenceActivity.class);
+                    startActivityForResult(intent, REQUEST_BUSINESS_LICENCE_CODE);
+                }
+            });
+        }else{
+            mRelativeGoYyzz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), BusinessLicenceActivity.class);
+                    intent.putExtra("noUpload",1);//不可上传
+                    startActivityForResult(intent, REQUEST_BUSINESS_LICENCE_CODE);
+                }
+            });
+        }
+
         showState(homepageEntity.getFlgAuthRealName(), mTextSmrzState);
+        //实名认证
+        if( homepageEntity.getFlgAuthRealName() == 0 || homepageEntity.getFlgAuthRealName() == 3){
+            mRelativeGoSmrr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CertificationActivity.class);
+                    startActivityForResult(intent, REQUEST_CERTIFICATION_CODE);
+                }
+            });
+        }else{
+            mRelativeGoSmrr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), CertificationActivity.class);
+                    intent.putExtra("noUpload",1);//不可上传
+                    startActivityForResult(intent, REQUEST_CERTIFICATION_CODE);
+                }
+            });
+        }
+
     }
 
     @Override
@@ -205,11 +243,4 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
         mPresenter.detachView();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 }

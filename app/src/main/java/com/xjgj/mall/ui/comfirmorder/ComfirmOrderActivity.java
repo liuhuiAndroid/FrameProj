@@ -81,6 +81,14 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     TextView mTextCount;
     @BindView(R.id.textCountShow)
     TextView mTextCountShow;
+    @BindView(R.id.textOtherService)
+    TextView mTextOtherService;
+    @BindView(R.id.textOtherServiceShow)
+    TextView mTextOtherServiceShow;
+    @BindView(R.id.textRemarks)
+    TextView mTextRemarks;
+    @BindView(R.id.textRemarksShow)
+    TextView mTextRemarksShow;
     /**
      * 订单信息
      */
@@ -138,6 +146,16 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
             mTextCountShow.setText(mOrderCarInfo.getCounts() + "个");
         } else {
             mTextCountShow.setText("暂无");
+        }
+        if (!TextUtils.isEmpty(mOrderCarInfo.getServiceType())) {
+            mTextOtherServiceShow.setText(mOrderCarInfo.getServiceType() );
+        } else {
+            mTextOtherServiceShow.setText("暂无");
+        }
+        if (!TextUtils.isEmpty(mOrderCarInfo.getRemark())) {
+            mTextRemarksShow.setText(mOrderCarInfo.getRemark() );
+        } else {
+            mTextRemarksShow.setText("暂无");
         }
 
         if (tempTerminiEntity != null && tempTerminiEntity.size() > 0) {

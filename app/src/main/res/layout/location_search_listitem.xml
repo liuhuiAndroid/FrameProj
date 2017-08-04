@@ -39,4 +39,5 @@
             android:textColor="@color/black_38_percent"
             android:textSize="12.0sp"/>
     </LinearLayout>
+
 </LinearLayout>

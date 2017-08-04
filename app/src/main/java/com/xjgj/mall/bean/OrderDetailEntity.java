@@ -12,6 +12,7 @@ public class OrderDetailEntity {
     private String contactMobile;
     private String avatarUrl;
 
+    private double starLevel;
     private double amount;
     private int orderId;
     private int counts;
@@ -29,6 +30,14 @@ public class OrderDetailEntity {
     private String carNo;
     private List<EvaluationBean> evaluation;
     private List<AddressListBean> addressList;
+
+    public double getStarLevel() {
+        return starLevel;
+    }
+
+    public void setStarLevel(double starLevel) {
+        this.starLevel = starLevel;
+    }
 
     public int getCarType() {
         return carType;
@@ -192,9 +201,18 @@ public class OrderDetailEntity {
 
     public static class EvaluationBean {
         private int userId;
-        private Object level;
+        private float level;
         private String createTime;
         private String content;
+        private int type;
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
 
         public int getUserId() {
             return userId;
@@ -204,11 +222,11 @@ public class OrderDetailEntity {
             this.userId = userId;
         }
 
-        public Object getLevel() {
+        public float getLevel() {
             return level;
         }
 
-        public void setLevel(Object level) {
+        public void setLevel(float level) {
             this.level = level;
         }
 

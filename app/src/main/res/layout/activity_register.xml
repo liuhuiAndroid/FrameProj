@@ -20,8 +20,8 @@
 
     <TextView
         android:id="@+id/text_type"
-        android:layout_marginTop="40px"
-        android:layout_marginLeft="35px"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="12dp"
         android:layout_width="match_parent"
         android:text="@string/phone_register"
         android:textSize="14sp"
@@ -31,19 +31,19 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="28px"
-        android:layout_marginLeft="35px"
-        android:layout_marginRight="35px"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/rectangle_input_phone_corner_bg"
         android:orientation="horizontal"
         android:gravity="center|left"
-        android:layout_height="150px">
+        android:layout_height="50dp">
         <TextView
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/register_one_shuo_ming"
             android:text="@string/phone"
-            android:layout_marginLeft="28px"
+            android:layout_marginLeft="9dp"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/editPhone"
@@ -53,8 +53,8 @@
             android:textColorHint="@color/zc3ccc4"
             android:hint="@string/phone_hint"
             android:background="@null"
-            android:layout_marginLeft="40px"
-            android:layout_marginRight="40px"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
             android:maxLength="11"
             android:inputType="number"
             android:gravity="center|left"
@@ -65,19 +65,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="28px"
-        android:layout_marginLeft="35px"
-        android:layout_marginRight="35px"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/rectangle_input_phone_corner_bg"
         android:orientation="horizontal"
         android:gravity="center|left"
-        android:layout_height="150px">
+        android:layout_height="50dp">
         <TextView
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/register_one_shuo_ming"
             android:text="@string/password"
-            android:layout_marginLeft="28px"
+            android:layout_marginLeft="9dp"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/editPassWord"
@@ -88,8 +88,8 @@
             android:textColorHint="@color/zc3ccc4"
             android:hint="@string/password_hint"
             android:background="@null"
-            android:layout_marginLeft="40px"
-            android:layout_marginRight="40px"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
             android:maxLength="11"
             android:inputType="textPassword"
             android:gravity="center|left"
@@ -99,19 +99,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="28px"
-        android:layout_marginLeft="35px"
-        android:layout_marginRight="35px"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/rectangle_input_phone_corner_bg"
         android:orientation="horizontal"
         android:gravity="center|left"
-        android:layout_height="150px">
+        android:layout_height="50dp">
         <TextView
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/register_one_shuo_ming"
             android:text="@string/nick_name"
-            android:layout_marginLeft="28px"
+            android:layout_marginLeft="9dp"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/editNickName"
@@ -122,8 +122,8 @@
             android:textColorHint="@color/zc3ccc4"
             android:hint="@string/nick_name_hint"
             android:background="@null"
-            android:layout_marginLeft="40px"
-            android:layout_marginRight="40px"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
             android:maxLength="11"
             android:inputType="text"
             android:gravity="center|left"
@@ -133,19 +133,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="28px"
-        android:layout_marginLeft="35px"
-        android:layout_marginRight="35px"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/rectangle_input_phone_corner_bg"
         android:orientation="horizontal"
         android:gravity="center|left"
-        android:layout_height="150px">
+        android:layout_height="50dp">
         <TextView
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/register_one_shuo_ming"
             android:text="@string/yan_zheng_ma"
-            android:layout_marginLeft="28px"
+            android:layout_marginLeft="9dp"
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/editIdentifyingCode"
@@ -156,8 +156,8 @@
             android:textColorHint="@color/zc3ccc4"
             android:hint="@string/yan_zheng_ma_hint"
             android:background="@null"
-            android:layout_marginLeft="40px"
-            android:layout_marginRight="40px"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
             android:maxLength="11"
             android:inputType="number"
             android:gravity="center|left"
@@ -165,8 +165,8 @@
             android:layout_height="match_parent" />
         <TextView
             android:id="@+id/text_get_verification_code"
-            android:layout_width="240px"
-            android:layout_height="100px"
+            android:layout_width="76dp"
+            android:layout_height="33dp"
             android:clickable="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -182,16 +182,16 @@
     <TextView
         android:id="@+id/textRegister"
         android:layout_width="match_parent"
-        android:layout_marginLeft="35px"
-        android:layout_marginRight="35px"
-        android:layout_marginTop="28px"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="9dp"
         android:gravity="center"
         android:clickable="true"
         android:textColor="@color/white"
         android:text="@string/register"
         android:textSize="18sp"
         android:background="@drawable/rectangle_register_phone_lv_corner_bg"
-        android:layout_height="150px" />
+        android:layout_height="50dp" />
 
 </LinearLayout>
 

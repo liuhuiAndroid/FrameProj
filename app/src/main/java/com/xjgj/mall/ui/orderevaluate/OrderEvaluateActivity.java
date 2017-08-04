@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.xjgj.mall.R.id.textPendingEvaluation;
 
@@ -53,7 +54,7 @@ public class OrderEvaluateActivity extends BaseActivity implements OrderEvaluate
     @BindView(R.id.linearClude)
     LinearLayout mLinearClude;
     @BindView(R.id.imageHeader)
-    ImageView mImageHeader;
+    CircleImageView mImageHeader;
     @BindView(R.id.imageCallPhone)
     ImageView mImageCallPhone;
     @BindView(R.id.textUserName)
@@ -121,7 +122,7 @@ public class OrderEvaluateActivity extends BaseActivity implements OrderEvaluate
         });
         mTextPaiZhao.setText(carNo);
         mTextUserPhone.setText(contactMobile);
-
+        mStarBar.setStarMark(5);
 
         mPresenter.attachView(this);
         mImageBack.setImageResource(R.drawable.btn_back);

@@ -10,12 +10,12 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingLeft="44px"
-        android:paddingRight="44px">
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120px"
+            android:layout_height="40dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -29,8 +29,8 @@
                 android:id="@+id/textTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25px"
-                android:layout_marginRight="25px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:text="2016-10-18 12:20  (金杯)"
                 android:textColor="@color/z262627"
@@ -51,22 +51,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40px"
+            android:layout_marginTop="13dp"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <ImageView
 
-                android:layout_width="50px"
-                android:layout_height="60px"
-                android:layout_marginLeft="30px"
+                android:layout_width="17dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/point_start"/>
 
             <TextView
                 android:id="@+id/textStart"
                 style="@style/normal_sixteen_text"
-                android:layout_marginLeft="25px"
-                android:layout_marginRight="25px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:text="西郊国际农产品交易市场"
                 android:textColor="@color/z262627"
                 android:textSize="14sp"/>
@@ -76,22 +76,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40px"
-            android:layout_marginTop="40px"
+            android:layout_marginBottom="13dp"
+            android:layout_marginTop="13dp"
             android:gravity="center|left"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50px"
-                android:layout_height="60px"
-                android:layout_marginLeft="30px"
+                android:layout_width="17dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/point_end"/>
 
             <TextView
                 android:id="@+id/textEnd"
                 style="@style/normal_sixteen_text"
-                android:layout_marginLeft="25px"
-                android:layout_marginRight="25px"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:text="美罗城"
                 android:textColor="@color/z262627"
                 android:textSize="14sp"/>
@@ -113,7 +113,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120px"
+            android:layout_height="40dp"
             android:gravity="center|left"
             android:orientation="horizontal">
 
@@ -121,7 +121,7 @@
                 android:id="@+id/textMoneyCost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="25px"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:text="费用：￥360.0"
                 android:textColor="@color/z262627"
@@ -137,8 +137,8 @@
                 android:background="@drawable/rectangle_yzm_lv_corner_bg"
                 android:clickable="true"
                 android:gravity="center"
-                android:paddingLeft="30px"
-                android:paddingRight="30px"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="@string/want_discusses"
                 android:textColor="@color/zfb331f"
                 android:textSize="12sp"/>
@@ -148,13 +148,13 @@
                 style="@style/normal_sixteen_text"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="17px"
-                android:layout_marginLeft="20px"
+                android:layout_marginLeft="7dp"
                 android:layout_marginTop="17px"
                 android:background="@drawable/rectangle_yzm_corner_bg"
                 android:clickable="true"
                 android:gravity="center"
-                android:paddingLeft="30px"
-                android:paddingRight="30px"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="@string/shen_su"
                 android:textColor="@color/red"
                 android:textSize="12sp"/>
@@ -164,13 +164,13 @@
                 style="@style/normal_sixteen_text"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="17px"
-                android:layout_marginLeft="20px"
+                android:layout_marginLeft="7dp"
                 android:layout_marginTop="17px"
                 android:background="@drawable/rectangle_order_type_again_bg"
                 android:clickable="true"
                 android:gravity="center"
-                android:paddingLeft="30px"
-                android:paddingRight="30px"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="@string/order_again"
                 android:textColor="@color/z262627"
                 android:textSize="12sp"/>

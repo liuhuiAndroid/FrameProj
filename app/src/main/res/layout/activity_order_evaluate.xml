@@ -36,21 +36,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="270px"
                 android:background="@color/white"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageHeader"
                     android:layout_width="180px"
                     android:layout_height="180px"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="20px"
+                    android:layout_marginRight="7dp"
                     android:src="@drawable/header"/>
 
                 <ImageView
                     android:id="@+id/imageCallPhone"
-                    android:layout_width="120px"
-                    android:layout_height="120px"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@id/imageHeader"
                     android:src="@drawable/icon_tel"/>
@@ -68,7 +68,7 @@
                     android:id="@+id/textUserPhone"
                     style="@style/normal_sixteen_text"
                     android:layout_alignTop="@id/textUserName"
-                    android:layout_marginLeft="115px"
+                    android:layout_marginLeft="38dp"
                     android:layout_toRightOf="@id/textUserName"
                     android:text=""
                     android:textColor="@color/z262627"
@@ -115,17 +115,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100px"
+                android:layout_height="33dp"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingLeft="90px"
-                android:paddingRight="90px">
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="2px"
-                    android:layout_marginRight="22px"
+                    android:layout_marginRight="7dp"
                     android:layout_weight="1"
                     android:background="@color/zdfe0e1"/>
 
@@ -146,18 +146,18 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300px"
+                android:layout_height="100dp"
                 android:layout_marginBottom="70px"
-                android:layout_marginLeft="44px"
-                android:layout_marginRight="44px"
-                android:layout_marginTop="115px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="38dp"
                 android:background="@drawable/rectangle_cancle_reason_item_bg">
 
                 <EditText
                     android:id="@+id/editShaoHua"
                     android:layout_width="match_parent"
-                    android:layout_height="300px"
-                    android:layout_margin="20px"
+                    android:layout_height="100dp"
+                    android:layout_margin="7dp"
                     android:background="@null"
                     android:gravity="top|left"
                     android:hint="@string/driver_discuss"
@@ -172,8 +172,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="20px"
-                    android:layout_marginRight="20px"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginRight="7dp"
                     android:text="60/60"
                     android:textColor="@color/z868788"
                     android:textCursorDrawable="@null"/>
@@ -189,10 +189,10 @@
                 <TextView
                     android:id="@+id/textPendingEvaluation"
                     android:layout_width="match_parent"
-                    android:layout_height="150px"
+                    android:layout_height="50dp"
                     android:layout_marginBottom="65px"
-                    android:layout_marginLeft="35px"
-                    android:layout_marginRight="35px"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
                     android:layout_marginTop="65px"
                     android:background="@drawable/rectangle_register_phone_lv_corner_bg"
                     android:clickable="true"

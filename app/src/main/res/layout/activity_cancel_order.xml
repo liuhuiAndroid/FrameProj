@@ -33,8 +33,8 @@
     <TextView
         android:id="@+id/textCancleOrder"
         android:layout_width="match_parent"
-        android:layout_height="150px"
-        android:layout_margin="35px"
+        android:layout_height="50dp"
+        android:layout_margin="12dp"
         android:background="@drawable/rectangle_register_phone_lv_corner_bg"
         android:clickable="true"
         android:gravity="center"

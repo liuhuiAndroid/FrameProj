@@ -27,9 +27,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:layout_marginLeft="44px"
-            android:layout_marginRight="44px"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/rectangle_register_phone_white_corner_bg"
             android:orientation="vertical"
             android:visibility="gone">
@@ -37,7 +37,7 @@
             <TextView
                 android:id="@+id/textMoney"
                 android:layout_width="match_parent"
-                android:layout_height="150px"
+                android:layout_height="50dp"
                 android:gravity="center"
                 android:hint=""
                 android:textColor="@color/red"
@@ -48,11 +48,11 @@
         <TextView
             android:id="@+id/textNext"
             android:layout_width="match_parent"
-            android:layout_height="150px"
-            android:layout_marginBottom="28px"
-            android:layout_marginLeft="44px"
-            android:layout_marginRight="44px"
-            android:layout_marginTop="28px"
+            android:layout_height="50dp"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="9dp"
             android:background="@drawable/rectangle_register_phone_lv_corner_bg"
             android:clickable="true"
             android:gravity="center"
@@ -79,23 +79,23 @@
             <LinearLayout
                 android:id="@+id/linearUpdateTime"
                 android:layout_width="match_parent"
-                android:layout_height="150px"
-                android:layout_marginBottom="30px"
-                android:layout_marginTop="30px"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/rectangle_get_order_corner_bg"
                 android:gravity="center|left"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:layout_width="60px"
-                    android:layout_height="60px"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/icon_time"/>
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="@string/use_car_time"
                     android:textColor="@color/z535455"
                     android:textSize="14sp"/>
@@ -104,7 +104,7 @@
                     android:id="@+id/textShowTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="30px"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:textColor="@color/red"
                     android:textSize="16sp"
@@ -114,7 +114,7 @@
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginRight="30px"
+                    android:layout_marginRight="10dp"
                     android:text="预约"
                     android:textColor="@color/red"
                     android:textSize="14sp"/>
@@ -131,22 +131,22 @@
             <!-- 体积-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150px"
+                android:layout_height="50dp"
                 android:background="@color/white"
                 android:clickable="true"
                 android:gravity="center|left"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="55px"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/icon_extra"/>
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="@string/tiJi"
                     android:textColor="@color/z262627"
                     android:textSize="14sp"/>
@@ -169,28 +169,28 @@
             <View
                 style="@style/ZddddddLineOneStyle"
                 android:layout_height="0.6dp"
-                android:layout_marginLeft="44px"
+                android:layout_marginLeft="15dp"
                 android:background="@color/zcbcdce"/>
 
             <!-- 重量 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150px"
+                android:layout_height="50dp"
                 android:background="@color/white"
                 android:clickable="true"
                 android:gravity="center|left"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="55px"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/icon_extra"/>
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="@string/weight"
                     android:textColor="@color/z262627"
                     android:textSize="14sp"/>
@@ -213,28 +213,28 @@
             <View
                 style="@style/ZddddddLineOneStyle"
                 android:layout_height="0.6dp"
-                android:layout_marginLeft="44px"
+                android:layout_marginLeft="15dp"
                 android:background="@color/zcbcdce"/>
 
             <!-- 数量 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150px"
+                android:layout_height="50dp"
                 android:background="@color/white"
                 android:clickable="true"
                 android:gravity="center|left"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="55px"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/icon_extra"/>
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="箱数(个)"
                     android:textColor="@color/z262627"
                     android:textSize="14sp"/>
@@ -257,29 +257,29 @@
 
             <View
                 style="@style/ZddddddLineOneStyle"
-                android:layout_marginTop="30px"
+                android:layout_marginTop="10dp"
                 android:background="@color/zcbcdce"/>
 
             <!-- 额外服务 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150px"
+                android:layout_height="50dp"
                 android:background="@color/white"
                 android:clickable="true"
                 android:gravity="center|left"
                 android:onClick="extraService"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="55px"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/icon_extra"/>
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="@string/extra_service"
                     android:textColor="@color/z262627"
                     android:textSize="14sp"/>
@@ -288,7 +288,7 @@
                     android:id="@+id/textExtraService"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="30px"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:hint="@string/extra__service"
@@ -307,29 +307,29 @@
             <View
                 style="@style/ZddddddLineOneStyle"
                 android:layout_height="0.6dp"
-                android:layout_marginLeft="44px"
+                android:layout_marginLeft="15dp"
                 android:background="@color/zcbcdce"/>
 
             <!-- 给司机捎句话 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150px"
+                android:layout_height="50dp"
                 android:background="@color/white"
                 android:clickable="true"
                 android:gravity="center|left"
                 android:onClick="shaoHua"
-                android:paddingLeft="44px"
-                android:paddingRight="44px">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <ImageView
-                    android:layout_width="55px"
-                    android:layout_height="55px"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:src="@drawable/icon_write"/>
 
                 <TextView
                     style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="30px"
-                    android:layout_marginRight="30px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="@string/shao_hua"
                     android:textColor="@color/z262627"
                     android:textSize="14sp"/>
@@ -338,7 +338,7 @@
                     android:id="@+id/textShaoHua"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="30px"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:hint="@string/shao__hua"

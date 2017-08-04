@@ -22,9 +22,9 @@
     <TextView
         android:id="@+id/textCancleOrder"
         android:layout_width="match_parent"
-        android:layout_height="150px"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="35px"
+        android:layout_margin="12dp"
         android:background="@drawable/rectangle_register_phone_lv_corner_bg"
         android:clickable="true"
         android:gravity="center"
@@ -54,9 +54,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25px"
-                android:layout_marginLeft="47px"
-                android:layout_marginTop="47px"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:text="上传图片"
                 android:textColor="@color/z868788"
                 android:textSize="16sp"/>
@@ -64,37 +64,37 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="47px">
+                android:layout_marginLeft="16dp">
 
                 <ImageView
                     android:id="@+id/imageOne"
-                    android:layout_width="150px"
-                    android:layout_height="150px"
-                    android:layout_marginRight="20px"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="7dp"
                     android:src="@drawable/btn_upfile"/>
 
                 <ImageView
                     android:id="@+id/imageTwo"
-                    android:layout_width="150px"
-                    android:layout_height="150px"
-                    android:layout_marginRight="20px"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="7dp"
                     android:src="@drawable/btn_upfile"/>
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300px"
+                android:layout_height="100dp"
                 android:layout_marginBottom="157px"
-                android:layout_marginLeft="44px"
-                android:layout_marginRight="44px"
-                android:layout_marginTop="115px"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="38dp"
                 android:background="@drawable/rectangle_cancle_reason_item_bg">
 
                 <EditText
                     android:id="@+id/editShaoHua"
                     android:layout_width="match_parent"
-                    android:layout_height="300px"
-                    android:layout_margin="20px"
+                    android:layout_height="100dp"
+                    android:layout_margin="7dp"
                     android:background="@null"
                     android:gravity="top|left"
                     android:hint="@string/all_no"
@@ -109,8 +109,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="20px"
-                    android:layout_marginRight="20px"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginRight="7dp"
                     android:text="60/60"
                     android:textColor="@color/z868788"
                     android:textCursorDrawable="@null"/>

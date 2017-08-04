@@ -15,21 +15,21 @@
         android:layout_width="match_parent"
         android:gravity="center|left"
         android:background="@color/white"
-        android:layout_height="140px">
+        android:layout_height="47dp">
 
         <EditText
             android:id="@+id/textAddress"
             style="@style/normal_fourteen_edittext"
             android:layout_marginLeft="0px"
-            android:paddingRight="44px"
-            android:paddingLeft="128px"
+            android:paddingRight="15dp"
+            android:paddingLeft="43dp"
             android:text=""
             android:focusable="false"
             />
 
         <ImageView
-            android:layout_width="53px"
-            android:layout_marginLeft="44px"
+            android:layout_width="18dp"
+            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
             android:src="@drawable/icon_find"
             android:layout_height="wrap_content" />
@@ -45,19 +45,19 @@
     <View
         style="@style/ZddddddLineOneStyle"
         android:layout_height="1px"
-        android:layout_marginLeft="44px"
+        android:layout_marginLeft="15dp"
         android:background="@color/zcbcdce"/>
 
     <LinearLayout
         android:clickable="true"
         android:layout_width="match_parent"
-        android:paddingRight="44px"
-        android:paddingLeft="44px"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:gravity="center|left"
         android:background="@color/white"
-        android:layout_height="140px">
+        android:layout_height="47dp">
         <ImageView
-            android:layout_width="53px"
+            android:layout_width="18dp"
             android:src="@drawable/img_address"
             android:layout_height="wrap_content" />
         <EditText
@@ -77,15 +77,15 @@
 
     <LinearLayout
         android:clickable="true"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:paddingRight="44px"
-        android:paddingLeft="44px"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:gravity="center|left"
         android:background="@color/white"
-        android:layout_height="140px">
+        android:layout_height="47dp">
         <ImageView
-            android:layout_width="53px"
+            android:layout_width="18dp"
             android:src="@drawable/img_contact"
             android:layout_height="wrap_content" />
         <EditText
@@ -104,13 +104,13 @@
     <LinearLayout
         android:clickable="true"
         android:layout_width="match_parent"
-        android:paddingRight="44px"
-        android:paddingLeft="44px"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:gravity="center|left"
         android:background="@color/white"
-        android:layout_height="140px">
+        android:layout_height="47dp">
         <ImageView
-            android:layout_width="53px"
+            android:layout_width="18dp"
             android:src="@drawable/img_mobile"
             android:layout_height="wrap_content" />
         <EditText
@@ -128,10 +128,10 @@
     <TextView
         android:id="@+id/textOk"
         android:layout_width="match_parent"
-        android:layout_marginLeft="44px"
-        android:layout_marginRight="44px"
-        android:layout_marginTop="40px"
-        android:layout_marginBottom="28px"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="9dp"
         android:gravity="center"
         android:clickable="true"
         android:onClick="ok"
@@ -139,7 +139,7 @@
         android:text="@string/ok"
         android:textSize="18sp"
         android:background="@drawable/rectangle_register_phone_lv_corner_bg"
-        android:layout_height="150px" />
+        android:layout_height="50dp" />
 </LinearLayout>
 
 

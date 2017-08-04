@@ -96,6 +96,12 @@ public class BusinessLicenceActivity extends BaseActivity implements BusinessLic
         mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
         mPresenter.photoQuery();
 
+        int noUpload = getIntent().getIntExtra("noUpload", -1);
+        if(noUpload == 1){
+            mTextUpload.setVisibility(View.GONE);
+        }else{
+            mTextUpload.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL;
@@ -50,7 +51,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @BindView(R.id.relative_layout)
     RelativeLayout mRelativeLayout;
     @BindView(R.id.imageHeader)
-    ImageView mImageHeader;
+    CircleImageView mImageHeader;
     @BindView(R.id.imageCallPhone)
     ImageView mImageCallPhone;
     @BindView(R.id.textUserName)
@@ -85,6 +86,20 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     ScrollView mScrollView;
     @BindView(R.id.textCount)
     TextView mTextCount;
+    @BindView(R.id.starMeBarShow)
+    StarBar mStarMeBarShow;
+    @BindView(R.id.textMeComments)
+    TextView mTextMeComments;
+    @BindView(R.id.linearMeShow)
+    LinearLayout mLinearMeShow;
+    @BindView(R.id.starOthersBarShow)
+    StarBar mStarOthersBarShow;
+    @BindView(R.id.textOthersComments)
+    TextView mTextOthersComments;
+    @BindView(R.id.linearOthersShow)
+    LinearLayout mLinearOthersShow;
+    @BindView(R.id.linearComments)
+    LinearLayout mLinearComments;
     private String mContactMobile;
 
     @Override
@@ -130,6 +145,49 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @Override
     public void orderDetailResult(final OrderDetailEntity orderDetailEntity) {
         if (orderDetailEntity != null) {
+
+            if (orderDetailEntity.getAddressList() != null && orderDetailEntity.getAddressList().size() > 0) {
+
+                mStarBar.setStarMark((float) orderDetailEntity.getStarLevel());
+                mStarBar.setStarMark(5);
+
+                int len = orderDetailEntity.getAddressList().size();
+
+                for (int j = 0; j < orderDetailEntity.getAddressList().size(); j++) {
+
+                    OrderDetailEntity.AddressListBean addressListBean = orderDetailEntity.getAddressList().get(j);
+
+                    View view = getLayoutInflater().inflate(R.layout.xing_cheng, null);
+
+                    if (j == 0) {
+                        view.findViewById(R.id.viewShow).setVisibility(View.GONE);
+                        ((TextView) view.findViewById(R.id.textD)).setText(getResources().getString(R.string.begin_d));
+                    } else {
+                        if (len == 1) {
+                            ((TextView) view.findViewById(R.id.textD)).setText(getResources().getString(R.string.target_d));
+                        } else {
+                            if (j != len - 1) {
+                                ((TextView) view.findViewById(R.id.textD)).setText(getResources().getString(R.string.pass_d));
+                            } else {
+                                ((TextView) view.findViewById(R.id.textD)).setText(getResources().getString(R.string.target_d));
+                            }
+                        }
+
+                        if (j == len - 1) {
+                            view.findViewById(R.id.viewShow).setVisibility(View.GONE);
+                        } else {
+                            view.findViewById(R.id.viewShow).setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    ((TextView) view.findViewById(R.id.textDAddress)).setText(addressListBean.getAddress());
+                    ((TextView) view.findViewById(R.id.textDetailsAddress)).setText(addressListBean.getAddressName());
+                    ((TextView) view.findViewById(R.id.textConstantUser)).setText(addressListBean.getReceiverName());
+                    ((TextView) view.findViewById(R.id.textConstantUserName)).setText(addressListBean.getReceiverPhone());
+                    mLinearAddXingCheng.addView(view);
+                }
+            }
+
             mTextCarType.setText(orderDetailEntity.getCarName());
             mTextUseCarTime.setText(orderDetailEntity.getServiceTime());
             if (TextUtils.isEmpty(orderDetailEntity.getServiceType())) {
@@ -205,10 +263,32 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                         intent.putExtras(bundle);
                         intent.putExtra("cartypeName", orderDetailEntity.getCarName() + "");
                         intent.putExtra("cartype", orderDetailEntity.getCarType() + "");
-                        intent.putExtra("comefrom",1);// 1代表从订单详情进入，2代表从找车进入
+                        intent.putExtra("comefrom", 1);// 1代表从订单详情进入，2代表从找车进入
                         startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL);
                     }
                 });
+            }
+
+            if(orderDetailEntity.getStatus() == 5){
+                mLinearComments.setVisibility(View.VISIBLE);
+                mLinearOthersShow.setVisibility(View.GONE);
+                mLinearMeShow.setVisibility(View.GONE);
+                for (int i = 0; i < orderDetailEntity.getEvaluation().size(); i++) {
+                    OrderDetailEntity.EvaluationBean evaluationBean = orderDetailEntity.getEvaluation().get(i);
+                    // 评价方式 1 商户评价 2 司机评价
+                    if(evaluationBean.getType() == 1 ){
+                        mLinearMeShow.setVisibility(View.VISIBLE);
+                        mTextMeComments.setText(evaluationBean.getContent());
+                        mStarMeBarShow.setStarMark(evaluationBean.getLevel());
+                    }else if(evaluationBean.getType() == 2){
+                        mLinearOthersShow.setVisibility(View.VISIBLE);
+                        mTextOthersComments.setText(evaluationBean.getContent());
+                        mStarOthersBarShow.setStarMark(evaluationBean.getLevel());
+                    }
+                }
+
+            }else{
+                mLinearComments.setVisibility(View.GONE);
             }
         }
     }
@@ -216,7 +296,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL && resultCode == RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL){
+        if (requestCode == REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL && resultCode == RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL) {
             finish();
         }
     }
