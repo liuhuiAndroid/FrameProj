@@ -3,6 +3,7 @@ package com.xjgj.mall.ui.orderdetail;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.frameproj.library.util.imageloader.ImageLoaderUtil;
+import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.TerminiEntity;
@@ -99,6 +101,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     LinearLayout mLinearOthersShow;
     @BindView(R.id.linearComments)
     LinearLayout mLinearComments;
+
+    @BindView(R.id.avLoadingIndicatorView)
+    AVLoadingIndicatorView mAvLoadingIndicatorView;
+
     private String mContactMobile;
 
     @Override
@@ -118,6 +124,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @Override
     public void initUiAndListener() {
         mPresenter.attachView(this);
+        mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
+
         mImageBack.setImageResource(R.drawable.btn_back);
         mImageBack.setVisibility(View.VISIBLE);
         mImageBack.setOnClickListener(new View.OnClickListener() {
@@ -128,21 +136,28 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         });
         mTextTitle.setText("订单详情");
         mPresenter.orderDetail(getIntent().getIntExtra("orderId", -1));
-
     }
 
     @Override
     public void showLoading() {
-
+        mAvLoadingIndicatorView.show();
     }
 
     @Override
     public void hideLoading() {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAvLoadingIndicatorView.hide();
+            }
+        }, 500);
     }
 
     @Override
     public void orderDetailResult(final OrderDetailEntity orderDetailEntity) {
+
+        mScrollView.setVisibility(View.VISIBLE);
+
         if (orderDetailEntity != null) {
 
             if (orderDetailEntity.getAddressList() != null && orderDetailEntity.getAddressList().size() > 0) {
@@ -267,25 +282,25 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 });
             }
 
-            if(orderDetailEntity.getStatus() == 5){
+            if (orderDetailEntity.getStatus() == 5) {
                 mLinearComments.setVisibility(View.VISIBLE);
                 mLinearOthersShow.setVisibility(View.GONE);
                 mLinearMeShow.setVisibility(View.GONE);
                 for (int i = 0; i < orderDetailEntity.getEvaluation().size(); i++) {
                     OrderDetailEntity.EvaluationBean evaluationBean = orderDetailEntity.getEvaluation().get(i);
                     // 评价方式 1 商户评价 2 司机评价
-                    if(evaluationBean.getType() == 1 ){
+                    if (evaluationBean.getType() == 1) {
                         mLinearMeShow.setVisibility(View.VISIBLE);
                         mTextMeComments.setText(evaluationBean.getContent());
                         mStarMeBarShow.setStarMark(evaluationBean.getLevel());
-                    }else if(evaluationBean.getType() == 2){
+                    } else if (evaluationBean.getType() == 2) {
                         mLinearOthersShow.setVisibility(View.VISIBLE);
                         mTextOthersComments.setText(evaluationBean.getContent());
                         mStarOthersBarShow.setStarMark(evaluationBean.getLevel());
                     }
                 }
 
-            }else{
+            } else {
                 mLinearComments.setVisibility(View.GONE);
             }
         }

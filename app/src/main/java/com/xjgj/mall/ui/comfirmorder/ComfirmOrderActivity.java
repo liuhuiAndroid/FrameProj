@@ -163,11 +163,13 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
                 View view = LayoutInflater.from(this).inflate(R.layout.item_termini, null);
                 TextView t = (TextView) view.findViewById(R.id.muDiDi);
                 TextView textMuDiDi = (TextView) view.findViewById(R.id.textMuDiDi);
+                TextView textMuDiDiDetail = (TextView) view.findViewById(R.id.textMuDiDiDetail);
                 String edtalName = tempTerminiEntity.get(i).getAddressDescribeName();
                 if (TextUtils.isEmpty(edtalName)) {
                     textMuDiDi.setText(tempTerminiEntity.get(i).getAddressName());
                 } else {
-                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressName() + "(" + tempTerminiEntity.get(i).getAddressDescribeName() + ")");
+                    textMuDiDi.setText(tempTerminiEntity.get(i).getAddressName());
+                    textMuDiDiDetail.setText(tempTerminiEntity.get(i).getAddressDescribeName());
                 }
                 if (i == 0) {
                     t.setText(getResources().getString(R.string.begin_d));

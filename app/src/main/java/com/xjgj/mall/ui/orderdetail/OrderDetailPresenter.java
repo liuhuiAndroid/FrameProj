@@ -58,6 +58,7 @@ public class OrderDetailPresenter implements OrderDetailContract.Presenter {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        mView.hideLoading();
                         mView.onError(throwable);
                     }
                 }));

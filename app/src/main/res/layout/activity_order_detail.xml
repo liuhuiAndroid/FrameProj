@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout style="@style/normal_weight_vertical"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:fitsSystemWindows="true">
+<RelativeLayout style="@style/normal_weight_vertical"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:fitsSystemWindows="true">
 
-    <include layout="@layout/includer_header"/>
+    <LinearLayout
+        android:id="@+id/linearClude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <View style="@style/ZddddddLineStyle"/>
+        <include layout="@layout/includer_header"/>
+
+        <View style="@style/ZddddddLineStyle"/>
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/zf1f2f4">
+        android:background="@color/zf1f2f4"
+        android:visibility="gone"
+        android:layout_below="@id/linearClude">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +37,8 @@
                 android:layout_height="270px"
                 android:background="@color/white"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageHeader"
@@ -359,72 +370,78 @@
                 <LinearLayout
                     android:id="@+id/linearMeShow"
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:layout_height="wrap_content">
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:paddingTop="20px"
                         android:text="@string/me_to_driver_comment"
-                        android:textColor="@color/z535455"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/z535455"/>
+
                     <com.xjgj.mall.ui.widget.StarBar
                         android:id="@+id/starMeBarShow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        ratingbar:starCount="5"
-                        android:layout_marginTop="45px"
                         android:layout_marginBottom="30px"
+                        android:layout_marginTop="45px"
+                        ratingbar:starCount="5"
                         ratingbar:starDistance="15dp"
                         ratingbar:starEmpty="@drawable/star_empty"
                         ratingbar:starFill="@drawable/star_full"
-                        ratingbar:starSize="40dp" />
+                        ratingbar:starSize="40dp"/>
+
                     <TextView
                         android:id="@+id/textMeComments"
-                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15px"
                         android:text=""
                         android:textColor="@color/z535455"
-                        android:layout_marginBottom="15px"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="16sp"/>
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:id="@+id/linearOthersShow"
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_marginTop="30px"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="30px"
-                    android:orientation="vertical"
+                    android:layout_marginTop="30px"
                     android:background="@color/white"
-                    android:layout_height="wrap_content">
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:paddingTop="20px"
                         android:text="@string/driver_to_me_comment"
-                        android:textColor="@color/z535455"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="@color/z535455"/>
+
                     <com.xjgj.mall.ui.widget.StarBar
                         android:id="@+id/starOthersBarShow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        ratingbar:starCount="5"
-                        android:layout_marginTop="45px"
                         android:layout_marginBottom="30px"
+                        android:layout_marginTop="45px"
+                        ratingbar:starCount="5"
                         ratingbar:starDistance="15dp"
                         ratingbar:starEmpty="@drawable/star_empty"
                         ratingbar:starFill="@drawable/star_full"
-                        ratingbar:starSize="40dp" />
+                        ratingbar:starSize="40dp"/>
+
                     <TextView
                         android:id="@+id/textOthersComments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="15px"
-                        android:textSize="16sp"
                         android:text=""
                         android:textColor="@color/z535455"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textSize="16sp"/>
                 </LinearLayout>
 
 
@@ -435,4 +452,15 @@
 
     </ScrollView>
 
-</LinearLayout>
+    <!-- 加载中 -->
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avLoadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ratingbar:indicatorColor="@color/colorAccent"
+        ratingbar:indicatorName="BallPulseIndicator"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
+
+</RelativeLayout>

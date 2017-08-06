@@ -27,4 +27,16 @@
         android:textColor="@color/z262627"
         android:textSize="14sp"/>
 
+    <TextView
+        android:id="@+id/textMuDiDiDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/muDiDi"
+        android:layout_below="@id/textMuDiDi"
+        android:text="现在"
+        android:textColor="@color/z262627"
+        android:textSize="14sp"/>
+
 </RelativeLayout>
