@@ -110,6 +110,7 @@ public class OrderEvaluateActivity extends BaseActivity implements OrderEvaluate
         final String contactMobile = getIntent().getStringExtra("contactMobile");
         String avatarUrl = getIntent().getStringExtra("avatarUrl");
         String carNo = getIntent().getStringExtra("carNo");
+        float starLevel = getIntent().getFloatExtra("starLevel",0);
         ImageLoaderUtil.getInstance().loadImage(avatarUrl, mImageHeader);
         mTextUserName.setText(contactName);
         mImageCallPhone.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +123,7 @@ public class OrderEvaluateActivity extends BaseActivity implements OrderEvaluate
         });
         mTextPaiZhao.setText(carNo);
         mTextUserPhone.setText(contactMobile);
-        mStarBar.setStarMark(5);
+        mStarBar.setStarMark(starLevel);
 
         mPresenter.attachView(this);
         mImageBack.setImageResource(R.drawable.btn_back);

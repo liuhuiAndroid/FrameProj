@@ -217,6 +217,7 @@ public class MyReasonsFragment extends BaseFragment implements MyReasonsContract
     @Override
     public void onError(Throwable throwable) {
         loadError(throwable);
+        getActivity().finish();
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.util.imageloader.ImageLoaderUtil;
+import com.android.frameproj.library.util.log.Logger;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.components.storage.UserStorage;
@@ -101,6 +102,15 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
     public void onResume() {
         super.onResume();
         mPresenter.onLoadHomepageInfo();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mPresenter.onLoadHomepageInfo();
+        }
+        Logger.i("test onHiddenChanged = " + hidden);
     }
 
     @Override

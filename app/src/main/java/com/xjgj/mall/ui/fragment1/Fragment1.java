@@ -243,6 +243,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                                 intent.putExtra("contactMobile", orderEntity.getContactMobile());
                                 intent.putExtra("avatarUrl", orderEntity.getAvatarUrl());
                                 intent.putExtra("carNo", orderEntity.getCarNo());
+                                intent.putExtra("starLevel", orderEntity.getStarLevel());
 
                                 startActivity(intent);
                             }
@@ -267,11 +268,17 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                         holder.getView(R.id.textDicuss).setVisibility(View.GONE);
                         holder.getView(R.id.textShengShu).setVisibility(View.GONE);
                         holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
+                    } else if (orderEntity.getStatus() == 7) {
+                        holder.setText(R.id.textState, "已过期");
+                        holder.getView(R.id.textDicuss).setVisibility(View.GONE);
+                        holder.getView(R.id.textShengShu).setVisibility(View.GONE);
+                        holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
+
                     }
 
                     holder.setText(R.id.textStart, orderEntity.getStartAddress());
                     holder.setText(R.id.textEnd, orderEntity.getGoalAddress());
-                    holder.setText(R.id.textTime, orderEntity.getCreateTime().concat("  ").concat(orderEntity.getCarType()));
+                    holder.setText(R.id.textTime, orderEntity.getServiceTime().concat("  ").concat(orderEntity.getCarType()));
                     if (orderEntity.getOrderType() == 1) {
                         holder.setImageResource(R.id.imageState, R.drawable.icon_real);
                     } else if (orderEntity.getOrderType() == 2) {

@@ -179,6 +179,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
         typeList.add(new Type(4, "已取消"));
         typeList.add(new Type(5, "已评价"));
         typeList.add(new Type(6, "申诉中"));
+        typeList.add(new Type(7, "已过期"));
         new MaterialDialog.Builder(MainActivity.this)
                 .title("筛选条件")
                 .items(typeList)

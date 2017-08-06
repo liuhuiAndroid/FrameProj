@@ -216,6 +216,7 @@ public class DriverReasonsFragment extends BaseFragment implements DriverReasons
     @Override
     public void onError(Throwable throwable) {
         loadError(throwable);
+        getActivity().finish();
     }
 
     @Override

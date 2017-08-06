@@ -198,7 +198,7 @@ public class ImproveOrderActivity extends BaseActivity {
                     }
 
                 }
-                for (int l = position ; l < HOUR.length; l++) {
+                for (int l = position; l < HOUR.length; l++) {
 
                     List<Info> minutList = new ArrayList<Info>();
                     // 上面一个if没用，暂时不需要立即用车
@@ -217,19 +217,7 @@ public class ImproveOrderActivity extends BaseActivity {
                         info.setId(dayTime + HOUR[l]);
                         info.setCity_name(HOUR[l]);
                         dayList.add(info);
-                        int currentMin = 0;
-                        if (l == (position + 1)) {
-                            // 获取当前的分钟比较算出currentMin
-                            String minuTime = TimeUtils.getMinuTime(otherTime);
-                            try {
-                                int minuTimeInt = Integer.parseInt(minuTime);
-                                int minuTimeIntUnit = minuTimeInt / 10;
-                                currentMin = minuTimeIntUnit + 1;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        for (int k = currentMin; k < MINUT.length; k++) {
+                        for (int k = 0; k < MINUT.length; k++) {
                             Info info3 = new Info();
                             info3.setId(MINUT[k]);
                             info3.setCity_name(MINUT[k]);
@@ -326,9 +314,9 @@ public class ImproveOrderActivity extends BaseActivity {
                 }
             }
         } else if (requestCode == REQUEST_CONFIRM_ORDER_CODE && resultCode == RESULT_CONFIRM_ORDER_CODE) {
-            if(mComeFrom == 1) { // 1代表从订单详情进入，2代表从找车进入
+            if (mComeFrom == 1) { // 1代表从订单详情进入，2代表从找车进入
                 setResult(RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL);
-            }else if(mComeFrom == 2){
+            } else if (mComeFrom == 2) {
                 setResult(RESULT_IMPROVE_ORDER_CODE);
             }
             finish();
@@ -341,7 +329,7 @@ public class ImproveOrderActivity extends BaseActivity {
     @OnClick(R.id.textNext)
     public void mTextNext() {
         String serviceTime = mTextShowTime.getText().toString().trim();
-        if(!serviceTime.equals("现在")) {
+        if (!serviceTime.equals("现在")) {
             // 格式化时间
             if (serviceTime.contains("今天")) {
                 String currentTime = TimeUtils.getCurrentTimeMillis();
@@ -360,7 +348,7 @@ public class ImproveOrderActivity extends BaseActivity {
                 serviceTime = TimeUtils.getYear(otherTime).concat("-").concat(serviceTime);
             }
             serviceTime = serviceTime.concat(":00");
-        }else{
+        } else {
             serviceTime = "";
         }
 

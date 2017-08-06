@@ -24,6 +24,16 @@ public class OrderEntity {
     private String avatarUrl;
     private String carNo;
 
+    private float starLevel;
+
+    public float getStarLevel() {
+        return starLevel;
+    }
+
+    public void setStarLevel(float starLevel) {
+        this.starLevel = starLevel;
+    }
+
     public String getContactName() {
         return contactName;
     }
