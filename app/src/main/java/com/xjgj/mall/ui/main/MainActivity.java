@@ -18,6 +18,7 @@ import com.android.frameproj.library.interf.CallbackChangeFragment;
 import com.android.frameproj.library.util.NetWorkUtils;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.MyApplication;
 import com.xjgj.mall.R;
@@ -96,6 +97,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
     @Override
     public void initUiAndListener() {
         ButterKnife.bind(this);
+        mBus.register(this);
 
         mTextHandle.setText("全部订单");
         mTextHandle.setTextSize(14);
@@ -187,11 +189,18 @@ public class MainActivity extends BaseActivity implements MainContract.View
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Type type = typeList.get(which);
-                        mBus.post(new CommonEvent().new OrderTypeChangeEvent(type.getId(),type.getName()));
+                        mBus.post(new CommonEvent().new OrderTypeChangeEvent(type.getId(),type.getName(),true));
                         mTextHandle.setText(type.getName());
                     }
                 })
                 .show();
+    }
+
+    @Subscribe
+    public void orderTypeChangeEvent(CommonEvent.OrderTypeChangeEvent orderTypeChangeEvent) {
+        if(!orderTypeChangeEvent.isRefresh()){
+            mTextHandle.setText(orderTypeChangeEvent.getName());
+        }
     }
 
     @Override
@@ -305,4 +314,10 @@ public class MainActivity extends BaseActivity implements MainContract.View
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBus.unregister(this);
+        mPresenter.detachView();
+    }
 }

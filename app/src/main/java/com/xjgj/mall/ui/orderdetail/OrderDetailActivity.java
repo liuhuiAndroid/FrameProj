@@ -189,29 +189,29 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             mTextCarType.setText(orderDetailEntity.getCarName());
             mTextUseCarTime.setText(orderDetailEntity.getServiceTime());
             if (TextUtils.isEmpty(orderDetailEntity.getServiceType())) {
-                mTextOtherCost.setText("暂无");
+                mTextOtherCost.setText("无");
             } else {
                 mTextOtherCost.setText(orderDetailEntity.getServiceType());
             }
             if (TextUtils.isEmpty(orderDetailEntity.getRemark())) {
-                mTextOrderBeiZhu.setText("暂无");
+                mTextOrderBeiZhu.setText("无");
             } else {
                 mTextOrderBeiZhu.setText(orderDetailEntity.getRemark());
             }
 
             if (orderDetailEntity.getVolume() == 0) {
-                mTextSize.setText("暂无");
+                mTextSize.setText("无");
             } else {
                 mTextSize.setText(orderDetailEntity.getVolume() + "立方");
             }
             if (orderDetailEntity.getWeight() == 0) {
-                mTextWeight.setText("暂无");
+                mTextWeight.setText("无");
             } else {
                 mTextWeight.setText(orderDetailEntity.getWeight() + "公斤");
             }
 
             if (orderDetailEntity.getCounts() == 0) {
-                mTextCount.setText("暂无");
+                mTextCount.setText("无");
             } else {
                 mTextCount.setText(orderDetailEntity.getCounts() + "个");
             }
@@ -235,9 +235,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 mUserInfoLayout.setVisibility(View.GONE);
             }
 
-            // 0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价,6 申诉中
+            // 0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价,6 申诉中,7 已过期
             if (orderDetailEntity.getStatus() == 3 || orderDetailEntity.getStatus() == 4
-                    || orderDetailEntity.getStatus() == 5) {
+                    || orderDetailEntity.getStatus() == 5 || orderDetailEntity.getStatus() == 7) {
                 mLinearOrderAgain.setVisibility(View.VISIBLE);
             } else {
                 mLinearOrderAgain.setVisibility(View.GONE);

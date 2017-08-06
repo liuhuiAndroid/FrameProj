@@ -46,7 +46,6 @@ import in.srain.cube.views.ptr.PtrHandler;
  */
 public class Fragment1 extends BaseFragment implements Fragment1Contract.View, LoadMoreWrapper.OnLoadMoreListener, PtrHandler {
 
-
     @Inject
     Fragment1Presenter mFragment1Presenter;
     List<OrderEntity> data;
@@ -191,7 +190,13 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                             }
                         });
                     } else if (orderEntity.getStatus() == 2) {
-                        holder.setText(R.id.textState, "服务中");
+                        if(orderEntity.getSignType() == 3){
+                            holder.setText(R.id.textState, "服务中[运输完成]");
+                        }else{
+                            holder.setText(R.id.textState, "服务中");
+                        }
+
+
                         holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
                         holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
                         holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
@@ -278,7 +283,10 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
 
                     holder.setText(R.id.textStart, orderEntity.getStartAddress());
                     holder.setText(R.id.textEnd, orderEntity.getGoalAddress());
-                    holder.setText(R.id.textTime, orderEntity.getServiceTime().concat("  ").concat(orderEntity.getCarType()));
+
+                    if (orderEntity.getServiceTime() != null && orderEntity.getCarType() != null) {
+                        holder.setText(R.id.textTime, orderEntity.getServiceTime().concat("  ").concat(orderEntity.getCarType()));
+                    }
                     if (orderEntity.getOrderType() == 1) {
                         holder.setImageResource(R.id.imageState, R.drawable.icon_real);
                     } else if (orderEntity.getOrderType() == 2) {

@@ -22,6 +22,7 @@ import com.android.frameproj.library.util.log.Logger;
 import com.android.frameproj.library.widget.SuperEditTextPlus;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
+import com.squareup.otto.Bus;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.GeoCoderResultEntity;
@@ -32,6 +33,7 @@ import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.delivery.DeliveryInfoActivity;
 import com.xjgj.mall.ui.improveorder.ImproveOrderActivity;
 import com.xjgj.mall.ui.main.MainComponent;
+import com.xjgj.mall.util.CommonEvent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,6 +61,9 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
     @Inject
     Fragment4Presenter mFragment4Presenter;
+
+    @Inject
+    Bus mBus;
 
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
@@ -457,10 +462,10 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
             if (superEditTextsMap != null && superEditTextsMap.size() > 0) {
                 for (int i = 1; i < superEditTextsMap.size(); i++) {
                     SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(i);
-                    if(tempTerminiEntity!=null && tempTerminiEntity.size()>0) {
+                    if (tempTerminiEntity != null && tempTerminiEntity.size() > 0) {
                         TerminiEntity terminiEntity = tempTerminiEntity.get(0);
                         tempTerminiEntity.clear();
-                        tempTerminiEntity.put(0,terminiEntity);
+                        tempTerminiEntity.put(0, terminiEntity);
                     }
                     localSuperEditTextPlus.setTopText("");
                     localSuperEditTextPlus.setMiddleText("");
@@ -471,8 +476,11 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     }
                 }
             }
+            //改变订单状态为全部订单
+            mBus.post(new CommonEvent().new OrderTypeChangeEvent(-1, "全部订单", false));
             mCallbackChangeFragment.changeFragment(1);
         }
+
     }
 
     /**
@@ -501,7 +509,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     }
                     bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
                     intent.putExtras(bundle);
-                    intent.putExtra("comefrom",2);// 1代表从订单详情进入，2代表从找车进入
+                    intent.putExtra("comefrom", 2);// 1代表从订单详情进入，2代表从找车进入
                     startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE);
                 } else {
                     ToastUtil.showToast("车型数据有误");

@@ -135,27 +135,27 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
         if (!TextUtils.isEmpty(mOrderCarInfo.getVolume())) {
             mTextSizeShow.setText(mOrderCarInfo.getVolume() + "立方");
         } else {
-            mTextSizeShow.setText("暂无");
+            mTextSizeShow.setText("无");
         }
         if (!TextUtils.isEmpty(mOrderCarInfo.getWeight())) {
             mTextWeightShow.setText(mOrderCarInfo.getWeight() + "公斤");
         } else {
-            mTextWeightShow.setText("暂无");
+            mTextWeightShow.setText("无");
         }
         if (!TextUtils.isEmpty(mOrderCarInfo.getCounts())) {
             mTextCountShow.setText(mOrderCarInfo.getCounts() + "个");
         } else {
-            mTextCountShow.setText("暂无");
+            mTextCountShow.setText("无");
         }
         if (!TextUtils.isEmpty(mOrderCarInfo.getServiceType())) {
             mTextOtherServiceShow.setText(mOrderCarInfo.getServiceType() );
         } else {
-            mTextOtherServiceShow.setText("暂无");
+            mTextOtherServiceShow.setText("无");
         }
         if (!TextUtils.isEmpty(mOrderCarInfo.getRemark())) {
             mTextRemarksShow.setText(mOrderCarInfo.getRemark() );
         } else {
-            mTextRemarksShow.setText("暂无");
+            mTextRemarksShow.setText("无");
         }
 
         if (tempTerminiEntity != null && tempTerminiEntity.size() > 0) {

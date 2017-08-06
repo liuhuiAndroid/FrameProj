@@ -18,6 +18,7 @@ public class OrderEntity {
     private String startAddress;
     private String goalAddress;
     private int orderType;
+    private int signType;
 
     private String contactName;
     private String contactMobile;
@@ -25,6 +26,14 @@ public class OrderEntity {
     private String carNo;
 
     private float starLevel;
+
+    public int getSignType() {
+        return signType;
+    }
+
+    public void setSignType(int signType) {
+        this.signType = signType;
+    }
 
     public float getStarLevel() {
         return starLevel;

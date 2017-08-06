@@ -49,7 +49,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class DriverReasonsFragment extends BaseFragment implements DriverReasonsContract.View {
 
-
     @Inject
     DriverReasonsPresenter mPresenter;
     @BindView(R.id.linearAdd)

@@ -26,10 +26,20 @@ public class CommonEvent {
     public class OrderTypeChangeEvent {
         public int type;
         public String name;
+        public boolean isRefresh;
 
-        public OrderTypeChangeEvent(int type, String name) {
+        public OrderTypeChangeEvent(int type, String name, boolean isRefresh) {
             this.type = type;
             this.name = name;
+            this.isRefresh = isRefresh;
+        }
+
+        public boolean isRefresh() {
+            return isRefresh;
+        }
+
+        public void setRefresh(boolean refresh) {
+            isRefresh = refresh;
         }
 
         public int getType() {
