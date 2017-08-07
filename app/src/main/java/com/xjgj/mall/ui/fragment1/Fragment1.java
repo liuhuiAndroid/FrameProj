@@ -190,9 +190,9 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                             }
                         });
                     } else if (orderEntity.getStatus() == 2) {
-                        if(orderEntity.getSignType() == 3){
+                        if (orderEntity.getSignType() == 3) {
                             holder.setText(R.id.textState, "服务中[运输完成]");
-                        }else{
+                        } else {
                             holder.setText(R.id.textState, "服务中");
                         }
 
@@ -217,18 +217,33 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                         holder.getView(R.id.textDicuss).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                new MaterialDialog.Builder(getActivity())
-                                        .title("提示")
-                                        .content("是否确认完成订单？")
-                                        .positiveText("确定")
-                                        .negativeText("取消")
-                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                            @Override
-                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                mFragment1Presenter.orderConfirm(orderEntity.getOrderId());
-                                            }
-                                        })
-                                        .show();
+                                if (orderEntity.getSignType() != 3) {
+                                    new MaterialDialog.Builder(getActivity())
+                                            .title("提示")
+                                            .content("司机尚未运输完成，是否确认完成订单？")
+                                            .positiveText("确定")
+                                            .negativeText("取消")
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    mFragment1Presenter.orderConfirm(orderEntity.getOrderId());
+                                                }
+                                            })
+                                            .show();
+                                } else {
+                                    new MaterialDialog.Builder(getActivity())
+                                            .title("提示")
+                                            .content("是否确认完成订单？")
+                                            .positiveText("确定")
+                                            .negativeText("取消")
+                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    mFragment1Presenter.orderConfirm(orderEntity.getOrderId());
+                                                }
+                                            })
+                                            .show();
+                                }
                             }
                         });
                     } else if (orderEntity.getStatus() == 3) {

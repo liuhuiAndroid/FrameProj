@@ -89,6 +89,8 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     TextView mTextRemarks;
     @BindView(R.id.textRemarksShow)
     TextView mTextRemarksShow;
+    @BindView(R.id.textTogetherShow)
+    TextView mTextTogetherShow;
     /**
      * 订单信息
      */
@@ -125,6 +127,7 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
         mOrderCarInfo = (OrderCarInfo) bundle.getSerializable("orderCarInfo");
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
 
+        mTextTogetherShow.setText(mOrderCarInfo.getFlgTogether() == 1 ? "是" : "否");
         String cartypeName = getIntent().getStringExtra("cartypeName");
         if (!TextUtils.isEmpty(mOrderCarInfo.getServiceTime())) {
             mTextUseCarTime.setText(mOrderCarInfo.getServiceTime());
@@ -148,12 +151,12 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
             mTextCountShow.setText("无");
         }
         if (!TextUtils.isEmpty(mOrderCarInfo.getServiceType())) {
-            mTextOtherServiceShow.setText(mOrderCarInfo.getServiceType() );
+            mTextOtherServiceShow.setText(mOrderCarInfo.getServiceType());
         } else {
             mTextOtherServiceShow.setText("无");
         }
         if (!TextUtils.isEmpty(mOrderCarInfo.getRemark())) {
-            mTextRemarksShow.setText(mOrderCarInfo.getRemark() );
+            mTextRemarksShow.setText(mOrderCarInfo.getRemark());
         } else {
             mTextRemarksShow.setText("无");
         }
@@ -224,7 +227,8 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     public void mTextNext() {
         mComfirmOrderPresenter.orderSubmit(mOrderCarInfo.getServiceTime(), mOrderCarInfo.getVolume(),
                 mOrderCarInfo.getWeight(), mOrderCarInfo.getServiceType(), mOrderCarInfo.getCarType(),
-                mOrderCarInfo.getRemark(), mOrderCarInfo.getCounts(), new Gson().toJson(tempTerminiEntity), "1");
+                mOrderCarInfo.getRemark(), mOrderCarInfo.getCounts(), new Gson().toJson(tempTerminiEntity),
+                "1",mOrderCarInfo.getFlgTogether());
     }
 
     @Override

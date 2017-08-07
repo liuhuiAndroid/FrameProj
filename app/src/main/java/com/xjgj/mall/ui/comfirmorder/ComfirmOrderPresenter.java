@@ -20,7 +20,7 @@ import io.reactivex.functions.Function;
  * Created by we-win on 2017/7/27.
  */
 
-public class ComfirmOrderPresenter  implements ComfirmOrderContract.Presenter {
+public class ComfirmOrderPresenter implements ComfirmOrderContract.Presenter {
 
     private ComfirmOrderContract.View mView;
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -34,9 +34,11 @@ public class ComfirmOrderPresenter  implements ComfirmOrderContract.Presenter {
 
     @Override
     public void orderSubmit(String serviceTime, String volume, String weight, String serviceType,
-                            String carType, String remark, String counts, String address, String submitType) {
+                            String carType, String remark, String counts, String address,
+                            String submitType, int flgTogether) {
         mView.showLoading();
-        disposables.add(mCommonApi.orderSubmit(serviceTime,volume,weight,serviceType,carType,remark,counts,address,submitType)
+        disposables.add(mCommonApi.orderSubmit(serviceTime, volume, weight, serviceType, carType, remark,
+                counts, address, submitType, flgTogether)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<String>, ObservableSource<String>>() {
                     @Override

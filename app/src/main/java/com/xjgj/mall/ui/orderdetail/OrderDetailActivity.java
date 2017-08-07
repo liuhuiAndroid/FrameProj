@@ -28,6 +28,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL;
@@ -104,6 +105,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
 
     @BindView(R.id.avLoadingIndicatorView)
     AVLoadingIndicatorView mAvLoadingIndicatorView;
+    @BindView(R.id.textTogether)
+    TextView mTextTogether;
 
     private String mContactMobile;
 
@@ -159,6 +162,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         mScrollView.setVisibility(View.VISIBLE);
 
         if (orderDetailEntity != null) {
+
+            mTextTogether.setText(orderDetailEntity.getFlgTogether() == 1 ? "是" : "否");
 
             if (orderDetailEntity.getAddressList() != null && orderDetailEntity.getAddressList().size() > 0) {
 
@@ -325,4 +330,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         mPresenter.detachView();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

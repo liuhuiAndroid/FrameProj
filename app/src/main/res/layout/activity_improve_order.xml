@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout style="@style/normal_weight_vertical"
                 xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:background="@color/zf1f2f4"
                 android:fitsSystemWindows="true">
 
@@ -252,6 +253,50 @@
                     android:textSize="12sp"
                     android:inputType="number"
                     />
+
+            </LinearLayout>
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:layout_marginTop="0.6dp"
+                android:background="@color/zcbcdce"/>
+
+            <!-- 是否拼单 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center|left"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/icon_extra"/>
+
+                <TextView
+                    style="@style/normal_sixteen_text"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="是否拼单"
+                    android:textColor="@color/z262627"
+                    android:textSize="14sp"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/sb_md"
+                    style="@style/SwitchButtonStyleMD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    app:kswTintColor="@color/colorAccent"/>
 
             </LinearLayout>
 

@@ -22,7 +22,8 @@ public interface ComfirmOrderContract {
     interface Presenter extends BasePresenter<View> {
 
         void orderSubmit(String serviceTime, String volume, String weight, String serviceType,
-                         String carType, String remark, String counts, String address, String submitType);
+                         String carType, String remark, String counts, String address,
+                         String submitType,int flgTogether);
 
     }
 

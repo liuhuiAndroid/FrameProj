@@ -16,6 +16,7 @@ import com.android.frameproj.library.util.TimeUtils;
 import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.widget.wheel.Info;
 import com.android.frameproj.library.widget.wheel.time.TimePickerPopWindow;
+import com.kyleduo.switchbutton.SwitchButton;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderCarInfo;
 import com.xjgj.mall.bean.TerminiEntity;
@@ -83,6 +84,8 @@ public class ImproveOrderActivity extends BaseActivity {
     TextView mTextShaoHua;
     @BindView(R.id.editCount)
     EditText mEditCount;
+    @BindView(R.id.sb_md)
+    SwitchButton mSbMd;
 
     private String sentenceToDriver = "";
     private String xieZhuang = "";
@@ -357,7 +360,8 @@ public class ImproveOrderActivity extends BaseActivity {
         String count = mEditCount.getText().toString().trim();
         String serviceType = mTextExtraService.getText().toString().trim();
 
-        OrderCarInfo orderCarInfo = new OrderCarInfo(serviceTime, volume, weight, serviceType, mCartype, sentenceToDriver, count);
+        OrderCarInfo orderCarInfo = new OrderCarInfo(serviceTime, volume, weight, serviceType,
+                mCartype, sentenceToDriver, count, mSbMd.isChecked() ? 1 : 0);
 
         Intent intent = new Intent(this, ComfirmOrderActivity.class);
         Bundle bundle = new Bundle();

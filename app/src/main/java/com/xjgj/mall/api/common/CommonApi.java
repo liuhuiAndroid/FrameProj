@@ -188,7 +188,8 @@ public class CommonApi {
      * 商户-下单
      */
     public Observable<HttpResult<String>> orderSubmit(String serviceTime, String volume, String weight, String serviceType,
-                                                      String carType, String remark, String counts, String address, String submitType) {
+                                                      String carType, String remark, String counts, String address,
+                                                      String submitType,int flgTogether) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         if (!serviceTime.equals("")) {
@@ -202,6 +203,7 @@ public class CommonApi {
         params.put("counts", counts);
         params.put("address", address);
         params.put("submitType", submitType);
+        params.put("flgTogether", flgTogether);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.orderSubmit(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
@@ -418,7 +420,7 @@ public class CommonApi {
     }
 
     /**
-     * 查看图片
+     * 日志上传
      */
     public Observable<ResponseBody> uploadErrorFiles(String appId,String deviceType,
                                              String osVersion,String deviceModel,String log) {

@@ -11,6 +11,7 @@ public class OrderDetailEntity {
     private String contactName;
     private String contactMobile;
     private String avatarUrl;
+    private int flgTogether;
 
     private double starLevel;
     private double amount;
@@ -30,6 +31,14 @@ public class OrderDetailEntity {
     private String carNo;
     private List<EvaluationBean> evaluation;
     private List<AddressListBean> addressList;
+
+    public int getFlgTogether() {
+        return flgTogether;
+    }
+
+    public void setFlgTogether(int flgTogether) {
+        this.flgTogether = flgTogether;
+    }
 
     public double getStarLevel() {
         return starLevel;
