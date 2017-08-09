@@ -1,7 +1,8 @@
 package com.xjgj.mall;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.android.frameproj.library.util.ToastUtil;
@@ -9,17 +10,18 @@ import com.android.frameproj.library.util.log.CrashlyticsTree;
 import com.android.frameproj.library.util.log.Logger;
 import com.android.frameproj.library.util.log.Settings;
 import com.baidu.mapapi.SDKInitializer;
-import com.xjgj.mall.BuildConfig;
 import com.xjgj.mall.injector.component.ApplicationComponent;
 import com.xjgj.mall.injector.component.DaggerApplicationComponent;
 import com.xjgj.mall.injector.module.ApplicationModule;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by WE-WIN-027 on 2016/9/27.
  *
  * @des ${TODO}
  */
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     private ApplicationComponent mApplicationComponent;
 
@@ -54,7 +56,12 @@ public class MyApplication extends Application {
         //        }
         //        LeakCanary.install(this);
 
+        //初始化百度地图SDK
         SDKInitializer.initialize(getApplicationContext());
+
+        //初始化JPush
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
 
     }
 
@@ -77,5 +84,9 @@ public class MyApplication extends Application {
         return mContext;
     }
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }
