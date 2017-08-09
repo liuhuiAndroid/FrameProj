@@ -6,6 +6,8 @@
     <color name="retry_button_background">#30000000</color>
     <color name="retry_button_background_stroke">#50000000</color>
 
+    <color name="statefulLayoutImageColor">#2ecc71</color>
+
     <!--不同项目不同的来-->
     <color name="zfd4a2e">#FD4A2E</color>
     <color name="zdddddd">#acb6be</color>

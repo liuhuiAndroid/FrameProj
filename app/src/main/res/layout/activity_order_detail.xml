@@ -40,7 +40,7 @@
                 android:paddingRight="15dp"
                 android:visibility="gone">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/imageHeader"
                     android:layout_width="180px"
                     android:layout_height="180px"

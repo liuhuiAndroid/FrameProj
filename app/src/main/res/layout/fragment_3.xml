@@ -21,7 +21,7 @@
                 android:background="@drawable/personal_background"
                 android:clickable="true">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <ImageView
                     android:id="@+id/roundImageView"
                     android:layout_width="83dp"
                     android:layout_height="83dp"

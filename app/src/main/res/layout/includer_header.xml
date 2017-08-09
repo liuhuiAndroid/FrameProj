@@ -2,17 +2,17 @@
 <RelativeLayout android:id="@+id/relative_layout"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="158px"
+                android:layout_height="53dp"
                 android:background="@color/base"
     >
 
     <ImageView
         android:id="@+id/image_back"
         android:layout_width="wrap_content"
-        android:layout_height="70px"
+        android:layout_height="23dp"
         android:layout_centerVertical="true"
         android:paddingLeft="15dp"
-        android:paddingRight="80px"/>
+        android:paddingRight="27dp"/>
 
     <TextView
         android:id="@+id/text_title"
@@ -30,7 +30,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:paddingLeft="17dp"
-        android:paddingRight="24px"/>
+        android:paddingRight="8dp"/>
 
     <TextView
         android:id="@+id/text_handle"

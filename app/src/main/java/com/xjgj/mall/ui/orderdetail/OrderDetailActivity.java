@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL;
@@ -53,7 +52,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @BindView(R.id.relative_layout)
     RelativeLayout mRelativeLayout;
     @BindView(R.id.imageHeader)
-    CircleImageView mImageHeader;
+    ImageView mImageHeader;
     @BindView(R.id.imageCallPhone)
     ImageView mImageCallPhone;
     @BindView(R.id.textUserName)
@@ -238,7 +237,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
 
             if (orderDetailEntity.getStatus() != 0 && !TextUtils.isEmpty(orderDetailEntity.getContactMobile())) {
                 mUserInfoLayout.setVisibility(View.VISIBLE);
-                ImageLoaderUtil.getInstance().loadImage(orderDetailEntity.getAvatarUrl(), mImageHeader);
+                ImageLoaderUtil.getInstance().loadCircleImage(orderDetailEntity.getAvatarUrl(),R.drawable.header, mImageHeader);
                 mTextUserName.setText(orderDetailEntity.getContactName());
                 mContactMobile = orderDetailEntity.getContactMobile();
                 mImageCallPhone.setOnClickListener(new View.OnClickListener() {

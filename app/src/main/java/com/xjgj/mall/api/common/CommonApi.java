@@ -1,5 +1,7 @@
 package com.xjgj.mall.api.common;
 
+import android.text.TextUtils;
+
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.DictionaryEntity;
@@ -189,7 +191,7 @@ public class CommonApi {
      */
     public Observable<HttpResult<String>> orderSubmit(String serviceTime, String volume, String weight, String serviceType,
                                                       String carType, String remark, String counts, String address,
-                                                      String submitType,int flgTogether) {
+                                                      String submitType, int flgTogether) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         if (!serviceTime.equals("")) {
@@ -217,6 +219,41 @@ public class CommonApi {
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.mallInformation(currentTimeMillis, sign, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 商户-完善用户信息
+     */
+    public Observable<HttpResult<String>> mallInfoComplete(String realName, int sex, String address, String companyName,
+                                                           String berth, String headIcon, String birthDay) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        List<MultipartBody.Part> partList = new ArrayList<>();
+        if (headIcon != null && !TextUtils.isEmpty(headIcon)) {
+            File file = new File(headIcon);
+            MultipartBody.Part headIconPart = prepareFilePart("headIcon", file);
+            partList.add(headIconPart);
+        }
+        MultipartBody.Part realNamePart = createPartString("realName", realName);
+        MultipartBody.Part sexPart = createPartString("sex", sex + "");
+        MultipartBody.Part addressPart = createPartString("address", address);
+        MultipartBody.Part companyNamePart = createPartString("companyName", companyName);
+        MultipartBody.Part berthPart = createPartString("berth", berth);
+        //        MultipartBody.Part birthDayPart = createPartString("birthDay", birthDay);
+        partList.add(realNamePart);
+        partList.add(sexPart);
+        partList.add(addressPart);
+        partList.add(companyNamePart);
+        partList.add(berthPart);
+        //        partList.add(birthDayPart);
+        params.put("realName",realName);
+        params.put("sex",sex);
+        params.put("address",address);
+        params.put("companyName",companyName);
+        params.put("berth",berth);
+
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.mallInfoComplete(currentTimeMillis, sign, partList, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
     /**
@@ -422,9 +459,9 @@ public class CommonApi {
     /**
      * 日志上传
      */
-    public Observable<ResponseBody> uploadErrorFiles(String appId,String deviceType,
-                                             String osVersion,String deviceModel,String log) {
-        return mCommonService.uploadErrorFiles(appId, deviceType, osVersion, deviceModel,log).subscribeOn(Schedulers.io());
+    public Observable<ResponseBody> uploadErrorFiles(String appId, String deviceType,
+                                                     String osVersion, String deviceModel, String log) {
+        return mCommonService.uploadErrorFiles(appId, deviceType, osVersion, deviceModel, log).subscribeOn(Schedulers.io());
     }
 
 }

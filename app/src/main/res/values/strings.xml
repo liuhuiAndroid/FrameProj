@@ -47,11 +47,11 @@
     <string name="write_ni_cheng">请填写昵称</string>
     <string name="write_sex">请选择性别</string>
     <string name="write_m_phone">请填写电话号码</string>
-    <string name="write_d_name">请填写单位名称(必填项)</string>
+    <string name="write_d_name">请填写单位名称</string>
     <string name="write_d__name">请填写单位名称</string>
-    <string name="write_address">请填写完整地址(必填项)</string>
+    <string name="write_address">请填写完整地址</string>
     <string name="write__address">请填写完整地址</string>
-    <string name="write_p_number">请填写铺位号(必填项)</string>
+    <string name="write_p_number">请填写铺位号</string>
     <string name="write_p__number">请填写铺位号</string>
     <string name="edit_personal_data">编辑个人资料</string>
     <string name="save">保存</string>

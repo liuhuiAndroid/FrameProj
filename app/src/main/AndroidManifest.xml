@@ -107,6 +107,10 @@
             android:name=".ui.orderappeal.OrderAppealActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <!-- 个人资料 -->
+        <activity
+            android:name=".ui.personalprofile.PersonalProfileActivity"
+            android:screenOrientation="portrait"/>
 
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->

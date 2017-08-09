@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Library</string>
+
+    <string name="statefulLayoutErrorButton">重新加载</string>
+
+    <string name="statefulLayoutEmptyTitlePlaceholder">暂无内容</string>
+    <string name="statefulLayoutEmptyContentPlaceholder"></string>
+    <string name="statefulLayoutErrorTitlePlaceholder">似乎出了点问题...</string>
+    <string name="statefulLayoutErrorContentPlaceholder"></string>
+
+
 </resources>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout style="@style/normal_weight_vertical"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@color/zf1f2f4"
+              android:fitsSystemWindows="true"
+              android:gravity="center|top">
+
+    <include layout="@layout/includer_header"/>
+
+    <View
+        style="@style/ZddddddLineStyle"/>
+
+    <com.android.frameproj.library.statefullayout.StatefulLayout
+        android:id="@+id/statefulLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                style="@style/normal_weight_vertical"
+                android:gravity="center|top"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="73dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:onClick="headIcon">
+
+                    <TextView
+                        android:id="@+id/tou"
+                        style="@style/normal_sixteen_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/tou_xiang"/>
+
+                    <ImageView
+                        android:id="@+id/image_header_photo"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="42dp"
+                        android:layout_toRightOf="@id/tou"
+                        android:src="@drawable/header"/>
+
+                    <ImageView
+                        style="@style/normal_image_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <View
+                    style="@style/ZddddddLineOneStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    style="@style/ZddddddLineTwoStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:gravity="center|left"
+                    android:onClick="realName"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normal_sixteen_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/ni_cheng"/>
+
+                    <EditText
+                        android:id="@+id/text_ni_cheng"
+                        style="@style/normal_personal_text_edit"
+                        android:hint="@string/write_ni_cheng"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        style="@style/normal_image_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/ZddddddLineOneStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    style="@style/ZddddddLineTwoStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:gravity="center|left"
+                    android:onClick="sex"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        style="@style/normal_sixteen_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/sex"/>
+
+                    <TextView
+                        android:id="@+id/text_sex"
+                        style="@style/normal_personal_text_edit"
+                        android:hint="@string/write_sex"/>
+
+                    <ImageView
+                        style="@style/normal_image_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/ZddddddLineOneStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    style="@style/ZddddddLineTwoStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:gravity="center|left"
+                    android:onClick="phone"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        style="@style/normal_sixteen_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/mobile_phone"/>
+
+                    <TextView
+                        android:id="@+id/text_phone"
+                        style="@style/normal_personal_text_edit"
+                        android:layout_marginLeft="10dp"
+                        android:hint="@string/write_m_phone"
+                        android:textColor="@color/z868788"/>
+
+                    <ImageView
+                        style="@style/normal_image_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/ZddddddLineOneStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    style="@style/ZddddddLineTwoStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:gravity="center|left"
+                    android:onClick="company"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        style="@style/normal_sixteen_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/dan_wei_name"/>
+
+                    <EditText
+                        android:id="@+id/text_d_name"
+                        style="@style/normal_personal_text_edit"
+                        android:layout_marginLeft="10dp"
+                        android:hint="@string/write_d_name"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        style="@style/normal_image_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/ZddddddLineOneStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    style="@style/ZddddddLineTwoStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:gravity="center|left"
+                    android:onClick="address"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        style="@style/normal_sixteen_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/address"/>
+
+                    <EditText
+                        android:id="@+id/text_address"
+                        style="@style/normal_personal_text_edit"
+                        android:hint="@string/write_address"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        style="@style/normal_image_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/ZddddddLineOneStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <View
+                    style="@style/ZddddddLineTwoStyle"
+                    android:layout_marginLeft="10dp"/>
+
+                <LinearLayout
+                    android:id="@+id/linearPuWei"
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="true"
+                    android:gravity="center|left"
+                    android:onClick="pNumber"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        style="@style/normal_sixteen_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/pu_wei_number"/>
+
+                    <EditText
+                        android:id="@+id/text_p_number"
+                        style="@style/normal_personal_text_edit"
+                        android:layout_marginLeft="77px"
+                        android:hint="@string/write_p_number"
+                        android:maxLines="1"/>
+
+                    <ImageView
+                        style="@style/normal_image_next"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <View
+                    style="@style/ZddddddLineOneStyle"
+                    />
+
+                <View
+                    style="@style/ZddddddLineTwoStyle"
+                    />
+            </LinearLayout>
+        </ScrollView>
+
+    </com.android.frameproj.library.statefullayout.StatefulLayout>
+
+</LinearLayout>
+

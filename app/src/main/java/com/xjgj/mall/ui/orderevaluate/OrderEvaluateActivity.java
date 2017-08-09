@@ -29,7 +29,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.xjgj.mall.R.id.textPendingEvaluation;
 
@@ -54,7 +53,7 @@ public class OrderEvaluateActivity extends BaseActivity implements OrderEvaluate
     @BindView(R.id.linearClude)
     LinearLayout mLinearClude;
     @BindView(R.id.imageHeader)
-    CircleImageView mImageHeader;
+    ImageView mImageHeader;
     @BindView(R.id.imageCallPhone)
     ImageView mImageCallPhone;
     @BindView(R.id.textUserName)
@@ -111,7 +110,7 @@ public class OrderEvaluateActivity extends BaseActivity implements OrderEvaluate
         String avatarUrl = getIntent().getStringExtra("avatarUrl");
         String carNo = getIntent().getStringExtra("carNo");
         float starLevel = getIntent().getFloatExtra("starLevel",0);
-        ImageLoaderUtil.getInstance().loadImage(avatarUrl, mImageHeader);
+        ImageLoaderUtil.getInstance().loadCircleImage(avatarUrl,R.drawable.header, mImageHeader);
         mTextUserName.setText(contactName);
         mImageCallPhone.setOnClickListener(new View.OnClickListener() {
             @Override

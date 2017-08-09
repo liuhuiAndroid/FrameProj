@@ -72,6 +72,12 @@ public interface CommonService {
     Observable<HttpResult<User>> mallInformation(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                  @Header("token") String token);
 
+    //商户-完善用户信息
+    @Multipart
+    @POST("mall/info/complete")
+    Observable<HttpResult<String>> mallInfoComplete(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                    @Part List<MultipartBody.Part> partList, @Header("token") String token);
+
     //商户-个人主页
     @POST("mall/homepage")
     Observable<HttpResult<HomepageEntity>> mallHomepage(@Header("timestamp") long timestamp, @Header("sign") String sign,

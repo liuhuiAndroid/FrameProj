@@ -21,12 +21,12 @@ import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.businesslicence.BusinessLicenceActivity;
 import com.xjgj.mall.ui.certification.CertificationActivity;
 import com.xjgj.mall.ui.main.MainComponent;
+import com.xjgj.mall.ui.personalprofile.PersonalProfileActivity;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.xjgj.mall.Constants.REQUEST_BUSINESS_LICENCE_CODE;
 import static com.xjgj.mall.Constants.REQUEST_CERTIFICATION_CODE;
@@ -43,7 +43,7 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
     @Inject
     UserStorage mUserStorage;
     @BindView(R.id.roundImageView)
-    CircleImageView mRoundImageView;
+    ImageView mRoundImageView;
     @BindView(R.id.textName)
     TextView mTextName;
     @BindView(R.id.imageSex)
@@ -168,7 +168,7 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
 
     @Override
     public void onLoadHomepageInfoCompleted(HomepageEntity homepageEntity) {
-        ImageLoaderUtil.getInstance().loadImage(homepageEntity.getAvatarUrl(), mRoundImageView);
+        ImageLoaderUtil.getInstance().loadCircleImage(homepageEntity.getAvatarUrl(),R.drawable.header, mRoundImageView);
         mTextName.setText(homepageEntity.getRealName());
         mTextPhone.setText(homepageEntity.getMobile());
         if (homepageEntity.getSex() == 1) {
@@ -253,4 +253,11 @@ public class Fragment3 extends BaseFragment implements Fragment3Contract.View {
         mPresenter.detachView();
     }
 
+    /**
+     *
+     */
+    @OnClick(R.id.relativePersonal)
+    public void mRelativePersonal(){
+       openActivity(PersonalProfileActivity.class);
+    }
 }
