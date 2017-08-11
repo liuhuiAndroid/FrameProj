@@ -1,5 +1,7 @@
 package com.xjgj.mall.api.common;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.xjgj.mall.Constants;
@@ -44,10 +46,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CommonApi {
 
     private CommonService mCommonService;
+    private Context mContext;
     private RequestHelper mRequestHelper;
     private UserStorage mUserStorage;
 
-    public CommonApi(OkHttpClient mOkHttpClient, RequestHelper requestHelper, UserStorage userStorage) {
+    public CommonApi(Context context,OkHttpClient mOkHttpClient, RequestHelper requestHelper, UserStorage userStorage) {
+        mContext = context;
         this.mRequestHelper = requestHelper;
         mUserStorage = userStorage;
         Retrofit retrofit =
@@ -141,6 +145,9 @@ public class CommonApi {
         params.put("username", username);
         params.put("password", password);
         params.put("appType", Constants.APPTYPE);
+        String deviceId = ((TelephonyManager)
+                mContext.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        params.put("device", deviceId);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.mallLogin(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
     }

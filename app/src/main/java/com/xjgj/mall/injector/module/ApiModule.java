@@ -1,5 +1,7 @@
 package com.xjgj.mall.injector.module;
 
+import android.content.Context;
+
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.components.retrofit.RequestHelper;
 import com.xjgj.mall.components.storage.UserStorage;
@@ -21,9 +23,9 @@ public class ApiModule {
 
     @Provides
     @PerApp
-    public CommonApi providesCookieApi(@Named("api") OkHttpClient okHttpClient,RequestHelper requestHelper,
+    public CommonApi providesCookieApi(Context context, @Named("api") OkHttpClient okHttpClient, RequestHelper requestHelper,
                                        UserStorage userStorage) {
-        return new CommonApi(okHttpClient,requestHelper,userStorage);
+        return new CommonApi(context,okHttpClient,requestHelper,userStorage);
     }
 
 }
