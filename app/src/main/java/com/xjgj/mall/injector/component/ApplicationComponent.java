@@ -14,6 +14,7 @@ import com.xjgj.mall.injector.module.ApplicationModule;
 import com.xjgj.mall.injector.module.DBModule;
 import com.xjgj.mall.service.LocationService;
 import com.xjgj.mall.ui.BaseActivity;
+import com.xjgj.mall.util.SPUtil;
 
 import dagger.Component;
 
@@ -51,5 +52,7 @@ public interface ApplicationComponent { //4 接口，自动生成实现
     LocationService getLocationService();
 
     UserStorage getUserStorage();
+
+    SPUtil provideSPUtil();
 
 }

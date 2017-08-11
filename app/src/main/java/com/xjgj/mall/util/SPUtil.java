@@ -20,6 +20,7 @@ public class SPUtil {
     private final String IS_LOGIN = "is_login";
     private final String TOKNE = "token";
     private final String USER = "user";
+    private final String REGISTRATIONID = "RegistrationID";
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -99,6 +100,14 @@ public class SPUtil {
 
     public String getUSER() {
         return getString(USER);
+    }
+
+    public void setREGISTRATIONID(String registrationID) {
+        save(REGISTRATIONID, registrationID);
+    }
+
+    public String getREGISTRATIONID() {
+        return getString(REGISTRATIONID);
     }
 
 }

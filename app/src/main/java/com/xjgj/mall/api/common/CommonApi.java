@@ -1,7 +1,6 @@
 package com.xjgj.mall.api.common;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.xjgj.mall.Constants;
@@ -17,6 +16,7 @@ import com.xjgj.mall.bean.RealNameEntity;
 import com.xjgj.mall.bean.User;
 import com.xjgj.mall.components.retrofit.RequestHelper;
 import com.xjgj.mall.components.storage.UserStorage;
+import com.xjgj.mall.util.SPUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,11 +49,14 @@ public class CommonApi {
     private Context mContext;
     private RequestHelper mRequestHelper;
     private UserStorage mUserStorage;
+    private SPUtil mSpUtil;
 
-    public CommonApi(Context context,OkHttpClient mOkHttpClient, RequestHelper requestHelper, UserStorage userStorage) {
+    public CommonApi(Context context,OkHttpClient mOkHttpClient, RequestHelper requestHelper,
+                     UserStorage userStorage, SPUtil spUtil) {
         mContext = context;
         this.mRequestHelper = requestHelper;
         mUserStorage = userStorage;
+        mSpUtil = spUtil;
         Retrofit retrofit =
                 new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
                         .client(mOkHttpClient)
@@ -145,9 +148,8 @@ public class CommonApi {
         params.put("username", username);
         params.put("password", password);
         params.put("appType", Constants.APPTYPE);
-        String deviceId = ((TelephonyManager)
-                mContext.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-        params.put("device", deviceId);
+
+        params.put("device", mSpUtil.getREGISTRATIONID());
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.mallLogin(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
     }
@@ -164,6 +166,8 @@ public class CommonApi {
         params.put("password", password);
         params.put("smsCode", smsCode);
         params.put("source", Constants.APPTYPE); // 用户来源:1-IOS,2-Android,3-Other
+
+        params.put("device", mSpUtil.getREGISTRATIONID());
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.mallRegister(currentTimeMillis, sign, params).subscribeOn(Schedulers.io());
     }
@@ -242,19 +246,24 @@ public class CommonApi {
             partList.add(headIconPart);
         }
         MultipartBody.Part realNamePart = createPartString("realName", realName);
-        MultipartBody.Part sexPart = createPartString("sex", sex + "");
+        if(sex!= -1) {
+            MultipartBody.Part sexPart = createPartString("sex", sex + "");
+            partList.add(sexPart);
+        }
         MultipartBody.Part addressPart = createPartString("address", address);
         MultipartBody.Part companyNamePart = createPartString("companyName", companyName);
         MultipartBody.Part berthPart = createPartString("berth", berth);
         //        MultipartBody.Part birthDayPart = createPartString("birthDay", birthDay);
         partList.add(realNamePart);
-        partList.add(sexPart);
+
         partList.add(addressPart);
         partList.add(companyNamePart);
         partList.add(berthPart);
         //        partList.add(birthDayPart);
         params.put("realName",realName);
-        params.put("sex",sex);
+        if(sex!= -1) {
+            params.put("sex", sex);
+        }
         params.put("address",address);
         params.put("companyName",companyName);
         params.put("berth",berth);

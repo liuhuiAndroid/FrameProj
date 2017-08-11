@@ -148,7 +148,14 @@ public class PersonalProfileActivity extends BaseActivity implements PersonalPro
     public void mallInformationSuccess(User user) {
         ImageLoaderUtil.getInstance().loadCircleImage(user.getAvatarUrl(), R.drawable.header, mImageHeaderPhoto);
         mTextNiCheng.setText(user.getRealName());
-        mTextSex.setText(user.getSex() == 1 ? "男" : "女");
+        if (user.getSex() == 1) {
+            mTextSex.setText("男");
+        } else if (user.getSex() == 0) {
+            mTextSex.setText("女");
+        } else {
+            mTextSex.setText("未填");
+        }
+
         mTextPhone.setText(user.getMobile());
         mTextDName.setText(user.getCompanyName());
         mTextAddress.setText(user.getAddress());
@@ -173,7 +180,15 @@ public class PersonalProfileActivity extends BaseActivity implements PersonalPro
                 String companyName = mTextDName.getText().toString().trim();
                 String address = mTextAddress.getText().toString().trim();
                 String pNumber = mTextPNumber.getText().toString().trim();
-                mPresenter.mallInfoComplete(nickname, sex.equals("男") ? 1 : 0, address, companyName, pNumber, mCompressPath, null);
+                int intSex = 0;
+                if (sex.equals("男")) {
+                    intSex = 1;
+                } else if (sex.equals("女")) {
+                    intSex = 0;
+                } else {
+                    intSex = -1;
+                }
+                mPresenter.mallInfoComplete(nickname, intSex, address, companyName, pNumber, mCompressPath, null);
                 break;
         }
     }
@@ -223,7 +238,7 @@ public class PersonalProfileActivity extends BaseActivity implements PersonalPro
                     if (selectList != null && selectList.size() > 0) {
                         final LocalMedia localMedia = selectList.get(0);
                         mCompressPath = localMedia.getCompressPath();
-                        ImageLoaderUtil.getInstance().loadCircleImage(localMedia.getCompressPath(),R.drawable.header, mImageHeaderPhoto);
+                        ImageLoaderUtil.getInstance().loadCircleImage(localMedia.getCompressPath(), R.drawable.header, mImageHeaderPhoto);
                         Logger.i("localMedia.getPath() = " + localMedia.getPath());
                         Logger.i("localMedia.getCompressPath() = " + localMedia.getCompressPath());
                     }

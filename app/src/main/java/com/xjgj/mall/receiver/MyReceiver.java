@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.android.frameproj.library.util.log.Logger;
+import com.xjgj.mall.util.SPUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,8 @@ public class MyReceiver extends BroadcastReceiver {
 				String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
 				Logger.i( "[MyReceiver] 接收Registration Id : " + regId);
 				//send the Registration Id to your server...
-
+				SPUtil spUtil = new SPUtil(context);
+				spUtil.setREGISTRATIONID(regId);
 			} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
 				Logger.i( "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 

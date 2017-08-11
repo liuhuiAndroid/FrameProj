@@ -6,6 +6,7 @@ import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.components.retrofit.RequestHelper;
 import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.injector.PerApp;
+import com.xjgj.mall.util.SPUtil;
 
 import javax.inject.Named;
 
@@ -24,8 +25,8 @@ public class ApiModule {
     @Provides
     @PerApp
     public CommonApi providesCookieApi(Context context, @Named("api") OkHttpClient okHttpClient, RequestHelper requestHelper,
-                                       UserStorage userStorage) {
-        return new CommonApi(context,okHttpClient,requestHelper,userStorage);
+                                       UserStorage userStorage, SPUtil spUtil) {
+        return new CommonApi(context,okHttpClient,requestHelper,userStorage,spUtil);
     }
 
 }
