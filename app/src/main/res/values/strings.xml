@@ -6,6 +6,7 @@
     <string name="error_permission">权限错误</string>
     <string name="error_parse">解析异常</string>
     <string name="error_unknow">未知的错误</string>
+    <string name="error_connect">无法连接到服务器，请检查网络</string>
     <string name="universal_empty">暂无更多内容</string>
 
     <string name="MainActivity_title_1">找车</string>

@@ -17,474 +17,487 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <com.android.frameproj.library.statefullayout.StatefulLayout
+        android:id="@+id/statefulLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/zf1f2f4"
-        android:visibility="gone"
         android:layout_below="@id/linearClude">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/zf1f2f4"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/userInfoLayout"
-                android:layout_width="match_parent"
-                android:layout_height="270px"
-                android:background="@color/white"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/imageHeader"
-                    android:layout_width="180px"
-                    android:layout_height="180px"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="7dp"
-                    android:src="@drawable/header"/>
-
-                <ImageView
-                    android:id="@+id/imageCallPhone"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/imageHeader"
-                    android:src="@drawable/icon_tel"/>
-
-                <TextView
-                    android:id="@+id/textUserName"
-                    style="@style/normal_sixteen_text"
-                    android:layout_alignTop="@id/imageHeader"
-                    android:layout_toRightOf="@id/imageHeader"
-                    android:text=""
-                    android:textColor="@color/z262627"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/textUserPhone"
-                    style="@style/normal_sixteen_text"
-                    android:layout_alignTop="@id/textUserName"
-                    android:layout_marginLeft="38dp"
-                    android:layout_toRightOf="@id/textUserName"
-                    android:text=""
-                    android:textColor="@color/z262627"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/textFwTimes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/imageHeader"
-                    android:layout_marginBottom="10px"
-                    android:layout_toRightOf="@id/imageHeader"
-                    android:text=""
-                    android:textColor="@color/z404b53"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:id="@+id/textPaiZhao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/imageHeader"
-                    android:layout_alignRight="@id/textUserPhone"
-                    android:layout_marginBottom="10px"
-                    android:text=""
-                    android:textColor="@color/z404b53"
-                    android:textSize="12sp"/>
-
-                <com.xjgj.mall.ui.widget.StarBar
-                    android:id="@+id/starBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textUserName"
-                    android:layout_marginTop="5px"
-                    android:layout_toRightOf="@id/imageHeader"
-                    ratingbar:starCount="5"
-                    ratingbar:starDistance="5dp"
-                    ratingbar:starEmpty="@drawable/star_empty"
-                    ratingbar:starFill="@drawable/star_full"
-                    ratingbar:starSize="10dp"/>
-
-
-            </RelativeLayout>
+            android:background="@color/zf1f2f4">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="33dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="2px"
-                    android:layout_marginRight="7dp"
-                    android:layout_weight="1"
-                    android:background="@color/zdfe0e1"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/order_details"
-                    android:textColor="@color/zdfe0e1"
-                    android:textSize="14sp"/>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="7dp"
-                    android:layout_weight="1"
-                    android:background="@color/zdfe0e1"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="17dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="车        型"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textCarType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/use_car_time"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textUseCarTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="体        积"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="重        量"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textWeight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="箱        数"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="拼        单"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textTogether"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/other_server"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textOtherCost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="7dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/order_bei_zhu"
-                    android:textColor="@color/z868788"/>
-
-                <TextView
-                    android:id="@+id/textOrderBeiZhu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:text=""
-                    android:textColor="@color/z262627"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/zdfe0e1"/>
-
-            <LinearLayout
-                android:id="@+id/linearAddXingCheng"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:background="@color/zdfe0e1"/>
-
-            <LinearLayout
-                android:id="@+id/linearOrderAgain"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="17dp"
-                    android:layout_height="17dp"
-                    android:src="@drawable/icon_add"/>
-
-                <TextView
-                    style="@style/normal_sixteen_text"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/order_again"
-                    android:textColor="@color/z535455"/>
-            </LinearLayout>
-
-
-            <!-- 评价 -->
-            <LinearLayout
-                android:id="@+id/linearComments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|top"
+                android:layout_height="match_parent"
+                android:background="@color/zf1f2f4"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    android:id="@+id/userInfoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="270px"
+                    android:background="@color/white"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imageHeader"
+                        android:layout_width="180px"
+                        android:layout_height="180px"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="7dp"
+                        android:src="@drawable/header"/>
+
+                    <ImageView
+                        android:id="@+id/imageCallPhone"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@id/imageHeader"
+                        android:src="@drawable/icon_tel"/>
+
+                    <TextView
+                        android:id="@+id/textUserName"
+                        style="@style/normal_sixteen_text"
+                        android:layout_alignTop="@id/imageHeader"
+                        android:layout_toRightOf="@id/imageHeader"
+                        android:text=""
+                        android:textColor="@color/z262627"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/textUserPhone"
+                        style="@style/normal_sixteen_text"
+                        android:layout_alignTop="@id/textUserName"
+                        android:layout_marginLeft="38dp"
+                        android:layout_toRightOf="@id/textUserName"
+                        android:text=""
+                        android:textColor="@color/z262627"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/textFwTimes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/imageHeader"
+                        android:layout_marginBottom="10px"
+                        android:layout_toRightOf="@id/imageHeader"
+                        android:text=""
+                        android:textColor="@color/z404b53"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/textPaiZhao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/imageHeader"
+                        android:layout_alignRight="@id/textUserPhone"
+                        android:layout_marginBottom="10px"
+                        android:text=""
+                        android:textColor="@color/z404b53"
+                        android:textSize="12sp"/>
+
+                    <com.xjgj.mall.ui.widget.StarBar
+                        android:id="@+id/starBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textUserName"
+                        android:layout_marginTop="5px"
+                        android:layout_toRightOf="@id/imageHeader"
+                        ratingbar:starCount="5"
+                        ratingbar:starDistance="5dp"
+                        ratingbar:starEmpty="@drawable/star_empty"
+                        ratingbar:starFill="@drawable/star_full"
+                        ratingbar:starSize="10dp"/>
+
+
+                </RelativeLayout>
+
                 <LinearLayout
-                    android:id="@+id/linearMeShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2px"
+                        android:layout_marginRight="7dp"
+                        android:layout_weight="1"
+                        android:background="@color/zdfe0e1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_details"
+                        android:textColor="@color/zdfe0e1"
+                        android:textSize="14sp"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2px"
+                        android:layout_marginLeft="7dp"
+                        android:layout_weight="1"
+                        android:background="@color/zdfe0e1"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="7dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/use_car_time"
+                        android:textColor="@color/z868788"/>
+
+                    <TextView
+                        android:id="@+id/textUseCarTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text=""
+                        android:textColor="@color/z262627"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_infomation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="17dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="车        型"
+                            android:textColor="@color/z868788"/>
+
+                        <TextView
+                            android:id="@+id/textCarType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:text=""
+                            android:textColor="@color/z262627"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="7dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="体        积"
+                            android:textColor="@color/z868788"/>
+
+                        <TextView
+                            android:id="@+id/textSize"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:text=""
+                            android:textColor="@color/z262627"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="7dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="重        量"
+                            android:textColor="@color/z868788"/>
+
+                        <TextView
+                            android:id="@+id/textWeight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:text=""
+                            android:textColor="@color/z262627"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="7dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="箱        数"
+                            android:textColor="@color/z868788"/>
+
+                        <TextView
+                            android:id="@+id/textCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:text=""
+                            android:textColor="@color/z262627"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="7dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="拼        单"
+                            android:textColor="@color/z868788"/>
+
+                        <TextView
+                            android:id="@+id/textTogether"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:text=""
+                            android:textColor="@color/z262627"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="7dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="20px"
-                        android:text="@string/me_to_driver_comment"
-                        android:textColor="@color/z535455"/>
-
-                    <com.xjgj.mall.ui.widget.StarBar
-                        android:id="@+id/starMeBarShow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="45px"
-                        ratingbar:starCount="5"
-                        ratingbar:starDistance="15dp"
-                        ratingbar:starEmpty="@drawable/star_empty"
-                        ratingbar:starFill="@drawable/star_full"
-                        ratingbar:starSize="40dp"/>
+                        android:text="@string/other_server"
+                        android:textColor="@color/z868788"/>
 
                     <TextView
-                        android:id="@+id/textMeComments"
+                        android:id="@+id/textOtherCost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15px"
+                        android:layout_marginLeft="12dp"
                         android:text=""
-                        android:textColor="@color/z535455"
-                        android:textSize="16sp"/>
+                        android:textColor="@color/z262627"/>
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:id="@+id/linearOthersShow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="30px"
-                    android:layout_marginTop="30px"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="7dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_bei_zhu"
+                        android:textColor="@color/z868788"/>
+
+                    <TextView
+                        android:id="@+id/textOrderBeiZhu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text=""
+                        android:textColor="@color/z262627"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/zdfe0e1"/>
+
+                <LinearLayout
+                    android:id="@+id/linearAddXingCheng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/zdfe0e1"/>
+
+                <LinearLayout
+                    android:id="@+id/linearOrderAgain"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:src="@drawable/icon_add"/>
+
+                    <TextView
+                        style="@style/normal_sixteen_text"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/order_again"
+                        android:textColor="@color/z535455"/>
+                </LinearLayout>
+
+
+                <!-- 评价 -->
+                <LinearLayout
+                    android:id="@+id/linearComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|top"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/linearMeShow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="20px"
-                        android:text="@string/driver_to_me_comment"
-                        android:textColor="@color/z535455"/>
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <com.xjgj.mall.ui.widget.StarBar
-                        android:id="@+id/starOthersBarShow"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="20px"
+                            android:text="@string/me_to_driver_comment"
+                            android:textColor="@color/z535455"/>
+
+                        <com.xjgj.mall.ui.widget.StarBar
+                            android:id="@+id/starMeBarShow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="30px"
+                            android:layout_marginTop="45px"
+                            ratingbar:starCount="5"
+                            ratingbar:starDistance="15dp"
+                            ratingbar:starEmpty="@drawable/star_empty"
+                            ratingbar:starFill="@drawable/star_full"
+                            ratingbar:starSize="40dp"/>
+
+                        <TextView
+                            android:id="@+id/textMeComments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15px"
+                            android:text=""
+                            android:textColor="@color/z535455"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearOthersShow"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="30px"
-                        android:layout_marginTop="45px"
-                        ratingbar:starCount="5"
-                        ratingbar:starDistance="15dp"
-                        ratingbar:starEmpty="@drawable/star_empty"
-                        ratingbar:starFill="@drawable/star_full"
-                        ratingbar:starSize="40dp"/>
+                        android:layout_marginTop="30px"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textOthersComments"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="15px"
-                        android:text=""
-                        android:textColor="@color/z535455"
-                        android:textSize="16sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="20px"
+                            android:text="@string/driver_to_me_comment"
+                            android:textColor="@color/z535455"/>
+
+                        <com.xjgj.mall.ui.widget.StarBar
+                            android:id="@+id/starOthersBarShow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="30px"
+                            android:layout_marginTop="45px"
+                            ratingbar:starCount="5"
+                            ratingbar:starDistance="15dp"
+                            ratingbar:starEmpty="@drawable/star_empty"
+                            ratingbar:starFill="@drawable/star_full"
+                            ratingbar:starSize="40dp"/>
+
+                        <TextView
+                            android:id="@+id/textOthersComments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15px"
+                            android:text=""
+                            android:textColor="@color/z535455"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-    </ScrollView>
+        </ScrollView>
+    </com.android.frameproj.library.statefullayout.StatefulLayout>
 
     <!-- 加载中 -->
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avLoadingIndicatorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ratingbar:indicatorColor="@color/colorAccent"
-        ratingbar:indicatorName="BallPulseIndicator"
         android:layout_centerInParent="true"
         android:visibility="invisible"
+        ratingbar:indicatorColor="@color/colorAccent"
+        ratingbar:indicatorName="BallPulseIndicator"
         />
 
 </RelativeLayout>

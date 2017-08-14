@@ -8,7 +8,7 @@ import com.xjgj.mall.injector.PerActivity;
 import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.fragment1.Fragment1;
 import com.xjgj.mall.ui.fragment3.Fragment3;
-import com.xjgj.mall.ui.fragment4.Fragment4;
+import com.xjgj.mall.ui.fragmentfindcar.FragmentFindCar;
 
 import javax.inject.Inject;
 
@@ -80,7 +80,7 @@ public class MainPresenter implements MainContract.Presenter {
         }
         if (mFragment == null) {
             if (nowSelect == 0) {
-                mFragment = Fragment4.newInstance();
+                mFragment = FragmentFindCar.newInstance();
             } else if (nowSelect == 1) {
                 mFragment = Fragment1.newInstance();
             } else if (nowSelect == 2) {

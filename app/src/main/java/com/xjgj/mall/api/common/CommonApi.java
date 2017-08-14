@@ -51,7 +51,7 @@ public class CommonApi {
     private UserStorage mUserStorage;
     private SPUtil mSpUtil;
 
-    public CommonApi(Context context,OkHttpClient mOkHttpClient, RequestHelper requestHelper,
+    public CommonApi(Context context, OkHttpClient mOkHttpClient, RequestHelper requestHelper,
                      UserStorage userStorage, SPUtil spUtil) {
         mContext = context;
         this.mRequestHelper = requestHelper;
@@ -202,7 +202,7 @@ public class CommonApi {
      */
     public Observable<HttpResult<String>> orderSubmit(String serviceTime, String volume, String weight, String serviceType,
                                                       String carType, String remark, String counts, String address,
-                                                      String submitType, int flgTogether) {
+                                                      String submitType, int flgTogether, int flgSite) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         if (!serviceTime.equals("")) {
@@ -216,7 +216,10 @@ public class CommonApi {
         params.put("counts", counts);
         params.put("address", address);
         params.put("submitType", submitType);
-        params.put("flgTogether", flgTogether);
+        if (flgTogether != -1) {
+            params.put("flgTogether", flgTogether);
+        }
+        params.put("flgSite", flgSite);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.orderSubmit(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
@@ -246,7 +249,7 @@ public class CommonApi {
             partList.add(headIconPart);
         }
         MultipartBody.Part realNamePart = createPartString("realName", realName);
-        if(sex!= -1) {
+        if (sex != -1) {
             MultipartBody.Part sexPart = createPartString("sex", sex + "");
             partList.add(sexPart);
         }
@@ -260,13 +263,13 @@ public class CommonApi {
         partList.add(companyNamePart);
         partList.add(berthPart);
         //        partList.add(birthDayPart);
-        params.put("realName",realName);
-        if(sex!= -1) {
+        params.put("realName", realName);
+        if (sex != -1) {
             params.put("sex", sex);
         }
-        params.put("address",address);
-        params.put("companyName",companyName);
-        params.put("berth",berth);
+        params.put("address", address);
+        params.put("companyName", companyName);
+        params.put("berth", berth);
 
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.mallInfoComplete(currentTimeMillis, sign, partList, mUserStorage.getToken()).subscribeOn(Schedulers.io());

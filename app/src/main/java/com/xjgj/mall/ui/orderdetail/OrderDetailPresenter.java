@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -45,20 +44,20 @@ public class OrderDetailPresenter implements OrderDetailContract.Presenter {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        mView.hideLoading();
-                    }
-                }).subscribe(new Consumer<OrderDetailEntity>() {
+                .subscribe(new Consumer<OrderDetailEntity>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull OrderDetailEntity orderDetailEntity) throws Exception {
-                        mView.orderDetailResult(orderDetailEntity);
+                        if (orderDetailEntity != null) {
+                            mView.hideLoading(0);
+                            mView.orderDetailResult(orderDetailEntity);
+                        } else {
+                            mView.hideLoading(-1);
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
-                        mView.hideLoading();
+                        mView.hideLoading(-1);
                         mView.onError(throwable);
                     }
                 }));

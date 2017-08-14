@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_white_1000">
+
+    <!-- 页面底部下一步-->
+    <LinearLayout
+        android:id="@+id/linearBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textNext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/linearBottom"
+        android:layout_below="@id/view_line"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 主LinearLayout -->
+            <LinearLayout
+                android:id="@+id/vanTypeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="16.0dip">
+
+                <!-- 第一块结束 间隔-->
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:background="@color/black_12_percent"/>
+
+                <!-- 选择起始地 -->
+                <LinearLayout
+                    android:id="@+id/llAddrOF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16.0dip"
+                    android:layout_marginLeft="8.0dip"
+                    android:layout_marginRight="8.0dip"
+                    android:layout_marginTop="16.0dip"
+                    android:background="@drawable/shape_rounded_white_radius_2dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="2.0dip"
+                    android:paddingTop="2.0dip">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8.0dip"
+                        android:layout_marginRight="8.0dip"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent">
+
+                            <LinearLayout
+                                android:id="@+id/lineV"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@color/transparent"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:id="@+id/topline"
+                                    android:layout_width="0.5dip"
+                                    android:layout_height="fill_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1.0"
+                                    android:background="@color/md_white_1000"/>
+
+                                <View
+                                    android:id="@+id/bottomline"
+                                    android:layout_width="0.5dip"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="1.0"
+                                    android:background="@color/md_grey_300"
+                                    android:paddingLeft="5.0dip"/>
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_start"/>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/editLayout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="56dp"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <com.android.frameproj.library.widget.SuperEditTextPlus
+                                android:id="@+id/seStPtOF"
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.0dip"
+                                android:layout_weight="1.0"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/bottom_stop_container"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8.0dip"
+                        android:layout_marginRight="8.0dip"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@color/transparent"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:layout_width="0.5dip"
+                                    android:layout_height="fill_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1.0"
+                                    android:background="@color/md_grey_300"/>
+
+                                <View
+                                    android:layout_width="0.5dip"
+                                    android:layout_height="fill_parent"
+                                    android:layout_weight="1.0"
+                                    android:background="@color/md_white_1000"
+                                    android:paddingLeft="5.0dip"/>
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_dest"/>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="56dp"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <com.android.frameproj.library.widget.SuperEditTextPlus
+                                android:id="@+id/nextDestOF"
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.0dip"
+                                android:layout_weight="1.0"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

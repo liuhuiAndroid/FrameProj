@@ -35,10 +35,10 @@ public class ComfirmOrderPresenter implements ComfirmOrderContract.Presenter {
     @Override
     public void orderSubmit(String serviceTime, String volume, String weight, String serviceType,
                             String carType, String remark, String counts, String address,
-                            String submitType, int flgTogether) {
+                            String submitType, int flgTogether,int flgSite) {
         mView.showLoading();
         disposables.add(mCommonApi.orderSubmit(serviceTime, volume, weight, serviceType, carType, remark,
-                counts, address, submitType, flgTogether)
+                counts, address, submitType, flgTogether,flgSite)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<String>, ObservableSource<String>>() {
                     @Override

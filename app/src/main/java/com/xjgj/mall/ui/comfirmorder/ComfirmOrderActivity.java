@@ -23,7 +23,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.RESULT_CONFIRM_ORDER_CODE;
@@ -91,6 +90,8 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     TextView mTextRemarksShow;
     @BindView(R.id.textTogetherShow)
     TextView mTextTogetherShow;
+    @BindView(R.id.rl_infomation)
+    RelativeLayout mRlInfomation;
     /**
      * 订单信息
      */
@@ -99,6 +100,8 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
      * 订单目的地信息
      */
     private List<TerminiEntity> tempTerminiEntity;
+
+    private int mOrderType; //0:代表场外配送,1:代表场内短驳
 
     @Override
     public int initContentView() {
@@ -123,33 +126,46 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
         mTextTitle.setText(getResources().getString(R.string.order_ok));
         mAvLoadingIndicatorView.setIndicator("BallSpinFadeLoaderIndicator");
 
+        mOrderType = getIntent().getIntExtra("orderType", -1);
         Bundle bundle = getIntent().getExtras();
         mOrderCarInfo = (OrderCarInfo) bundle.getSerializable("orderCarInfo");
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
 
-        mTextTogetherShow.setText(mOrderCarInfo.getFlgTogether() == 1 ? "是" : "否");
-        String cartypeName = getIntent().getStringExtra("cartypeName");
-        if (!TextUtils.isEmpty(mOrderCarInfo.getServiceTime())) {
-            mTextUseCarTime.setText(mOrderCarInfo.getServiceTime());
+
+        if (mOrderType == 0) {
+            mRlInfomation.setVisibility(View.VISIBLE);
+            //车型
+            String cartypeName = getIntent().getStringExtra("cartypeName");
+            if (!TextUtils.isEmpty(mOrderCarInfo.getServiceTime())) {
+                mTextUseCarTime.setText(mOrderCarInfo.getServiceTime());
+            } else {
+                mTextUseCarTime.setText("现在");
+            }
+            mTextCarType.setText(cartypeName);
+            //体积
+            if (!TextUtils.isEmpty(mOrderCarInfo.getVolume())) {
+                mTextSizeShow.setText(mOrderCarInfo.getVolume() + "立方");
+            } else {
+                mTextSizeShow.setText("无");
+            }
+            //重量
+            if (!TextUtils.isEmpty(mOrderCarInfo.getWeight())) {
+                mTextWeightShow.setText(mOrderCarInfo.getWeight() + "公斤");
+            } else {
+                mTextWeightShow.setText("无");
+            }
+            //箱数
+            if (!TextUtils.isEmpty(mOrderCarInfo.getCounts())) {
+                mTextCountShow.setText(mOrderCarInfo.getCounts() + "个");
+            } else {
+                mTextCountShow.setText("无");
+            }
+            //拼单
+            mTextTogetherShow.setText(mOrderCarInfo.getFlgTogether() == 1 ? "是" : "否");
         } else {
-            mTextUseCarTime.setText("现在");
+            mRlInfomation.setVisibility(View.GONE);
         }
-        mTextCarType.setText(cartypeName);
-        if (!TextUtils.isEmpty(mOrderCarInfo.getVolume())) {
-            mTextSizeShow.setText(mOrderCarInfo.getVolume() + "立方");
-        } else {
-            mTextSizeShow.setText("无");
-        }
-        if (!TextUtils.isEmpty(mOrderCarInfo.getWeight())) {
-            mTextWeightShow.setText(mOrderCarInfo.getWeight() + "公斤");
-        } else {
-            mTextWeightShow.setText("无");
-        }
-        if (!TextUtils.isEmpty(mOrderCarInfo.getCounts())) {
-            mTextCountShow.setText(mOrderCarInfo.getCounts() + "个");
-        } else {
-            mTextCountShow.setText("无");
-        }
+
         if (!TextUtils.isEmpty(mOrderCarInfo.getServiceType())) {
             mTextOtherServiceShow.setText(mOrderCarInfo.getServiceType());
         } else {
@@ -225,16 +241,18 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
      */
     @OnClick(R.id.textNext)
     public void mTextNext() {
-        mComfirmOrderPresenter.orderSubmit(mOrderCarInfo.getServiceTime(), mOrderCarInfo.getVolume(),
-                mOrderCarInfo.getWeight(), mOrderCarInfo.getServiceType(), mOrderCarInfo.getCarType(),
-                mOrderCarInfo.getRemark(), mOrderCarInfo.getCounts(), new Gson().toJson(tempTerminiEntity),
-                "1",mOrderCarInfo.getFlgTogether());
+        //0:代表场外配送,1:代表场内短驳
+        if (mOrderType == 0) {
+            mComfirmOrderPresenter.orderSubmit(mOrderCarInfo.getServiceTime(), mOrderCarInfo.getVolume(),
+                    mOrderCarInfo.getWeight(), mOrderCarInfo.getServiceType(), mOrderCarInfo.getCarType(),
+                    mOrderCarInfo.getRemark(), mOrderCarInfo.getCounts(), new Gson().toJson(tempTerminiEntity),
+                    "1", mOrderCarInfo.getFlgTogether(), mOrderType);
+        } else if (mOrderType == 1) {
+            mComfirmOrderPresenter.orderSubmit(mOrderCarInfo.getServiceTime(), "",
+                    "", mOrderCarInfo.getServiceType(), "",
+                    mOrderCarInfo.getRemark(), "", new Gson().toJson(tempTerminiEntity),
+                    "1", -1, mOrderType);
+        }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

@@ -12,6 +12,7 @@ import com.xjgj.mall.ui.fragment2.order_waiting_accept.OrderWaitingAcceptFragmen
 import com.xjgj.mall.ui.fragment2.order_working.OrderWorkingFragement;
 import com.xjgj.mall.ui.fragment3.Fragment3;
 import com.xjgj.mall.ui.fragment4.Fragment4;
+import com.xjgj.mall.ui.fragmentfindcar.on_site.FragmentFindCarOnSite;
 
 import dagger.Component;
 
@@ -40,4 +41,6 @@ public interface MainComponent {
     void inject(OrderEvaluatedFragment fragment);
 
     void inject(Fragment4 fragment);
+    void inject(FragmentFindCarOnSite fragment);
+
 }

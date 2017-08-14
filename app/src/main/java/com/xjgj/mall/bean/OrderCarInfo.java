@@ -17,6 +17,12 @@ public class OrderCarInfo extends Entity{
     private String counts;
     private int flgTogether;
 
+    public OrderCarInfo(String serviceTime, String remark, String serviceType) {
+        this.serviceTime = serviceTime;
+        this.remark = remark;
+        this.serviceType = serviceType;
+    }
+
     public OrderCarInfo(String serviceTime, String volume, String weight, String serviceType, String carType, String remark, String counts, int flgTogether) {
         this.serviceTime = serviceTime;
         this.volume = volume;

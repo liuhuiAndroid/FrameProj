@@ -23,7 +23,7 @@ public interface ComfirmOrderContract {
 
         void orderSubmit(String serviceTime, String volume, String weight, String serviceType,
                          String carType, String remark, String counts, String address,
-                         String submitType,int flgTogether);
+                         String submitType,int flgTogether,int flgSite);
 
     }
 

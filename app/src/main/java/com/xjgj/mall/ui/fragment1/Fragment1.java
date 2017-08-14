@@ -299,8 +299,14 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                     holder.setText(R.id.textStart, orderEntity.getStartAddress());
                     holder.setText(R.id.textEnd, orderEntity.getGoalAddress());
 
-                    if (orderEntity.getServiceTime() != null && orderEntity.getCarType() != null) {
-                        holder.setText(R.id.textTime, orderEntity.getServiceTime().concat("  ").concat(orderEntity.getCarType()));
+                    if (orderEntity.getServiceTime() != null) {
+                        if (orderEntity.getFlgSite() == 0) { // 是否场内订单 0 场外 1 场内
+                            if (orderEntity.getCarType() != null) {
+                                holder.setText(R.id.textTime, orderEntity.getServiceTime().concat("  ").concat(orderEntity.getCarType()));
+                            }
+                        } else if (orderEntity.getFlgSite() == 1) {
+                            holder.setText(R.id.textTime, orderEntity.getServiceTime().concat("  ").concat("场内短驳"));
+                        }
                     }
                     if (orderEntity.getOrderType() == 1) {
                         holder.setImageResource(R.id.imageState, R.drawable.icon_real);
@@ -316,6 +322,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                         OrderEntity orderEntity = datas.get(position);
                         Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
                         intent.putExtra("orderId", orderEntity.getOrderId());
+                        intent.putExtra("flgSite", orderEntity.getFlgSite());
                         startActivity(intent);
                     }
                 }

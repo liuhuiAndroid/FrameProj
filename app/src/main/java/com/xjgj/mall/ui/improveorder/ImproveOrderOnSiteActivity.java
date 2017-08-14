@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,7 +15,6 @@ import com.android.frameproj.library.util.TimeUtils;
 import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.widget.wheel.Info;
 import com.android.frameproj.library.widget.wheel.time.TimePickerPopWindow;
-import com.kyleduo.switchbutton.SwitchButton;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderCarInfo;
 import com.xjgj.mall.bean.TerminiEntity;
@@ -41,16 +39,13 @@ import static com.xjgj.mall.Constants.RESULT_EXTRA_SERVICE_CODE;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL;
 import static com.xjgj.mall.Constants.RESULT_WRITE_SENTENCE_CODE;
-import static com.xjgj.mall.R.id.editTiJi;
-import static com.xjgj.mall.R.id.textExtraService;
-import static com.xjgj.mall.R.id.textShowTime;
 
 /**
  * Created by we-win on 2017/7/27.
  * 完善订单信息
  */
 
-public class ImproveOrderActivity extends BaseActivity {
+public class ImproveOrderOnSiteActivity extends BaseActivity {
 
     @BindView(R.id.image_back)
     ImageView mImageBack;
@@ -70,36 +65,26 @@ public class ImproveOrderActivity extends BaseActivity {
     TextView mTextNext;
     @BindView(R.id.linearBottom)
     LinearLayout mLinearBottom;
-    @BindView(textShowTime)
+    @BindView(R.id.textShowTime)
     TextView mTextShowTime;
     @BindView(R.id.linearUpdateTime)
     LinearLayout mLinearUpdateTime;
-    @BindView(editTiJi)
-    EditText mEditTiJi;
-    @BindView(R.id.editWeight)
-    EditText mEditWeight;
-    @BindView(textExtraService)
+    @BindView(R.id.textExtraService)
     TextView mTextExtraService;
     @BindView(R.id.textShaoHua)
     TextView mTextShaoHua;
-    @BindView(R.id.editCount)
-    EditText mEditCount;
-    @BindView(R.id.sb_md)
-    SwitchButton mSbMd;
 
     private String sentenceToDriver = "";
     private String xieZhuang = "";
     private String huiDan = "";
     private String huiKuan = "";
     private String huikuanMoney = "";
-    private String mCartype;
-    private String mCartypeName;
     private List<TerminiEntity> tempTerminiEntity;
     private int mComeFrom;
 
     @Override
     public int initContentView() {
-        return R.layout.activity_improve_order;
+        return R.layout.activity_improve_order_onsite;
     }
 
     @Override
@@ -116,11 +101,8 @@ public class ImproveOrderActivity extends BaseActivity {
         mImageBack.setVisibility(View.VISIBLE);
         setImgBack(mImageBack);
         mTextTitle.setText("完善订单信息");
-        mCartype = getIntent().getStringExtra("cartype");
-        mCartypeName = getIntent().getStringExtra("cartypeName");
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
 
-        mEditTiJi.requestFocus();
     }
 
     // ==========================   时间选择控件  =================================
@@ -355,23 +337,17 @@ public class ImproveOrderActivity extends BaseActivity {
             serviceTime = "";
         }
 
-        String volume = mEditTiJi.getText().toString().trim();
-        String weight = mEditWeight.getText().toString().trim();
-        String count = mEditCount.getText().toString().trim();
         String serviceType = mTextExtraService.getText().toString().trim();
 
-        OrderCarInfo orderCarInfo = new OrderCarInfo(serviceTime, volume, weight, serviceType,
-                mCartype, sentenceToDriver, count, mSbMd.isChecked() ? 1 : 0);
+        OrderCarInfo orderCarInfo = new OrderCarInfo(serviceTime, sentenceToDriver, serviceType);
 
         Intent intent = new Intent(this, ComfirmOrderActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("cartypeName", mCartypeName);
         bundle.putSerializable("orderCarInfo", orderCarInfo);
         bundle.putSerializable("tempTerminiEntity", (Serializable) tempTerminiEntity);
         intent.putExtras(bundle);
-        intent.putExtra("orderType", 0);//0:代表场外配送,1:代表场内短驳
+        intent.putExtra("orderType", 1);//0:代表场外配送,1:代表场内短驳
         startActivityForResult(intent, REQUEST_CONFIRM_ORDER_CODE);
     }
-
 
 }

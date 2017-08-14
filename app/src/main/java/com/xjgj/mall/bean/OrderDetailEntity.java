@@ -1,5 +1,6 @@
 package com.xjgj.mall.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -31,6 +32,15 @@ public class OrderDetailEntity {
     private String carNo;
     private List<EvaluationBean> evaluation;
     private List<AddressListBean> addressList;
+    private List<CarAddressBean> carAddress;
+
+    public List<CarAddressBean> getCarAddress() {
+        return carAddress;
+    }
+
+    public void setCarAddress(List<CarAddressBean> carAddress) {
+        this.carAddress = carAddress;
+    }
 
     public int getFlgTogether() {
         return flgTogether;
@@ -253,6 +263,27 @@ public class OrderDetailEntity {
 
         public void setContent(String content) {
             this.content = content;
+        }
+    }
+
+    public static class CarAddressBean implements Serializable {
+        private double longitude;
+        private double latitude;
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
         }
     }
 

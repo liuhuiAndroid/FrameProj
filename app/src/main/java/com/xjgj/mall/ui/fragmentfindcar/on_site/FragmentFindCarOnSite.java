@@ -1,4 +1,4 @@
-package com.xjgj.mall.ui.fragment4;
+package com.xjgj.mall.ui.fragmentfindcar.on_site;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,14 +23,13 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.squareup.otto.Bus;
 import com.xjgj.mall.R;
-import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.GeoCoderResultEntity;
 import com.xjgj.mall.bean.TerminiEntity;
 import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.service.LocationService;
 import com.xjgj.mall.ui.BaseFragment;
 import com.xjgj.mall.ui.delivery.DeliveryInfoActivity;
-import com.xjgj.mall.ui.improveorder.ImproveOrderActivity;
+import com.xjgj.mall.ui.improveorder.ImproveOrderOnSiteActivity;
 import com.xjgj.mall.ui.main.MainComponent;
 import com.xjgj.mall.util.CommonEvent;
 
@@ -53,49 +51,35 @@ import static com.xjgj.mall.Constants.RESULT_DELIVERY_INFO_CODE;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE;
 
 /**
- * Created by WE-WIN-027 on 2016/9/27.
- *
- * @des ${TODO}
+ * Created by lh on 2017/8/14.
  */
-public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
-    @Inject
-    Fragment4Presenter mFragment4Presenter;
+public class FragmentFindCarOnSite extends BaseFragment implements FragmentFindCarOnSiteContract.View {
 
-    @Inject
-    Bus mBus;
-
-    @BindView(R.id.tab_layout)
-    TabLayout mTabLayout;
-    @BindView(R.id.vehicleWeight)
-    TextView mVehicleWeight;
-    @BindView(R.id.vehicleSize)
-    TextView mVehicleSize;
-    @BindView(R.id.vehicleVolume)
-    TextView mVehicleVolume;
-    @BindView(R.id.lIndicator)
-    ImageView mLIndicator;
-    @BindView(R.id.rIndicator)
-    ImageView mRIndicator;
-    // 发货起点
+    @BindView(R.id.textNext)
+    TextView mTextNext;
+    @BindView(R.id.linearBottom)
+    LinearLayout mLinearBottom;
+    @BindView(R.id.topline)
+    View mTopline;
+    @BindView(R.id.bottomline)
+    View mBottomline;
+    @BindView(R.id.lineV)
+    LinearLayout mLineV;
     @BindView(R.id.seStPtOF)
     SuperEditTextPlus mSeStPtOF;
-    // 发货终点
+    @BindView(R.id.editLayout)
+    LinearLayout mEditLayout;
     @BindView(R.id.nextDestOF)
     SuperEditTextPlus mNextDestOF;
-
-    // 选择地点的Container
+    @BindView(R.id.bottom_stop_container)
+    LinearLayout mBottomStopContainer;
     @BindView(R.id.llAddrOF)
     LinearLayout mLlAddrOF;
-
-    @Inject
-    LocationService locationService;
-
-    @Inject
-    UserStorage mUserStorage;
-
-    CallbackChangeFragment mCallbackChangeFragment;
-
+    @BindView(R.id.vanTypeView)
+    LinearLayout mVanTypeView;
+    @BindView(R.id.scrollView)
+    NestedScrollView mScrollView;
     /**
      * 存放起始地、途径地和终点
      */
@@ -104,17 +88,28 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
      * 存放起始地、途径地和终点的信息
      */
     public Map<Integer, TerminiEntity> tempTerminiEntity = new LinkedHashMap();
-    @BindView(R.id.viewPager)
-    ViewPager mViewPager;
+
     private int startIndex = 0;
     private int nextIndex = 1;
     //最大8个
     private int maxStation = 8;
-    private VehiclePagerAdapter mVehiclePagerAdapter;
+
+    @Inject
+    FragmentFindCarOnSitePresenter mFragmentFindCarOnSitePresenter;
+    @Inject
+    UserStorage mUserStorage;
+
+    @Inject
+    Bus mBus;
+
+    @Inject
+    LocationService locationService;
+
+    CallbackChangeFragment mCallbackChangeFragment;
 
     public static BaseFragment newInstance() {
-        Fragment4 fragment4 = new Fragment4();
-        return fragment4;
+        FragmentFindCarOnSite fragmentFindCarOnSite = new FragmentFindCarOnSite();
+        return fragmentFindCarOnSite;
     }
 
     @Override
@@ -124,7 +119,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
     @Override
     public int initContentView() {
-        return R.layout.fragment_4;
+        return R.layout.fragment_find_car_onsite;
     }
 
     @Override
@@ -148,8 +143,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         superEditTextsMap.put(startIndex, mSeStPtOF);
         superEditTextsMap.put(nextIndex, mNextDestOF);
 
-        mFragment4Presenter.attachView(this);
-        mFragment4Presenter.onCarListReceive();
+        mFragmentFindCarOnSitePresenter.attachView(this);
     }
 
     @Override
@@ -157,44 +151,6 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
 
     }
 
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void renderCarList(final List<CarTypeEntity> carTypeEntities) {
-        updateVehicleUI(0, carTypeEntities);
-        //初始化ViewPager
-        mVehiclePagerAdapter = new VehiclePagerAdapter(mViewPager, carTypeEntities);
-        mViewPager.setAdapter(mVehiclePagerAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        //防止频繁的销毁视图
-        mViewPager.setOffscreenPageLimit(carTypeEntities.size());
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                updateVehicleUI(position, carTypeEntities);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
 
     @Override
     public void onError(Throwable throwable) {
@@ -218,52 +174,6 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
             }
         }
     }
-
-    /**
-     * 更新页面上车的重量、体积数据
-     *
-     * @param position
-     * @param carTypeEntities
-     */
-    private void updateVehicleUI(int position, List<CarTypeEntity> carTypeEntities) {
-        mLIndicator.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
-        mRIndicator.setVisibility(position == carTypeEntities.size() - 1 ? View.INVISIBLE : View.VISIBLE);
-
-        mVehicleWeight.setText(carTypeEntities.get(position).getLoadWeight());
-        mVehicleSize.setText(carTypeEntities.get(position).getShape());
-        mVehicleVolume.setText(carTypeEntities.get(position).getLoadVolume());
-    }
-
-    /**
-     * ViewPager左滑
-     */
-    @OnClick(R.id.lIndicator)
-    public void mLIndicator() {
-        int childCount = mViewPager.getChildCount();
-        int currentItem = mViewPager.getCurrentItem();
-        if (childCount != 0 && (currentItem - 1) >= 0) {
-            mViewPager.setCurrentItem(currentItem - 1);
-        }
-    }
-
-    /**
-     * ViewPager右滑
-     */
-    @OnClick(R.id.rIndicator)
-    public void mRIndicator() {
-        int childCount = mViewPager.getChildCount();
-        int currentItem = mViewPager.getCurrentItem();
-        if (childCount != 0 && (currentItem + 1) < childCount) {
-            mViewPager.setCurrentItem(currentItem + 1);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mFragment4Presenter.detachView();
-    }
-
 
     /**
      *
@@ -433,7 +343,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                         @Override
                         public void run() {
                             Logger.i("收到定位：" + location.getLatitude() + "," + location.getLongitude());
-                            mFragment4Presenter.geocoderApi(location.getLatitude() + "," + location.getLongitude());
+                            mFragmentFindCarOnSitePresenter.geocoderApi(location.getLatitude() + "," + location.getLongitude());
                         }
                     });
                     stopLocationService();
@@ -466,7 +376,6 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
                     tempTerminiEntity.clear();
                     tempTerminiEntity.put(0, terminiEntity);
                 }
-
                 for (int i = 1; i < superEditTextsMap.size(); i++) {
                     SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(i);
                     if (localSuperEditTextPlus != null) {
@@ -484,7 +393,12 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
             mBus.post(new CommonEvent().new OrderTypeChangeEvent(-1, "全部订单", false));
             mCallbackChangeFragment.changeFragment(1);
         }
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mFragmentFindCarOnSitePresenter.detachView();
     }
 
     /**
@@ -497,30 +411,16 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
             isPrefect = false;
         }
         if (isPrefect) {
-            Intent intent = new Intent(baseActivity, ImproveOrderActivity.class);
-            int currentItem = mViewPager.getCurrentItem();
-            if (mVehiclePagerAdapter != null && mVehiclePagerAdapter.getCarTypeEntities() != null) {
-                List<CarTypeEntity> carTypeEntities = mVehiclePagerAdapter.getCarTypeEntities();
-                if (carTypeEntities.size() > currentItem) {
-                    intent.putExtra("cartypeName", carTypeEntities.get(currentItem).getCarTypeName() + "");
-                    intent.putExtra("cartype", carTypeEntities.get(currentItem).getCarTypeId() + "");
-                    Logger.i("选择 cartype = " + carTypeEntities.get(currentItem).getCarTypeId() + "" +
-                            ";carname = " + carTypeEntities.get(currentItem).getCarTypeName());
-                    Bundle bundle = new Bundle();
-                    List<TerminiEntity> terminiEntities = new ArrayList<TerminiEntity>();
-                    for (Integer integer : tempTerminiEntity.keySet()) {
-                        terminiEntities.add(tempTerminiEntity.get(integer));
-                    }
-                    bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
-                    intent.putExtras(bundle);
-                    intent.putExtra("comefrom", 2);// 1代表从订单详情进入，2代表从找车进入
-                    startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE);
-                } else {
-                    ToastUtil.showToast("车型数据有误");
-                }
-            } else {
-                ToastUtil.showToast("车型数据有误");
+            Intent intent = new Intent(baseActivity, ImproveOrderOnSiteActivity.class);
+            Bundle bundle = new Bundle();
+            List<TerminiEntity> terminiEntities = new ArrayList<TerminiEntity>();
+            for (Integer integer : tempTerminiEntity.keySet()) {
+                terminiEntities.add(tempTerminiEntity.get(integer));
             }
+            bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
+            intent.putExtras(bundle);
+            intent.putExtra("comefrom", 2);// 1代表从订单详情进入，2代表从找车进入
+            startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE);
         } else {
             ToastUtil.showToast("请填写地址");
         }
@@ -531,4 +431,5 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         super.onAttach(context);
         mCallbackChangeFragment = (CallbackChangeFragment) context;
     }
+
 }

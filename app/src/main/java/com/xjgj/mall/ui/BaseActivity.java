@@ -20,6 +20,7 @@ import com.xjgj.mall.injector.module.ActivityModule;
 
 import org.json.JSONException;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
@@ -151,6 +152,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             ToastUtil.showToast(getResources().getString(R.string.error_network));
         } else if (throwable instanceof SocketTimeoutException) {    //超时
 //            ToastUtil.showToast(getResources().getString(R.string.error_overtime));
+        } else if (throwable instanceof ConnectException) {
+            ToastUtil.showToast(getResources().getString(R.string.error_connect));
         } else {
 //            ToastUtil.showToast(getResources().getString(R.string.error_unknow));
         }

@@ -13,7 +13,7 @@ public class OrderDetailContract {
     interface View extends BaseView {
         void showLoading();
 
-        void hideLoading();
+        void hideLoading(int type);
 
         void orderDetailResult(OrderDetailEntity orderDetailEntity);
 

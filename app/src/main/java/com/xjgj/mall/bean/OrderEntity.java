@@ -26,6 +26,15 @@ public class OrderEntity {
     private String carNo;
 
     private float starLevel;
+    private int flgSite;
+
+    public int getFlgSite() {
+        return flgSite;
+    }
+
+    public void setFlgSite(int flgSite) {
+        this.flgSite = flgSite;
+    }
 
     public int getSignType() {
         return signType;

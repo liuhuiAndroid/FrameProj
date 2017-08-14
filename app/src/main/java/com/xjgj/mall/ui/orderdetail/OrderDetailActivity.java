@@ -3,7 +3,6 @@ package com.xjgj.mall.ui.orderdetail;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android.frameproj.library.statefullayout.StatefulLayout;
+import com.android.frameproj.library.statefullayout.StatusfulConfig;
+import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.util.imageloader.ImageLoaderUtil;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
@@ -19,6 +21,8 @@ import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.TerminiEntity;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.ui.improveorder.ImproveOrderActivity;
+import com.xjgj.mall.ui.improveorder.ImproveOrderOnSiteActivity;
+import com.xjgj.mall.ui.maprouteoverlay.MapRouteOverlayActivity;
 import com.xjgj.mall.ui.widget.StarBar;
 
 import java.io.Serializable;
@@ -106,8 +110,14 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     AVLoadingIndicatorView mAvLoadingIndicatorView;
     @BindView(R.id.textTogether)
     TextView mTextTogether;
+    @BindView(R.id.ll_infomation)
+    LinearLayout mLlInfomation;
+    @BindView(R.id.statefulLayout)
+    StatefulLayout mStatefulLayout;
 
     private String mContactMobile;
+    private int mFlgSite;
+    private int mOrderId;
 
     @Override
     public int initContentView() {
@@ -137,32 +147,50 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             }
         });
         mTextTitle.setText("订单详情");
-        mPresenter.orderDetail(getIntent().getIntExtra("orderId", -1));
+
+        mTextHandle.setText("查看车辆轨迹");
+        mTextHandle.setTextSize(14);
+        mTextHandle.setTextColor(getResources().getColor(R.color.z5b5b5b));
+        mTextHandle.setClickable(true);
+        mTextHandle.setVisibility(View.GONE);
+
+        mFlgSite = getIntent().getIntExtra("flgSite", -1);
+        mOrderId = getIntent().getIntExtra("orderId", -1);
+        mPresenter.orderDetail(mOrderId);
     }
 
     @Override
     public void showLoading() {
-        mAvLoadingIndicatorView.show();
+//        mAvLoadingIndicatorView.show();
+        mStatefulLayout.showLoading();
     }
 
     @Override
-    public void hideLoading() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAvLoadingIndicatorView.hide();
-            }
-        }, 500);
+    public void hideLoading(int type) {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mAvLoadingIndicatorView.hide();
+//            }
+//        }, 500);
+        if (type == -1) {
+            StatusfulConfig statusfulConfig = new StatusfulConfig.Builder()
+                    .setOnErrorStateButtonClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mPresenter.orderDetail(mOrderId);
+                        }
+                    }).build();
+            mStatefulLayout.showError(statusfulConfig);
+        } else if (type == 0) {
+            mStatefulLayout.showContent();
+        }
     }
 
     @Override
     public void orderDetailResult(final OrderDetailEntity orderDetailEntity) {
 
-        mScrollView.setVisibility(View.VISIBLE);
-
         if (orderDetailEntity != null) {
-
-            mTextTogether.setText(orderDetailEntity.getFlgTogether() == 1 ? "是" : "否");
 
             if (orderDetailEntity.getAddressList() != null && orderDetailEntity.getAddressList().size() > 0) {
 
@@ -205,8 +233,33 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 }
             }
 
-            mTextCarType.setText(orderDetailEntity.getCarName());
             mTextUseCarTime.setText(orderDetailEntity.getServiceTime());
+            if (mFlgSite == 0) {
+                mLlInfomation.setVisibility(View.VISIBLE);
+                mTextCarType.setText(orderDetailEntity.getCarName());
+                if (orderDetailEntity.getVolume() == 0) {
+                    mTextSize.setText("无");
+                } else {
+                    mTextSize.setText(orderDetailEntity.getVolume() + "立方");
+                }
+                if (orderDetailEntity.getWeight() == 0) {
+                    mTextWeight.setText("无");
+                } else {
+                    mTextWeight.setText(orderDetailEntity.getWeight() + "公斤");
+                }
+
+                if (orderDetailEntity.getCounts() == 0) {
+                    mTextCount.setText("无");
+                } else {
+                    mTextCount.setText(orderDetailEntity.getCounts() + "个");
+                }
+
+                mTextTogether.setText(orderDetailEntity.getFlgTogether() == 1 ? "是" : "否");
+
+            } else {
+                mLlInfomation.setVisibility(View.GONE);
+            }
+
             if (TextUtils.isEmpty(orderDetailEntity.getServiceType())) {
                 mTextOtherCost.setText("无");
             } else {
@@ -218,26 +271,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 mTextOrderBeiZhu.setText(orderDetailEntity.getRemark());
             }
 
-            if (orderDetailEntity.getVolume() == 0) {
-                mTextSize.setText("无");
-            } else {
-                mTextSize.setText(orderDetailEntity.getVolume() + "立方");
-            }
-            if (orderDetailEntity.getWeight() == 0) {
-                mTextWeight.setText("无");
-            } else {
-                mTextWeight.setText(orderDetailEntity.getWeight() + "公斤");
-            }
-
-            if (orderDetailEntity.getCounts() == 0) {
-                mTextCount.setText("无");
-            } else {
-                mTextCount.setText(orderDetailEntity.getCounts() + "个");
-            }
 
             if (orderDetailEntity.getStatus() != 0 && !TextUtils.isEmpty(orderDetailEntity.getContactMobile())) {
                 mUserInfoLayout.setVisibility(View.VISIBLE);
-                ImageLoaderUtil.getInstance().loadCircleImage(orderDetailEntity.getAvatarUrl(),R.drawable.header, mImageHeader);
+                ImageLoaderUtil.getInstance().loadCircleImage(orderDetailEntity.getAvatarUrl(), R.drawable.header, mImageHeader);
                 mTextUserName.setText(orderDetailEntity.getContactName());
                 mContactMobile = orderDetailEntity.getContactMobile();
                 mImageCallPhone.setOnClickListener(new View.OnClickListener() {
@@ -266,23 +303,41 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 mLinearOrderAgain.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(OrderDetailActivity.this, ImproveOrderActivity.class);
-                        List<TerminiEntity> terminiEntities = new ArrayList<TerminiEntity>();
-                        Bundle bundle = new Bundle();
-                        for (int i = 0; i < orderDetailEntity.getAddressList().size(); i++) {
-                            OrderDetailEntity.AddressListBean addressListBean = orderDetailEntity.getAddressList().get(i);
-                            TerminiEntity terminiEntity = new TerminiEntity(addressListBean.getAddress(), addressListBean.getAddressName(),
-                                    addressListBean.getLongitude(), addressListBean.getLatitude(),
-                                    addressListBean.getReceiverName(), addressListBean.getReceiverPhone());
-                            terminiEntities.add(terminiEntity);
+                        if (mFlgSite == 0) {//是否场内订单 0 场外 1 场内（是）
+                            Intent intent = new Intent(OrderDetailActivity.this, ImproveOrderActivity.class);
+                            List<TerminiEntity> terminiEntities = new ArrayList<TerminiEntity>();
+                            Bundle bundle = new Bundle();
+                            for (int i = 0; i < orderDetailEntity.getAddressList().size(); i++) {
+                                OrderDetailEntity.AddressListBean addressListBean = orderDetailEntity.getAddressList().get(i);
+                                TerminiEntity terminiEntity = new TerminiEntity(addressListBean.getAddress(), addressListBean.getAddressName(),
+                                        addressListBean.getLongitude(), addressListBean.getLatitude(),
+                                        addressListBean.getReceiverName(), addressListBean.getReceiverPhone());
+                                terminiEntities.add(terminiEntity);
+                            }
+                            bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
+                            intent.putExtras(bundle);
+                            intent.putExtra("cartypeName", orderDetailEntity.getCarName() + "");
+                            intent.putExtra("cartype", orderDetailEntity.getCarType() + "");
+                            intent.putExtra("comefrom", 1);// 1代表从订单详情进入，2代表从找车进入
+                            startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL);
+                        } else {
+                            Intent intent = new Intent(OrderDetailActivity.this, ImproveOrderOnSiteActivity.class);
+                            Bundle bundle = new Bundle();
+                            List<TerminiEntity> terminiEntities = new ArrayList<TerminiEntity>();
+                            for (int i = 0; i < orderDetailEntity.getAddressList().size(); i++) {
+                                OrderDetailEntity.AddressListBean addressListBean = orderDetailEntity.getAddressList().get(i);
+                                TerminiEntity terminiEntity = new TerminiEntity(addressListBean.getAddress(), addressListBean.getAddressName(),
+                                        addressListBean.getLongitude(), addressListBean.getLatitude(),
+                                        addressListBean.getReceiverName(), addressListBean.getReceiverPhone());
+                                terminiEntities.add(terminiEntity);
+                            }
+                            bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
+                            intent.putExtras(bundle);
+                            intent.putExtra("comefrom", 1);// 1代表从订单详情进入，2代表从找车进入
+                            startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL);
                         }
-                        bundle.putSerializable("tempTerminiEntity", (Serializable) terminiEntities);
-                        intent.putExtras(bundle);
-                        intent.putExtra("cartypeName", orderDetailEntity.getCarName() + "");
-                        intent.putExtra("cartype", orderDetailEntity.getCarType() + "");
-                        intent.putExtra("comefrom", 1);// 1代表从订单详情进入，2代表从找车进入
-                        startActivityForResult(intent, REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL);
                     }
+
                 });
             }
 
@@ -307,6 +362,27 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             } else {
                 mLinearComments.setVisibility(View.GONE);
             }
+
+            // 0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价,6 申诉中,7 已过期
+            if (orderDetailEntity.getStatus() == 2 || orderDetailEntity.getStatus() == 3
+                    || orderDetailEntity.getStatus() == 5) {
+                mTextHandle.setVisibility(View.VISIBLE);
+                mTextHandle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (orderDetailEntity.getCarAddress() != null && orderDetailEntity.getCarAddress().size() > 0) {
+                            Intent intent = new Intent(OrderDetailActivity.this, MapRouteOverlayActivity.class);
+                            intent.putExtra("addressList", (Serializable) orderDetailEntity.getCarAddress());
+                            startActivity(intent);
+                        } else {
+                            ToastUtil.showToast("暂无司机打卡记录");
+                        }
+                    }
+                });
+            } else {
+                mTextHandle.setVisibility(View.GONE);
+            }
+
         }
     }
 

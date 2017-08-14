@@ -66,6 +66,11 @@
             android:name=".ui.improveorder.ImproveOrderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <!-- 完善订单信息 -->
+        <activity
+            android:name=".ui.improveorder.ImproveOrderOnSiteActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- 给司机捎句话 -->
         <activity
             android:name=".ui.sentence.WriteSentenceActivity"
@@ -111,6 +116,10 @@
         <!-- 个人资料 -->
         <activity
             android:name=".ui.personalprofile.PersonalProfileActivity"
+            android:screenOrientation="portrait"/>
+        <!-- 司机行驶轨迹 -->
+        <activity
+            android:name=".ui.maprouteoverlay.MapRouteOverlayActivity"
             android:screenOrientation="portrait"/>
 
 
