@@ -90,6 +90,12 @@ public class MapRouteOverlayActivity extends BaseActivity {
             return;
         }
 
+        double sumLat = 0;
+        double sumLng = 0;
+        double minLat = 1000;
+        double minLng = 1000;
+        double maxLat = 0;
+        double maxLng = 0;
         // 多个点的时候绘制路径
         //向latLngPolygon中添加获取到的所有坐标点
         for (int i = 0; i < carAddressBeen.size(); i++) {
@@ -97,6 +103,23 @@ public class MapRouteOverlayActivity extends BaseActivity {
             double lngstart = carAddressBeen.get(i).getLongitude();
             LatLng latLng = new LatLng(latstart, lngstart);
             latLngPolygon.add(latLng);
+            double latitude = carAddressBeen.get(i).getLatitude();
+            double longitude = carAddressBeen.get(i).getLongitude();
+            sumLat += latitude;
+            sumLng += longitude;
+            if(latitude >= maxLat){
+                maxLat = latitude;
+            }
+            if(latitude <= minLat){
+                minLat = latitude;
+            }
+
+            if(longitude >= maxLng){
+                maxLng = longitude;
+            }
+            if(longitude <= minLng){
+                minLng = longitude;
+            }
         }
 
         //获取起点和终点以及计算中心点
@@ -104,14 +127,17 @@ public class MapRouteOverlayActivity extends BaseActivity {
         double lngstart = carAddressBeen.get(0).getLongitude();
         double latend = carAddressBeen.get(carAddressBeen.size() - 1).getLatitude();
         double lngend = carAddressBeen.get(carAddressBeen.size() - 1).getLongitude();
-        final double midlat = (latstart + latend) / 2;
-        final double midlon = (lngstart + lngend) / 2;
+        final double midlat = sumLat / carAddressBeen.size();
+        final double midlon = sumLng / carAddressBeen.size();
         LatLng pointMid = new LatLng(midlat, midlon);// 中点
-        LatLng pointStart = new LatLng(latstart, lngstart);// 起点
-        LatLng pointEnd = new LatLng(latend, lngend);// 终点
+        LatLng pointStart = new LatLng(latstart, lngstart);// 最小点
+        LatLng pointEnd = new LatLng(latend, lngend);// 最大点
+
+        LatLng pointMin= new LatLng(minLat, minLng);// 最小点
+        LatLng pointMax = new LatLng(maxLat, maxLng);// 最大点
 
         //设置地图缩放等级和中心点
-        mapZoomStatus(pointMid, pointStart, pointEnd);
+        mapZoomStatus(pointMid, pointMin, pointMax);
 
         // 添加覆盖物
         addOverLayout(pointStart,pointEnd);

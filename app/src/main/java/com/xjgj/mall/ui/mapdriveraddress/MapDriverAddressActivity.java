@@ -20,11 +20,8 @@ import com.baidu.mapapi.model.LatLng;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.DriverAddressEntity;
 import com.xjgj.mall.ui.BaseActivity;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 
 /**
@@ -33,6 +30,7 @@ import butterknife.BindView;
  */
 
 public class MapDriverAddressActivity extends BaseActivity implements MapDriverAddressContract.View {
+
     @BindView(R.id.image_back)
     ImageView mImageBack;
     @BindView(R.id.text_title)

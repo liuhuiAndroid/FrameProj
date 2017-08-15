@@ -318,7 +318,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
             mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    if (datas != null && datas.size() > position) {
+                    if (datas != null && datas.size() > position && position!=-1) {
                         OrderEntity orderEntity = datas.get(position);
                         Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
                         intent.putExtra("orderId", orderEntity.getOrderId());
