@@ -1,5 +1,6 @@
 package com.xjgj.mall.ui.comfirmorder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderCarInfo;
 import com.xjgj.mall.bean.TerminiEntity;
 import com.xjgj.mall.ui.BaseActivity;
+import com.xjgj.mall.ui.mapdriveraddress.MapDriverAddressActivity;
 
 import java.util.List;
 
@@ -131,6 +133,11 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
         mOrderCarInfo = (OrderCarInfo) bundle.getSerializable("orderCarInfo");
         tempTerminiEntity = (List<TerminiEntity>) getIntent().getExtras().getSerializable("tempTerminiEntity");
 
+        mTextHandle.setText("查看附近车辆");
+        mTextHandle.setTextSize(14);
+        mTextHandle.setTextColor(getResources().getColor(R.color.z5b5b5b));
+        mTextHandle.setClickable(true);
+        mTextHandle.setVisibility(View.GONE);
 
         if (mOrderType == 0) {
             mRlInfomation.setVisibility(View.VISIBLE);
@@ -199,7 +206,22 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
                 }
                 mLinearD.addView(view);
             }
+
+            mTextHandle.setVisibility(View.VISIBLE);
+            final TerminiEntity terminiEntity = tempTerminiEntity.get(0);
+            mTextHandle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ComfirmOrderActivity.this, MapDriverAddressActivity.class);
+                    intent.putExtra("longitude",terminiEntity.getLongitude());
+                    intent.putExtra("latitude",terminiEntity.getLatitude());
+                    startActivity(intent);
+                }
+            });
+
         }
+
+
     }
 
     @Override

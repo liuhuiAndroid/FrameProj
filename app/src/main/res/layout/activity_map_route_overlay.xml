@@ -4,6 +4,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <include layout="@layout/includer_header" />
+
+    <View style="@style/ZddddddLineStyle" />
+
     <com.baidu.mapapi.map.MapView
         android:id="@+id/baiduMapView"
         android:layout_width="match_parent"

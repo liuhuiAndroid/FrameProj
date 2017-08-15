@@ -121,6 +121,10 @@
         <activity
             android:name=".ui.maprouteoverlay.MapRouteOverlayActivity"
             android:screenOrientation="portrait"/>
+        <!-- 附近司机位置 -->
+        <activity
+            android:name=".ui.mapdriveraddress.MapDriverAddressActivity"
+            android:screenOrientation="portrait"/>
 
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->

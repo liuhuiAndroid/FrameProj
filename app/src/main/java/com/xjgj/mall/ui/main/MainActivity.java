@@ -6,12 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.interf.CallbackChangeFragment;
@@ -19,6 +21,7 @@ import com.android.frameproj.library.util.NetWorkUtils;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.xjgj.mall.AppManager;
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.MyApplication;
 import com.xjgj.mall.R;
@@ -42,7 +45,7 @@ import io.reactivex.functions.Consumer;
 import okhttp3.ResponseBody;
 
 public class MainActivity extends BaseActivity implements MainContract.View
-        , HasComponent<MainComponent>,CallbackChangeFragment {
+        , HasComponent<MainComponent>, CallbackChangeFragment {
 
     @BindView(R.id.frame_layout)
     FrameLayout mFrameLayout;
@@ -69,6 +72,9 @@ public class MainActivity extends BaseActivity implements MainContract.View
     Bus mBus;
 
     private MainComponent mMainComponent;
+    private long firstTime = 0;
+    private static final int BACK_TIME = 2000;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,9 +143,9 @@ public class MainActivity extends BaseActivity implements MainContract.View
     @Override
     public void setTitle(int position, String title) {
         mTextTitle.setText(title);
-        if(position == 1){
+        if (position == 1) {
             mTextHandle.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mTextHandle.setVisibility(View.GONE);
         }
     }
@@ -189,7 +195,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
                     @Override
                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         Type type = typeList.get(which);
-                        mBus.post(new CommonEvent().new OrderTypeChangeEvent(type.getId(),type.getName(),true));
+                        mBus.post(new CommonEvent().new OrderTypeChangeEvent(type.getId(), type.getName(), true));
                         mTextHandle.setText(type.getName());
                     }
                 })
@@ -198,7 +204,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
 
     @Subscribe
     public void orderTypeChangeEvent(CommonEvent.OrderTypeChangeEvent orderTypeChangeEvent) {
-        if(!orderTypeChangeEvent.isRefresh()){
+        if (!orderTypeChangeEvent.isRefresh()) {
             mTextHandle.setText(orderTypeChangeEvent.getName());
         }
     }
@@ -213,6 +219,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
             this.id = id;
             this.name = name;
         }
+
         private int id;
         private String name;
 
@@ -276,8 +283,8 @@ public class MainActivity extends BaseActivity implements MainContract.View
                                 final String res = new String(buffer, "UTF-8");
                                 fin.close();
 
-                               mCommonApi.uploadErrorFiles(MainActivity.this.getPackageName(),"android",
-                                       android.os.Build.VERSION.RELEASE, android.os.Build.MODEL,res)
+                                mCommonApi.uploadErrorFiles(MainActivity.this.getPackageName(), "android",
+                                        android.os.Build.VERSION.RELEASE, android.os.Build.MODEL, res)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Consumer<ResponseBody>() {
                                             @Override
@@ -320,4 +327,21 @@ public class MainActivity extends BaseActivity implements MainContract.View
         mBus.unregister(this);
         mPresenter.detachView();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        long secondTime = System.currentTimeMillis();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (secondTime - firstTime < BACK_TIME) {
+                AppManager.getAppManager().appExit(MainActivity.this);
+                //                System.exit(0);
+            } else {
+                Toast.makeText(MainActivity.this, R.string.exit_app, Toast.LENGTH_SHORT).show();
+                firstTime = System.currentTimeMillis();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

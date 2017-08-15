@@ -47,7 +47,7 @@ public class AppError implements Thread.UncaughtExceptionHandler {
                 //AppException.exc(e).makeToast(AppContext.getContext());
             }
             //退出程序
-            AppManager.getAppManager().AppExit(MyApplication.getContext());
+            AppManager.getAppManager().appExit(MyApplication.getContext());
         }
     }
 

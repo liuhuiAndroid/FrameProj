@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.DictionaryEntity;
+import com.xjgj.mall.bean.DriverAddressEntity;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
@@ -481,6 +482,18 @@ public class CommonApi {
     public Observable<ResponseBody> uploadErrorFiles(String appId, String deviceType,
                                                      String osVersion, String deviceModel, String log) {
         return mCommonService.uploadErrorFiles(appId, deviceType, osVersion, deviceModel, log).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 附近司机
+     */
+    public Observable<HttpResult<List<DriverAddressEntity>>> driverAddress(double longitude,double latitude) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("longitude", longitude);
+        params.put("latitude", latitude);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.driverAddress(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
     }
 
 }

@@ -3,6 +3,7 @@ package com.xjgj.mall.api.common;
 
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.DictionaryEntity;
+import com.xjgj.mall.bean.DriverAddressEntity;
 import com.xjgj.mall.bean.HomepageEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
@@ -154,5 +155,12 @@ public interface CommonService {
     Observable<ResponseBody> uploadErrorFiles(@Field("appId") String appId, @Field("deviceType") String deviceType,
                                       @Field("osVersion") String osVersion,
                                       @Field("deviceModel") String deviceModel, @Field("log") String log);
+
+    //附近司机
+    @FormUrlEncoded
+    @POST("common/driver/address")
+    Observable<HttpResult<List<DriverAddressEntity>>> driverAddress(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                                    @Header("token") String token, @FieldMap Map<String, Object> params);
+
 
 }
