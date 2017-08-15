@@ -247,6 +247,7 @@ public class FragmentFindCarOnSite extends BaseFragment implements FragmentFindC
         bundle.putSerializable("termini_info", (Serializable) terminiEntity);
         bundle.putInt("position", paramInt);
         intent.putExtras(bundle);
+        intent.putExtra("type", 1);//场外0 场内1
         startActivityForResult(intent, REQUEST_DELIVERY_INFO_CODE);
     }
 
@@ -365,7 +366,12 @@ public class FragmentFindCarOnSite extends BaseFragment implements FragmentFindC
             TerminiEntity terminiEntity = (TerminiEntity) data.getExtras().getSerializable("terminiEntity");
             if (position != -1) {
                 SuperEditTextPlus localSuperEditTextPlus = superEditTextsMap.get(position);
-                localSuperEditTextPlus.setTopText(terminiEntity.getAddressName());
+//                if(!TextUtils.isEmpty(terminiEntity.getAddressName())) {
+//                    localSuperEditTextPlus.setTopText(terminiEntity.getAddressName());
+//                }else{
+//                    localSuperEditTextPlus.setTopText(terminiEntity.getAddressDescribeName());
+//                }
+                localSuperEditTextPlus.setTopText(terminiEntity.getAddressDescribeName());
                 localSuperEditTextPlus.setMiddleText(terminiEntity.getAddressDescribeName());
                 tempTerminiEntity.put(position, terminiEntity);
             }

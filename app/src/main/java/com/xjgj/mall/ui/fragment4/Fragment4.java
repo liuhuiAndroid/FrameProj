@@ -337,6 +337,7 @@ public class Fragment4 extends BaseFragment implements Fragment4Contract.View {
         bundle.putSerializable("termini_info", (Serializable) terminiEntity);
         bundle.putInt("position", paramInt);
         intent.putExtras(bundle);
+        intent.putExtra("type",0);//场外0 场内1
         startActivityForResult(intent, REQUEST_DELIVERY_INFO_CODE);
     }
 

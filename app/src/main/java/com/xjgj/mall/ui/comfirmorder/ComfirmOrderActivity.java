@@ -197,6 +197,12 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
                     textMuDiDi.setText(tempTerminiEntity.get(i).getAddressName());
                     textMuDiDiDetail.setText(tempTerminiEntity.get(i).getAddressDescribeName());
                 }
+
+                if(mOrderType == 1){
+                    textMuDiDi.setVisibility(View.GONE);
+                }else{
+                    textMuDiDi.setVisibility(View.VISIBLE);
+                }
                 if (i == 0) {
                     t.setText(getResources().getString(R.string.begin_d));
                 } else if (i != tempTerminiEntity.size() - 1) {

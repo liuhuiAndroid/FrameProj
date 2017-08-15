@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.xjgj.mall.ui.location.ChooseLocationActivity;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.REQUEST_CHOOSE_LOCATION_CODE;
@@ -64,11 +66,14 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
 
     @Inject
     UserStorage mUserStorage;
+    @BindView(R.id.ll_search)
+    LinearLayout mLlSearch;
 
     private TerminiEntity mTerminiEntity;
     private int mPosition;
     private double longitude = 0.0;
     private double latitude = 0.0;
+    private int mType;
 
     @Override
     public int initContentView() {
@@ -96,6 +101,13 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         //        mTextHandle.setClickable(true);
         //        mTextHandle.setOnClickListener(this);
         //        mTextHandle.setVisibility(View.VISIBLE);
+
+        mType = getIntent().getIntExtra("type", -1);
+        if (mType == 0) {
+            mLlSearch.setVisibility(View.VISIBLE);
+        } else if (mType == 1) {
+            mLlSearch.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -218,7 +230,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             return;
         }
 
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name) && mType == 0) {
             if (mPosition == 0) {
                 ToastUtil.showToast("请填写始发站地址");
             } else {
@@ -266,4 +278,10 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         startActivityForResult(localIntent, REQUEST_CHOOSE_LOCATION_CODE);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

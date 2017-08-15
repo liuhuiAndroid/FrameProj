@@ -228,6 +228,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     ((TextView) view.findViewById(R.id.textDetailsAddress)).setText(addressListBean.getAddressName());
                     ((TextView) view.findViewById(R.id.textConstantUser)).setText(addressListBean.getReceiverName());
                     ((TextView) view.findViewById(R.id.textConstantUserName)).setText(addressListBean.getReceiverPhone());
+
+                    if(mFlgSite == 1){
+                        view.findViewById(R.id.textDAddress).setVisibility(View.GONE);
+                    }else{
+                        view.findViewById(R.id.textDAddress).setVisibility(View.VISIBLE);
+                    }
                     mLinearAddXingCheng.addView(view);
                 }
             }
