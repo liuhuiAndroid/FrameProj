@@ -7,7 +7,16 @@ import android.widget.TextView;
 
 import com.android.frameproj.library.statefullayout.StatefulLayout;
 import com.android.frameproj.library.statefullayout.StatusfulConfig;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.model.LatLng;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.DriverAddressEntity;
 import com.xjgj.mall.ui.BaseActivity;
@@ -43,6 +52,7 @@ public class MapDriverAddressActivity extends BaseActivity implements MapDriverA
     MapDriverAddressPresenter mPresenter;
     private double mLongitude;
     private double mLatitude;
+    private BaiduMap mBaiduMap;
 
     @Override
     public int initContentView() {
@@ -61,6 +71,7 @@ public class MapDriverAddressActivity extends BaseActivity implements MapDriverA
     @Override
     public void initUiAndListener() {
         mPresenter.attachView(this);
+        mBaiduMap = mBaiduMapView.getMap();
 
         mImageBack.setImageResource(R.drawable.btn_back);
         mImageBack.setVisibility(View.VISIBLE);
@@ -70,11 +81,11 @@ public class MapDriverAddressActivity extends BaseActivity implements MapDriverA
                 finish();
             }
         });
-        mTextTitle.setText("附近司机");
+        mTextTitle.setText("附近车辆");
 
         mLongitude = getIntent().getDoubleExtra("longitude", 0.0);
         mLatitude = getIntent().getDoubleExtra("latitude", 0.0);
-        mPresenter.driverAddress(mLongitude,mLatitude);
+        mPresenter.driverAddress(mLongitude, mLatitude);
     }
 
     @Override
@@ -89,7 +100,7 @@ public class MapDriverAddressActivity extends BaseActivity implements MapDriverA
                     .setOnErrorStateButtonClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mPresenter.driverAddress(mLongitude,mLatitude);
+                            mPresenter.driverAddress(mLongitude, mLatitude);
                         }
                     }).build();
             mStatefulLayout.showError(statusfulConfig);
@@ -100,6 +111,47 @@ public class MapDriverAddressActivity extends BaseActivity implements MapDriverA
 
     @Override
     public void driverAddressResult(List<DriverAddressEntity> driverAddressEntities) {
+        double sumLat = 0;
+        double sumLng = 0;
+        if (driverAddressEntities != null && driverAddressEntities.size() > 0) {
+            for (int i = 0; i < driverAddressEntities.size(); i++) {
+                DriverAddressEntity driverAddressEntity = driverAddressEntities.get(i);
+                sumLat += driverAddressEntity.getLatitude();
+                sumLng += driverAddressEntity.getLongitude();
+
+                //添加覆盖物
+                addOverLayout(new LatLng(driverAddressEntity.getLatitude(),driverAddressEntity.getLongitude()));
+            }
+        }
+        final double midlat = sumLat / driverAddressEntities.size();
+        final double midlon = sumLng / driverAddressEntities.size();
+
+        MapStatus.Builder builder = new MapStatus.Builder();
+        LatLng latLng = new LatLng(midlat, midlon);
+        float zoom = 15.0f; // 默认 15级
+        builder.target(latLng).zoom(zoom);
+        //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+        MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(builder.build());
+        //改变地图状态
+        mBaiduMap.animateMapStatus(mMapStatusUpdate);
+
+    }
+
+    /**
+     * 添加覆盖物
+     * @param endPosition
+     */
+    private void addOverLayout(LatLng endPosition) {
+
+        // 构建Marker图标
+        BitmapDescriptor bitmap1 = BitmapDescriptorFactory
+                .fromResource(R.mipmap.bike_icon);
+        // 构建MarkerOption，用于在地图上添加Marker
+        OverlayOptions optionEnd = new MarkerOptions().position(endPosition)
+                .icon(bitmap1)
+                .zIndex(8) //设置marker所在层级
+                .draggable(true);
+        mBaiduMap.addOverlay(optionEnd);
 
     }
 

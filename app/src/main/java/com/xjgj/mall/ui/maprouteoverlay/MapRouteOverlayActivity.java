@@ -125,7 +125,7 @@ public class MapRouteOverlayActivity extends BaseActivity {
      * @param pointLng
      */
     private void mapZoomStatus(LatLng pointLng) {
-        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(pointLng, 18.0f);// 设置缩放比例
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(pointLng, 15.0f);// 设置缩放比例
         mBaiduMap.animateMapStatus(u);
     }
 
@@ -167,7 +167,6 @@ public class MapRouteOverlayActivity extends BaseActivity {
         // 构建MarkerOption，用于在地图上添加Marker
         OverlayOptions optionEnd = new MarkerOptions().position(endPosition)
                 .icon(bitmap1).zIndex(8).draggable(true);
-
         mBaiduMap.addOverlay(optionEnd);
 
     }
