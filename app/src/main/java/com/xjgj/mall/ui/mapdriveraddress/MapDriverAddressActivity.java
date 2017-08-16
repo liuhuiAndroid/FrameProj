@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.android.frameproj.library.statefullayout.StatefulLayout;
 import com.android.frameproj.library.statefullayout.StatusfulConfig;
+import com.android.frameproj.library.util.log.Logger;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -20,8 +21,11 @@ import com.baidu.mapapi.model.LatLng;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.DriverAddressEntity;
 import com.xjgj.mall.ui.BaseActivity;
+
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 
 /**
@@ -118,12 +122,13 @@ public class MapDriverAddressActivity extends BaseActivity implements MapDriverA
                 sumLng += driverAddressEntity.getLongitude();
 
                 //添加覆盖物
-                addOverLayout(new LatLng(driverAddressEntity.getLatitude(),driverAddressEntity.getLongitude()));
+                addOverLayout(new LatLng(driverAddressEntity.getLatitude(), driverAddressEntity.getLongitude()));
             }
         }
         final double midlat = sumLat / driverAddressEntities.size();
         final double midlon = sumLng / driverAddressEntities.size();
 
+        Logger.i("midlat：" + midlat + ",midlon = " + midlon);
         MapStatus.Builder builder = new MapStatus.Builder();
         LatLng latLng = new LatLng(midlat, midlon);
         float zoom = 15.0f; // 默认 15级
@@ -137,6 +142,7 @@ public class MapDriverAddressActivity extends BaseActivity implements MapDriverA
 
     /**
      * 添加覆盖物
+     *
      * @param endPosition
      */
     private void addOverLayout(LatLng endPosition) {

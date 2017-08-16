@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.android.frameproj.library.statefullayout.StatefulLayout;
 import com.android.frameproj.library.statefullayout.StatusfulConfig;
-import com.android.frameproj.library.util.ToastUtil;
 import com.android.frameproj.library.util.imageloader.ImageLoaderUtil;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
@@ -147,7 +146,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         });
         mTextTitle.setText("订单详情");
 
-        mTextHandle.setText("查看车辆轨迹");
         mTextHandle.setTextSize(14);
         mTextHandle.setTextColor(getResources().getColor(R.color.z5b5b5b));
         mTextHandle.setClickable(true);
@@ -160,18 +158,18 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
 
     @Override
     public void showLoading() {
-//        mAvLoadingIndicatorView.show();
+        //        mAvLoadingIndicatorView.show();
         mStatefulLayout.showLoading();
     }
 
     @Override
     public void hideLoading(int type) {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mAvLoadingIndicatorView.hide();
-//            }
-//        }, 500);
+        //        new Handler().postDelayed(new Runnable() {
+        //            @Override
+        //            public void run() {
+        //                mAvLoadingIndicatorView.hide();
+        //            }
+        //        }, 500);
         if (type == -1) {
             StatusfulConfig statusfulConfig = new StatusfulConfig.Builder()
                     .setOnErrorStateButtonClickListener(new View.OnClickListener() {
@@ -229,9 +227,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     ((TextView) view.findViewById(R.id.textConstantUser)).setText(addressListBean.getReceiverName());
                     ((TextView) view.findViewById(R.id.textConstantUserName)).setText(addressListBean.getReceiverPhone());
 
-                    if(mFlgSite == 1){
+                    if (mFlgSite == 1) {
                         view.findViewById(R.id.textDAddress).setVisibility(View.GONE);
-                    }else{
+                    } else {
                         view.findViewById(R.id.textDAddress).setVisibility(View.VISIBLE);
                     }
                     mLinearAddXingCheng.addView(view);
@@ -369,19 +367,29 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             }
 
             // 0 新建(待接单),1 已接单, 2  服务中，3 已完成, 4 已取消, 5 已评价,6 申诉中,7 已过期
-            if (orderDetailEntity.getStatus() == 2 || orderDetailEntity.getStatus() == 3
-                    || orderDetailEntity.getStatus() == 5) {
+            if ((orderDetailEntity.getStatus() == 2 || orderDetailEntity.getStatus() == 3
+                    || orderDetailEntity.getStatus() == 5) && mFlgSite == 0) {
+                mTextHandle.setText("查看车辆轨迹");
                 mTextHandle.setVisibility(View.VISIBLE);
                 mTextHandle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (orderDetailEntity.getCarAddress() != null && orderDetailEntity.getCarAddress().size() > 0) {
-                            Intent intent = new Intent(OrderDetailActivity.this, MapRouteOverlayActivity.class);
-                            intent.putExtra("addressList", (Serializable) orderDetailEntity.getCarAddress());
-                            startActivity(intent);
-                        } else {
-                            ToastUtil.showToast("暂无司机打卡记录");
-                        }
+                        Intent intent = new Intent(OrderDetailActivity.this, MapRouteOverlayActivity.class);
+                        intent.putExtra("orderId", orderDetailEntity.getOrderId());
+                        intent.putExtra("type",1);// type：1车辆轨迹。2车辆当前位置
+                        startActivity(intent);
+                    }
+                });
+            } else if (orderDetailEntity.getStatus() == 1) {
+                mTextHandle.setText("查看车辆位置");
+                mTextHandle.setVisibility(View.VISIBLE);
+                mTextHandle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(OrderDetailActivity.this, MapRouteOverlayActivity.class);
+                        intent.putExtra("orderId", orderDetailEntity.getOrderId());
+                        intent.putExtra("type",2);// type：1车辆轨迹。2车辆当前位置
+                        startActivity(intent);
                     }
                 });
             } else {

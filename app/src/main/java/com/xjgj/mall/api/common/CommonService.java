@@ -1,6 +1,7 @@
 package com.xjgj.mall.api.common;
 
 
+import com.xjgj.mall.bean.CarAddressEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.DictionaryEntity;
 import com.xjgj.mall.bean.DriverAddressEntity;
@@ -161,6 +162,12 @@ public interface CommonService {
     @POST("common/driver/address")
     Observable<HttpResult<List<DriverAddressEntity>>> driverAddress(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                                     @Header("token") String token, @FieldMap Map<String, Object> params);
+
+    //车位置
+    @FormUrlEncoded
+    @POST("common/car/address")
+    Observable<HttpResult<CarAddressEntity>> carAddress(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                        @Header("token") String token, @FieldMap Map<String, Object> params);
 
 
 }

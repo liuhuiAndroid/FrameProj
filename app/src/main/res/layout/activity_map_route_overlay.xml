@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <include layout="@layout/includer_header" />
+    <include layout="@layout/includer_header"/>
 
-    <View style="@style/ZddddddLineStyle" />
+    <View style="@style/ZddddddLineStyle"/>
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/baiduMapView"
+    <com.android.frameproj.library.statefullayout.StatefulLayout
+        android:id="@+id/statefulLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/baiduMapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.android.frameproj.library.statefullayout.StatefulLayout>
 
 </LinearLayout>

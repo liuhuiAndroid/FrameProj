@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.xjgj.mall.Constants;
+import com.xjgj.mall.bean.CarAddressEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.DictionaryEntity;
 import com.xjgj.mall.bean.DriverAddressEntity;
@@ -494,6 +495,20 @@ public class CommonApi {
         params.put("latitude", latitude);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.driverAddress(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 附近司机
+     */
+    public Observable<HttpResult<CarAddressEntity>> carAddress(int orderId, String collectTime) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("orderId", orderId);
+        if(!TextUtils.isEmpty(collectTime)) {
+            params.put("collectTime", collectTime);
+        }
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.carAddress(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
     }
 
 }
