@@ -17,6 +17,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderCarInfo;
 import com.xjgj.mall.bean.TerminiEntity;
+import com.xjgj.mall.db.Destination;
+import com.xjgj.mall.db.DestinationDao;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.ui.mapdriveraddress.MapDriverAddressActivity;
 
@@ -94,6 +96,9 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
     TextView mTextTogetherShow;
     @BindView(R.id.rl_infomation)
     RelativeLayout mRlInfomation;
+
+    @Inject
+    DestinationDao mDestinationDao;
     /**
      * 订单信息
      */
@@ -198,9 +203,14 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
                     textMuDiDiDetail.setText(tempTerminiEntity.get(i).getAddressDescribeName());
                 }
 
-                if(mOrderType == 1){
+                if (i != 0) {
+                    Destination destination = new Destination(null,tempTerminiEntity.get(i).getAddressDescribeName());
+                    mDestinationDao.insert(destination);
+                }
+
+                if (mOrderType == 1) {
                     textMuDiDi.setVisibility(View.GONE);
-                }else{
+                } else {
                     textMuDiDi.setVisibility(View.VISIBLE);
                 }
                 if (i == 0) {
@@ -213,17 +223,21 @@ public class ComfirmOrderActivity extends BaseActivity implements ComfirmOrderCo
                 mLinearD.addView(view);
             }
 
-            mTextHandle.setVisibility(View.VISIBLE);
-            final TerminiEntity terminiEntity = tempTerminiEntity.get(0);
-            mTextHandle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ComfirmOrderActivity.this, MapDriverAddressActivity.class);
-                    intent.putExtra("longitude",terminiEntity.getLongitude());
-                    intent.putExtra("latitude",terminiEntity.getLatitude());
-                    startActivity(intent);
-                }
-            });
+            if (mOrderType == 0) {
+                mTextHandle.setVisibility(View.VISIBLE);
+                final TerminiEntity terminiEntity = tempTerminiEntity.get(0);
+                mTextHandle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ComfirmOrderActivity.this, MapDriverAddressActivity.class);
+                        intent.putExtra("longitude", terminiEntity.getLongitude());
+                        intent.putExtra("latitude", terminiEntity.getLatitude());
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                mTextHandle.setVisibility(View.GONE);
+            }
 
         }
 

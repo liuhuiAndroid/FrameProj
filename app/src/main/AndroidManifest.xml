@@ -107,7 +107,8 @@
         <!-- 订单评价 -->
         <activity
             android:name=".ui.orderevaluate.OrderEvaluateActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- 订单申诉 -->
         <activity
             android:name=".ui.orderappeal.OrderAppealActivity"

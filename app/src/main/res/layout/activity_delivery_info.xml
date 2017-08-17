@@ -1,153 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                            xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
-                                                            xmlns:tools="http://schemas.android.com/tools"
-                                                            style="@style/normal_weight_vertical"
-                                                            android:background="@color/zf1f2f4"
-                                                            android:fitsSystemWindows="true">
-
-    <include layout="@layout/includer_header" />
-
-    <View style="@style/ZddddddLineStyle" />
-
-   <LinearLayout
-       android:id="@+id/ll_search"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
-
-       <RelativeLayout
-           android:clickable="true"
-           android:layout_width="match_parent"
-           android:gravity="center|left"
-           android:background="@color/white"
-           android:layout_height="47dp">
-
-           <EditText
-               android:id="@+id/textAddress"
-               style="@style/normal_fourteen_edittext"
-               android:layout_marginLeft="0px"
-               android:paddingRight="15dp"
-               android:paddingLeft="43dp"
-               android:text=""
-               android:focusable="false"
-               />
-
-           <ImageView
-               android:layout_width="18dp"
-               android:layout_marginLeft="15dp"
-               android:layout_centerVertical="true"
-               android:src="@drawable/icon_find"
-               android:layout_height="wrap_content" />
-
-       </RelativeLayout>
-       <ListView
-           android:id="@+id/myListView"
-           android:visibility="gone"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
-
-       </ListView>
-       <View
-           style="@style/ZddddddLineOneStyle"
-           android:layout_height="1px"
-           android:layout_marginLeft="15dp"
-           android:background="@color/zcbcdce"/>
-
-   </LinearLayout>
+<LinearLayout style="@style/normal_weight_vertical"
+              android:orientation="vertical"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@color/zf1f2f4"
+                android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:clickable="true"
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
-        android:paddingRight="15dp"
-        android:paddingLeft="15dp"
-        android:gravity="center|left"
-        android:background="@color/white"
-        android:layout_height="47dp">
-        <ImageView
-            android:layout_width="18dp"
-            android:src="@drawable/img_address"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/textDetailsAddress"
-            style="@style/normal_fourteen_edittext"
-            android:hint="@string/details_address"
-            />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/includer_header"/>
+
+        <View style="@style/ZddddddLineStyle"/>
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:gravity="center|left">
+
+                <EditText
+                    android:id="@+id/textAddress"
+                    style="@style/normal_fourteen_edittext"
+                    android:layout_marginLeft="0px"
+                    android:focusable="false"
+                    android:paddingLeft="43dp"
+                    android:paddingRight="15dp"
+                    android:text=""
+                    />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/icon_find"/>
+
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/myListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+            </ListView>
+
+            <View
+                style="@style/ZddddddLineOneStyle"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:background="@color/zcbcdce"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center|left"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_address"/>
+
+            <EditText
+                android:id="@+id/textDetailsAddress"
+                style="@style/normal_fourteen_edittext"
+                android:hint="@string/details_address"
+                />
 
 
-    </LinearLayout>
-    <View
+        </LinearLayout>
 
-        style="@style/ZddddddLineOneStyle"
-        android:layout_height="1px"
-        android:background="@color/zcbcdce"/>
+        <View
 
-
-    <LinearLayout
-        android:clickable="true"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:paddingRight="15dp"
-        android:paddingLeft="15dp"
-        android:gravity="center|left"
-        android:background="@color/white"
-        android:layout_height="47dp">
-        <ImageView
-            android:layout_width="18dp"
-            android:src="@drawable/img_contact"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/textPersonalName"
-            style="@style/normal_fourteen_edittext"
-            android:hint="@string/personal_name"
-            />
-
-
-    </LinearLayout>
-    <View
-        style="@style/ZddddddLineOneStyle"
-        android:layout_height="1px"
-        android:background="@color/zcbcdce"/>
-
-    <LinearLayout
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:paddingRight="15dp"
-        android:paddingLeft="15dp"
-        android:gravity="center|left"
-        android:background="@color/white"
-        android:layout_height="47dp">
-        <ImageView
-            android:layout_width="18dp"
-            android:src="@drawable/img_mobile"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/textContactPhone"
-            style="@style/normal_fourteen_edittext"
-            android:inputType="number"
-            android:maxLength="11"
-            android:hint="@string/contact_phone"
-            />
-
+            style="@style/ZddddddLineOneStyle"
+            android:layout_height="1px"
+            android:background="@color/zcbcdce"/>
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/textOk"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_result"
         android:layout_width="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="9dp"
-        android:gravity="center"
-        android:clickable="true"
-        android:onClick="ok"
-        android:textColor="@color/white"
-        android:text="@string/ok"
-        android:textSize="18sp"
-        android:background="@drawable/rectangle_register_phone_lv_corner_bg"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8.0dip"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center|left"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_contact"/>
+
+            <EditText
+                android:id="@+id/textPersonalName"
+                style="@style/normal_fourteen_edittext"
+                android:hint="@string/personal_name"
+                />
+
+
+        </LinearLayout>
+
+        <View
+            style="@style/ZddddddLineOneStyle"
+            android:layout_height="1px"
+            android:background="@color/zcbcdce"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center|left"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_mobile"/>
+
+            <EditText
+                android:id="@+id/textContactPhone"
+                style="@style/normal_fourteen_edittext"
+                android:hint="@string/contact_phone"
+                android:inputType="number"
+                android:maxLength="11"
+                />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textOk"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="ok"
+            android:text="@string/ok"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
 </LinearLayout>
 
 

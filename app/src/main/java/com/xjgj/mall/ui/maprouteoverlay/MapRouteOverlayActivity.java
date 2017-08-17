@@ -100,6 +100,7 @@ public class MapRouteOverlayActivity extends BaseActivity implements MapRouteOve
         mBaiduMap = mBaiduMapView.getMap();
         mBaiduMap.clear();
 
+        mCarAddressBeen.clear();
         disposables.add(Observable.interval(0, 15, TimeUnit.SECONDS)
                 // Run on a background thread
                 .subscribeOn(Schedulers.io())
@@ -172,6 +173,7 @@ public class MapRouteOverlayActivity extends BaseActivity implements MapRouteOve
             double maxLng = 0;
             // 多个点的时候绘制路径
             //向latLngPolygon中添加获取到的所有坐标点
+            latLngPolygon.clear();
             for (int i = 0; i < carAddressBeen.size(); i++) {
                 double latstart = carAddressBeen.get(i).getLatitude();
                 double lngstart = carAddressBeen.get(i).getLongitude();
@@ -355,7 +357,6 @@ public class MapRouteOverlayActivity extends BaseActivity implements MapRouteOve
             drawLineChart(data, true);
         } else {//多点连线
             if (carAddressEntity.getData() != null && carAddressEntity.getData().size() > 0) {
-                mCarAddressBeen.clear();
                 mCarAddressBeen.addAll(carAddressEntity.getData());
                 drawLineChart(mCarAddressBeen, false);
             }

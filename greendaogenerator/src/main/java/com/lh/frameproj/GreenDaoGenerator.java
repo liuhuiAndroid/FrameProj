@@ -12,9 +12,10 @@ public class GreenDaoGenerator {
     public static final String GREEN_DAO_CODE_PATH = "../FrameProj/app/src/main/java";
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(VERSION, "com.lh.frameproj.db");
+        Schema schema = new Schema(VERSION, "com.xjgj.mall.db");
 
         addTest(schema);
+        addDestination(schema);
 
         File f = new File(GREEN_DAO_CODE_PATH);
         if (!f.exists()) {
@@ -31,6 +32,16 @@ public class GreenDaoGenerator {
         Entity note = schema.addEntity("Test");
         note.addIdProperty().autoincrement();
         note.addStringProperty("test").notNull();
+    }
+
+    /**
+     * 场内订单目的地表
+     * @param schema
+     */
+    private static void addDestination(Schema schema) {
+        Entity note = schema.addEntity("Destination");
+        note.addIdProperty().autoincrement();
+        note.addStringProperty("termini").notNull();
     }
 
 }

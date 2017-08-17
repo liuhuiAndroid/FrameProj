@@ -1,7 +1,6 @@
 package com.xjgj.mall.ui.orderevaluate;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.api.common.CommonApi;
@@ -38,10 +37,6 @@ public class OrderEvaluatePresenter implements OrderEvaluateContract.Presenter {
     public void orderComment(int orderId, String level, String content) {
         if (level.equals("0.0")) {
             ToastUtil.showToast("要给司机一个评分后才能评价哦");
-            return;
-        }
-        if (TextUtils.isEmpty(content)) {
-            ToastUtil.showToast("请输入对司机的印象");
             return;
         }
         mView.showLoading();

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.xjgj.mall.db.DaoMaster;
 import com.xjgj.mall.db.DaoSession;
+import com.xjgj.mall.db.DestinationDao;
 import com.xjgj.mall.db.TestDao;
 import com.xjgj.mall.injector.PerApp;
 
@@ -36,6 +37,11 @@ public class DBModule {
     @Provides @PerApp
     TestDao getTestDao(DaoSession session) {
         return session.getTestDao();
+    }
+
+    @Provides @PerApp
+    DestinationDao getDestinationDao(DaoSession session) {
+        return session.getDestinationDao();
     }
 
 }

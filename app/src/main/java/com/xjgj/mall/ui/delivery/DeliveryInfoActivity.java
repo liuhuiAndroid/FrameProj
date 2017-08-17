@@ -1,8 +1,12 @@
 package com.xjgj.mall.ui.delivery;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -14,12 +18,20 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.frameproj.library.adapter.CommonAdapter;
+import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
+import com.android.frameproj.library.adapter.base.ViewHolder;
 import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.R;
 import com.xjgj.mall.bean.TerminiEntity;
 import com.xjgj.mall.components.storage.UserStorage;
+import com.xjgj.mall.db.DaoSession;
+import com.xjgj.mall.db.DestinationDao;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.ui.location.ChooseLocationActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -68,12 +80,23 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     UserStorage mUserStorage;
     @BindView(R.id.ll_search)
     LinearLayout mLlSearch;
+    @BindView(R.id.list_result)
+    RecyclerView mListResult;
 
     private TerminiEntity mTerminiEntity;
     private int mPosition;
     private double longitude = 0.0;
     private double latitude = 0.0;
     private int mType;
+
+
+    @Inject
+    DaoSession mDaoSession;
+    @Inject
+    DestinationDao mDestinationDao;
+
+    private static final String SQL_DISTINCT_ENAME = "SELECT DISTINCT "+DestinationDao.Properties.Termini.columnName+" FROM "+DestinationDao.TABLENAME
+            + " ORDER BY _id DESC LIMIT 0,3";
 
     @Override
     public int initContentView() {
@@ -108,7 +131,58 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         } else if (mType == 1) {
             mLlSearch.setVisibility(View.GONE);
         }
+
+        if(mType == 1){
+            final List<String> result = new ArrayList<String>();
+            Cursor c = mDaoSession.getDatabase().rawQuery(SQL_DISTINCT_ENAME, null);
+            try{
+                if (c.moveToFirst()) {
+                    do {
+                        result.add(c.getString(0));
+                    } while (c.moveToNext());
+                }
+            } finally {
+                c.close();
+            }
+
+            if (result != null && result.size() > 0) {
+                mListResult.setVisibility(View.VISIBLE);
+                if (mCommonAdapterSearch == null) {
+                    mListResult.setLayoutManager(new LinearLayoutManager(DeliveryInfoActivity.this));
+                    mCommonAdapterSearch = new CommonAdapter<String>(DeliveryInfoActivity.this, R.layout.item_delivery_termini, result) {
+                        @Override
+                        protected void convert(ViewHolder holder, final String s, int position) {
+                            holder.setText(R.id.textview_formmatted_address, s);
+                        }
+                    };
+                    mCommonAdapterSearch.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                            mTextDetailsAddress.setText(result.get(position));
+                            mListResult.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                            return false;
+                        }
+                    });
+                    mListResult.setAdapter(mCommonAdapterSearch);
+                    mListResult.setItemAnimator(new DefaultItemAnimator());
+                } else {
+                    mCommonAdapterSearch.notifyDataSetChanged();
+                }
+            } else {
+                mListResult.setVisibility(View.GONE);
+            }
+        }else{
+            mListResult.setVisibility(View.GONE);
+        }
+
+
     }
+
+    private CommonAdapter mCommonAdapterSearch;
 
     /**
      * 页面传值

@@ -380,7 +380,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                         startActivity(intent);
                     }
                 });
-            } else if (orderDetailEntity.getStatus() == 1) {
+            } else if (orderDetailEntity.getStatus() == 1 && mFlgSite == 0) {
                 mTextHandle.setText("查看车辆位置");
                 mTextHandle.setVisibility(View.VISIBLE);
                 mTextHandle.setOnClickListener(new View.OnClickListener() {

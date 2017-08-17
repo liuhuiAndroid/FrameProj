@@ -7,6 +7,8 @@ import com.xjgj.mall.MyApplication;
 import com.xjgj.mall.api.common.CommonApi;
 import com.xjgj.mall.components.okhttp.OkHttpHelper;
 import com.xjgj.mall.components.storage.UserStorage;
+import com.xjgj.mall.db.DaoSession;
+import com.xjgj.mall.db.DestinationDao;
 import com.xjgj.mall.db.TestDao;
 import com.xjgj.mall.injector.PerApp;
 import com.xjgj.mall.injector.module.ApiModule;
@@ -39,7 +41,11 @@ public interface ApplicationComponent { //4 接口，自动生成实现
 
     CommonApi getCommonApi();
 
+    DaoSession getDaoSession();
+
     TestDao getTestDao();
+
+    DestinationDao getDestinationDao();
 
     // 表示我要提供给谁
     // 有输入参数返回值类型就是void
