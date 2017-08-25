@@ -22,6 +22,7 @@ import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.ui.improveorder.ImproveOrderActivity;
 import com.xjgj.mall.ui.improveorder.ImproveOrderOnSiteActivity;
 import com.xjgj.mall.ui.maprouteoverlay.MapRouteOverlayActivity;
+import com.xjgj.mall.ui.orderpay.OrderPayActivity;
 import com.xjgj.mall.ui.widget.StarBar;
 
 import java.io.Serializable;
@@ -31,6 +32,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL;
 import static com.xjgj.mall.Constants.RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL;
@@ -376,7 +378,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     public void onClick(View v) {
                         Intent intent = new Intent(OrderDetailActivity.this, MapRouteOverlayActivity.class);
                         intent.putExtra("orderId", orderDetailEntity.getOrderId());
-                        intent.putExtra("type",1);// type：1车辆轨迹。2车辆当前位置
+                        intent.putExtra("type", 1);// type：1车辆轨迹。2车辆当前位置
                         startActivity(intent);
                     }
                 });
@@ -388,7 +390,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     public void onClick(View v) {
                         Intent intent = new Intent(OrderDetailActivity.this, MapRouteOverlayActivity.class);
                         intent.putExtra("orderId", orderDetailEntity.getOrderId());
-                        intent.putExtra("type",2);// type：1车辆轨迹。2车辆当前位置
+                        intent.putExtra("type", 2);// type：1车辆轨迹。2车辆当前位置
                         startActivity(intent);
                     }
                 });
@@ -416,6 +418,15 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
+    }
+
+    /**
+     * 跳转支付页面
+     */
+    @OnClick(R.id.btnPay)
+    public void mBtnPay(){
+        Intent intent = new Intent(OrderDetailActivity.this, OrderPayActivity.class);
+        startActivity(intent);
     }
 
 }

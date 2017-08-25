@@ -126,6 +126,10 @@
         <activity
             android:name=".ui.mapdriveraddress.MapDriverAddressActivity"
             android:screenOrientation="portrait"/>
+        <!-- 支付页面 -->
+        <activity
+            android:name=".ui.orderpay.OrderPayActivity"
+            android:screenOrientation="portrait"/>
 
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->
@@ -173,6 +177,24 @@
                 <category android:name="com.xjgj.mall" />
             </intent-filter>
         </receiver>
+
+        <!-- 支付宝支付 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+
+        <!-- 支付宝支付 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
 
     </application>
 

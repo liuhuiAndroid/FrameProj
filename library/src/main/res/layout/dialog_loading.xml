@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/dialog_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:layout_width="75.0dip"
+        android:layout_height="75.0dip"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_loading_bg">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/img_round"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/round"
+            android:visibility="visible"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

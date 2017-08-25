@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearClude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/includer_header"/>
+
+        <View style="@style/ZddddddLineStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/orderPriceHeadOCI"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="16.0dip"
+            android:paddingTop="10.0dip">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16.0dip"
+                android:layout_marginRight="16.0dip"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="3.0dip"
+                    android:gravity="bottom"
+                    android:text="￥"
+                    android:textColor="@color/black_87_percent"
+                    android:textSize="20.0sp"/>
+
+                <EditText
+                    android:id="@+id/etPriceOldOCI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:gravity="center"
+                    android:textColor="@color/black_87_percent"
+                    android:textSize="32.0sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/couponName"
+                android:layout_width="wrap_content"
+                android:layout_height="28.0dip"
+                android:layout_gravity="center"
+                android:layout_weight="1.0"
+                android:drawableRight="@drawable/ic_detailed_arrow"
+                android:gravity="center"
+                android:text="已经优惠10元"
+                android:textColor="@color/black_54_percent"
+                android:textSize="14.0sp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/black_12_percent"
+            android:paddingTop="16.0dip"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="16.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip">
+
+            <RadioGroup
+                android:id="@+id/payType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="vertical"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip">
+
+                <RadioButton
+                    android:id="@+id/aliPay"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48.0dip"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/transparent"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableLeft="@drawable/alipay_selection"
+                    android:drawableRight="@drawable/selector_radio_button"
+                    android:text="   支付宝"
+                    android:textColor="@drawable/mycheck_color_selector"
+                    android:textSize="16.0sp"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- 下一步-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textNext"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/rectangle_register_phone_lv_corner_bg"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="支付"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

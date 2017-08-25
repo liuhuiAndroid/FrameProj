@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          android:color="@color/easyvan_branding_transparent">
+    <item android:color="@color/colorAccent" android:state_checked="true"/>
+    <item android:color="#ffa0a0a0"/>
+</selector>
