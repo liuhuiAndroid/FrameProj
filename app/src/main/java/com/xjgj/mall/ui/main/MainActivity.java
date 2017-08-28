@@ -1,5 +1,7 @@
 package com.xjgj.mall.ui.main;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -18,17 +20,23 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.frameproj.library.interf.CallbackChangeFragment;
 import com.android.frameproj.library.util.NetWorkUtils;
+import com.google.gson.Gson;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.vector.update_app.UpdateAppBean;
+import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
 import com.xjgj.mall.AppManager;
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.MyApplication;
 import com.xjgj.mall.R;
 import com.xjgj.mall.api.common.CommonApi;
+import com.xjgj.mall.bean.UpdateAppEntity;
 import com.xjgj.mall.injector.HasComponent;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.util.CommonEvent;
+import com.xjgj.mall.util.UpdateAppHttpUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -83,6 +91,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
                 && getSupportFragmentManager().getFragments().size() > 0) {
             getSupportFragmentManager().getFragments().clear();
         }
+
     }
 
     @Override
@@ -249,6 +258,43 @@ public class MainActivity extends BaseActivity implements MainContract.View
     protected void onResume() {
         super.onResume();
         uploadLog();
+
+        //版本更新
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(MainActivity.this)
+                //更新地址
+                .setUpdateUrl("https://api.91naju.com/najumain/api/version/control")
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .build()
+                .checkNewApp(new UpdateCallback() {
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+                        try {
+                            UpdateAppEntity appBean = new Gson().fromJson(json, UpdateAppEntity.class);
+
+                            updateAppBean
+                                    .setUpdate((getVersion() == appBean.getResultValue().getVersionNo()) ? "No" : "Yes")
+                                    .setNewVersion("1.0.3")
+                                    .setApkFileUrl("http://www.maigel.com/beta/Maige1.0.apk")
+                                    .setUpdateLog("1，修复了已知的BUG。\r\n2，添加了新的功能。\r\n")
+                                    .setTargetSize("5M");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        updateAppManager.showDialogFragment();
+                    }
+
+                });
     }
 
     /**
@@ -342,6 +388,24 @@ public class MainActivity extends BaseActivity implements MainContract.View
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
+     */
+    public int getVersion() {
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            String version = info.versionName;
+            int versionCode = info.versionCode;
+            return versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
 }

@@ -96,7 +96,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
      */
     @OnClick(R.id.textNext)
     public void mTextNext() {
-        mOrderPayPresenter.payOrder(1, 2);
+//        mOrderPayPresenter.payOrder(1, 2);
+        payOrderResult(null);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
     @Override
     public void payOrderResult(PayOrderEntity payOrderEntity) {
 
-        final String orderInfo = "";
+        final String orderInfo = "alipay_sdk=alipay-sdk-java-dynamicVersionNo&app_id=2017032806446530&biz_content=%7B%22body%22%3A%22App%E6%94%AF%E4%BB%98%E6%B5%8B%E8%AF%95Java%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22timeout_express%22%3A%2230%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Flotertest.we-win.cn%2Floter-api%2Fpayment%2FnotifyUrl&sign=ZaNbcx3d2KqKwbR0cCd8CnO8i6Ld2Uv2BeACGzR5R2KcMIYac815CwSyy2RGZfUuK6iYK65%2BIhz853kJgGWnfQ8fMxLkMGqH9s9xmGxBUg4Gf%2FvjJzGLiOYJK%2BqcATDbV2CZzM%2Fi8Gmdiz6%2B07SRB84eWU1CWAqvKggA9PFWgYHZ6DrAMyFburODshCVgRXHrXP%2BRD%2BlD8qmw%2BEpnXzJRiAx9ue6OBGkrEbc4RNqJ32f5j0aVed5JMt%2FuWq%2Bhj%2FRGBvfA%2B%2FVu4b3H29zDiIG6mORHyC2fHFhgPsmcR7%2B6OworJallkYfdS%2FpbZv%2FXE3Ql6TqgRbqmEiPIoRpLkIp5w%3D%3D&sign_type=RSA2&timestamp=2017-08-28+10%3A55%3A32&version=1.0";
         Runnable payRunnable = new Runnable() {
 
             @Override

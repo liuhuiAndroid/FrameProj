@@ -130,6 +130,10 @@
         <activity
             android:name=".ui.orderpay.OrderPayActivity"
             android:screenOrientation="portrait"/>
+        <!-- 自定义地图页面 -->
+        <activity
+            android:name=".ui.custommap.CustomMapActivity"
+            android:screenOrientation="portrait"/>
 
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->

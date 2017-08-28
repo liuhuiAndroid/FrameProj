@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Image Format="png" Overlap="1" TileSize="256">
+    <Size Height="5202" Width="11338"/>
+    <CalibrationRect>
+        <Point lat="31.319549" lon="121.402328" topLeft="1" x="15" y="15"/>
+        <Point lat="31.244247" lon="121.505669" x="30" y="30"/>
+    </CalibrationRect>
+</Image>

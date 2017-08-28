@@ -19,6 +19,7 @@ import com.xjgj.mall.R;
 import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.TerminiEntity;
 import com.xjgj.mall.ui.BaseActivity;
+import com.xjgj.mall.ui.custommap.CustomMapActivity;
 import com.xjgj.mall.ui.improveorder.ImproveOrderActivity;
 import com.xjgj.mall.ui.improveorder.ImproveOrderOnSiteActivity;
 import com.xjgj.mall.ui.maprouteoverlay.MapRouteOverlayActivity;
@@ -424,8 +425,17 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
      * 跳转支付页面
      */
     @OnClick(R.id.btnPay)
-    public void mBtnPay(){
+    public void mBtnPay() {
         Intent intent = new Intent(OrderDetailActivity.this, OrderPayActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转自定义地图页面
+     */
+    @OnClick(R.id.btnCustomMap)
+    public void mBtnCustomMap() {
+        Intent intent = new Intent(OrderDetailActivity.this, CustomMapActivity.class);
         startActivity(intent);
     }
 
