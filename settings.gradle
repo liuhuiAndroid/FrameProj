@@ -1,1 +1,1 @@
-include ':app', ':greendaogenerator', ':library', ':mappwidgetlib'
+include ':app', ':greendaogenerator', ':library', 'mappwidgetlib'
