@@ -16,8 +16,9 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.android.frameproj.library.util.DialogManager;
+import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.R;
-import com.xjgj.mall.bean.PayOrderEntity;
+import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.bean.PayResult;
 import com.xjgj.mall.ui.BaseActivity;
 
@@ -55,6 +56,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
 
     @Inject
     OrderPayPresenter mOrderPayPresenter;
+    private Dialog mLoadingDialog;
+    private int mOrderId;
+    private String mOutTradeNo;
 
 
     @Override
@@ -74,6 +78,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
     @Override
     public void initUiAndListener() {
 
+        mOrderId = getIntent().getIntExtra("orderId", -1);
         mOrderPayPresenter.attachView(this);
 
         mImageBack.setImageResource(R.drawable.btn_back);
@@ -96,31 +101,37 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
      */
     @OnClick(R.id.textNext)
     public void mTextNext() {
-//        mOrderPayPresenter.payOrder(1, 2);
-        payOrderResult(null);
+        String trim = mEtPriceOldOCI.getText().toString().trim();
+        if (TextUtils.isEmpty(trim)) {
+            ToastUtil.showToast("请填写支付金额");
+            return;
+        }
+        mOrderPayPresenter.payOrder(mOrderId, trim);
     }
 
     @Override
     public void showLoading() {
-        Dialog loadingDialog = DialogManager.getInstance().createLoadingDialog(OrderPayActivity.this);
-        loadingDialog.show();
+        mLoadingDialog = DialogManager.getInstance().createLoadingDialog(OrderPayActivity.this);
+        mLoadingDialog.show();
     }
 
     @Override
     public void hideLoading(int type) {
-
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
     }
 
     @Override
-    public void payOrderResult(PayOrderEntity payOrderEntity) {
+    public void payOrderResult(final PayAlipayEntity payAlipayEntity) {
 
-        final String orderInfo = "alipay_sdk=alipay-sdk-java-dynamicVersionNo&app_id=2017032806446530&biz_content=%7B%22body%22%3A%22App%E6%94%AF%E4%BB%98%E6%B5%8B%E8%AF%95Java%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22timeout_express%22%3A%2230%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Flotertest.we-win.cn%2Floter-api%2Fpayment%2FnotifyUrl&sign=ZaNbcx3d2KqKwbR0cCd8CnO8i6Ld2Uv2BeACGzR5R2KcMIYac815CwSyy2RGZfUuK6iYK65%2BIhz853kJgGWnfQ8fMxLkMGqH9s9xmGxBUg4Gf%2FvjJzGLiOYJK%2BqcATDbV2CZzM%2Fi8Gmdiz6%2B07SRB84eWU1CWAqvKggA9PFWgYHZ6DrAMyFburODshCVgRXHrXP%2BRD%2BlD8qmw%2BEpnXzJRiAx9ue6OBGkrEbc4RNqJ32f5j0aVed5JMt%2FuWq%2Bhj%2FRGBvfA%2B%2FVu4b3H29zDiIG6mORHyC2fHFhgPsmcR7%2B6OworJallkYfdS%2FpbZv%2FXE3Ql6TqgRbqmEiPIoRpLkIp5w%3D%3D&sign_type=RSA2&timestamp=2017-08-28+10%3A55%3A32&version=1.0";
+        mOutTradeNo = payAlipayEntity.getOutTradeNo();
         Runnable payRunnable = new Runnable() {
 
             @Override
             public void run() {
                 PayTask alipay = new PayTask(OrderPayActivity.this);
-                Map<String, String> result = alipay.payV2(orderInfo, true);
+                Map<String, String> result = alipay.payV2(payAlipayEntity.getPayString(), true);
                 Log.i("msp", result.toString());
 
                 Message msg = new Message();
@@ -133,6 +144,12 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
         Thread payThread = new Thread(payRunnable);
         payThread.start();
 
+    }
+
+    @Override
+    public void payConfirmResult(String s) {
+        ToastUtil.showToast(s);
+        finish();
     }
 
     @SuppressLint("HandlerLeak")
@@ -151,7 +168,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(OrderPayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(OrderPayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        payConfirm(mOutTradeNo);
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(OrderPayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -163,6 +181,14 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
             }
         }
     };
+
+    /**
+     * 确认支付
+     * @param outTradeNo
+     */
+    private void payConfirm(String outTradeNo) {
+        mOrderPayPresenter.payConfirm(mOutTradeNo);
+    }
 
     @Override
     public void onError(Throwable throwable) {

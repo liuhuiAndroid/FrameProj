@@ -28,6 +28,7 @@ import com.xjgj.mall.ui.main.MainComponent;
 import com.xjgj.mall.ui.orderappeal.OrderAppealActivity;
 import com.xjgj.mall.ui.orderdetail.OrderDetailActivity;
 import com.xjgj.mall.ui.orderevaluate.OrderEvaluateActivity;
+import com.xjgj.mall.ui.orderpay.OrderPayActivity;
 import com.xjgj.mall.util.CommonEvent;
 
 import java.util.ArrayList;
@@ -249,9 +250,10 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                     } else if (orderEntity.getStatus() == 3) {
                         holder.setText(R.id.textState, "已完成");
                         holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.textShengShu).setVisibility(View.GONE);
+                        holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
                         holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
                         holder.setText(R.id.textDicuss, getResources().getString(R.string.want_discusses));
+                        holder.setText(R.id.textShengShu, "我要支付");
 
                         //我要评价
                         holder.getView(R.id.textDicuss).setOnClickListener(new View.OnClickListener() {
@@ -268,6 +270,17 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                                 startActivity(intent);
                             }
                         });
+
+                        //订单支付
+                        holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                                intent.putExtra("orderId", orderEntity.getOrderId());
+                                startActivity(intent);
+                            }
+                        });
+
                     } else if (orderEntity.getStatus() == 4) {
                         holder.setText(R.id.textState, "已取消");
 

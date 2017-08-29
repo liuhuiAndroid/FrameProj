@@ -33,6 +33,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL;
@@ -115,6 +116,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     LinearLayout mLlInfomation;
     @BindView(R.id.statefulLayout)
     StatefulLayout mStatefulLayout;
+    @BindView(R.id.ll_pay)
+    LinearLayout mLlPay;
 
     private String mContactMobile;
     private int mFlgSite;
@@ -305,6 +308,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 mLinearOrderAgain.setVisibility(View.GONE);
             }
 
+            if (orderDetailEntity.getStatus() == 3) {
+                mLlPay.setVisibility(View.VISIBLE);
+            } else {
+                mLlPay.setVisibility(View.GONE);
+            }
+
             if (orderDetailEntity.getAddressList() != null) {
                 mLinearOrderAgain.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -426,8 +435,11 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
      */
     @OnClick(R.id.btnPay)
     public void mBtnPay() {
+
         Intent intent = new Intent(OrderDetailActivity.this, OrderPayActivity.class);
+        intent.putExtra("orderId", mOrderId);
         startActivity(intent);
+
     }
 
     /**
@@ -439,4 +451,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         startActivity(intent);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

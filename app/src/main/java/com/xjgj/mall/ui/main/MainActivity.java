@@ -254,18 +254,30 @@ public class MainActivity extends BaseActivity implements MainContract.View
         }
     }
 
+    private boolean isCheckUpdate = true;
+
     @Override
     protected void onResume() {
         super.onResume();
         uploadLog();
 
+        if (isCheckUpdate) {
+            checkUpdate();
+            isCheckUpdate = false;
+        }
+    }
+
+    /**
+     * 检查版本更新
+     */
+    private void checkUpdate() {
         //版本更新
         new UpdateAppManager
                 .Builder()
                 //当前Activity
                 .setActivity(MainActivity.this)
                 //更新地址
-                .setUpdateUrl("https://api.91naju.com/najumain/api/version/control")
+                .setUpdateUrl(Constants.BASE_URL + "common/version/control")
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
                 .build()
@@ -277,11 +289,11 @@ public class MainActivity extends BaseActivity implements MainContract.View
                             UpdateAppEntity appBean = new Gson().fromJson(json, UpdateAppEntity.class);
 
                             updateAppBean
-                                    .setUpdate((getVersion() == appBean.getResultValue().getVersionNo()) ? "No" : "Yes")
-                                    .setNewVersion("1.0.3")
-                                    .setApkFileUrl("http://www.maigel.com/beta/Maige1.0.apk")
-                                    .setUpdateLog("1，修复了已知的BUG。\r\n2，添加了新的功能。\r\n")
-                                    .setTargetSize("5M");
+                                    .setUpdate((getVersion() == appBean.getResultValue().getVersionCode()) ? "No" : "Yes")
+                                    .setNewVersion(appBean.getResultValue().getVersionName())
+                                    .setApkFileUrl(appBean.getResultValue().getVersionUrl())
+                                    .setUpdateLog(appBean.getResultValue().getUpdateDetail())
+                                    .setTargetSize(appBean.getResultValue().getPackageSize());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

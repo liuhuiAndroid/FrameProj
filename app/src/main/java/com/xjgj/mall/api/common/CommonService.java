@@ -10,6 +10,7 @@ import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
 import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.OrderEntity;
+import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.bean.PhotoUploadEntity;
 import com.xjgj.mall.bean.RealNameEntity;
 import com.xjgj.mall.bean.User;
@@ -168,6 +169,19 @@ public interface CommonService {
     @POST("common/car/address")
     Observable<HttpResult<CarAddressEntity>> carAddress(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                         @Header("token") String token, @FieldMap Map<String, Object> params);
+
+
+    //支付宝支付
+    @FormUrlEncoded
+    @POST("pay/aliPay")
+    Observable<HttpResult<PayAlipayEntity>> payAlipay(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                      @Header("token") String token, @FieldMap Map<String, Object> params);
+
+    //支付确认
+    @FormUrlEncoded
+    @POST("pay/confirm")
+    Observable<HttpResult<String>> payConfirm(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                      @Header("token") String token, @FieldMap Map<String, Object> params);
 
 
 }

@@ -11,9 +11,9 @@ public class Constants {
 
     public static String LH_LOG_PATH = "/LH/Log/";// 日志默认保存目录
 
-    //    public static final String BASE_URL = "http://192.168.1.130:8080/";
+    public static final String BASE_URL = "http://192.168.1.130:8080/";
     //    public static final String BASE_URL = "http://we-win.3322.org/nhy2/";
-    public static final String BASE_URL = "http://121.41.103.166:18080/nhy/";
+    //    public static final String BASE_URL = "http://121.41.103.166/nhy/";
 
     // app类型：1:ios,2:andriod
     public static final int APPTYPE = 2;

@@ -58,7 +58,8 @@
                     android:minWidth="60dp"
                     android:gravity="center"
                     android:textColor="@color/black_87_percent"
-                    android:textSize="32.0sp"/>
+                    android:textSize="32.0sp"
+                    android:inputType="numberDecimal"/>
             </LinearLayout>
 
             <TextView

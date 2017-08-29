@@ -13,6 +13,7 @@ import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.LoginEntity;
 import com.xjgj.mall.bean.OrderDetailEntity;
 import com.xjgj.mall.bean.OrderEntity;
+import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.bean.PhotoUploadEntity;
 import com.xjgj.mall.bean.RealNameEntity;
 import com.xjgj.mall.bean.User;
@@ -488,7 +489,7 @@ public class CommonApi {
     /**
      * 附近司机
      */
-    public Observable<HttpResult<List<DriverAddressEntity>>> driverAddress(double longitude,double latitude) {
+    public Observable<HttpResult<List<DriverAddressEntity>>> driverAddress(double longitude, double latitude) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("longitude", longitude);
@@ -504,11 +505,34 @@ public class CommonApi {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("orderId", orderId);
-        if(!TextUtils.isEmpty(collectTime)) {
+        if (!TextUtils.isEmpty(collectTime)) {
             params.put("collectTime", collectTime);
         }
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.carAddress(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 支付宝支付
+     */
+    public Observable<HttpResult<PayAlipayEntity>> payAlipay(int orderId, String amount) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("orderId", orderId);
+        params.put("amount", amount);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.payAlipay(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 支付确认
+     */
+    public Observable<HttpResult<String>> payConfirm(String outTradeNo) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("outTradeNo", outTradeNo);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.payConfirm(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
     }
 
 }

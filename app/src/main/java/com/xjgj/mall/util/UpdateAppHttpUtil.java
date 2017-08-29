@@ -31,6 +31,7 @@ public class UpdateAppHttpUtil implements HttpManager {
     public void asyncGet(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.get()
                 .url(url)
+                .addHeader("app_type", "android")
                 .params(params)
                 .build()
                 .execute(new StringCallback() {
@@ -57,6 +58,7 @@ public class UpdateAppHttpUtil implements HttpManager {
     public void asyncPost(@NonNull String url, @NonNull Map<String, String> params, @NonNull final Callback callBack) {
         OkHttpUtils.post()
                 .url(url)
+                .addHeader("app_type", "android")
                 .params(params)
                 .build()
                 .execute(new StringCallback() {

@@ -4,11 +4,20 @@ import android.support.annotation.NonNull;
 
 import com.squareup.otto.Bus;
 import com.xjgj.mall.api.common.CommonApi;
+import com.xjgj.mall.bean.HttpResult;
+import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.components.storage.UserStorage;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Created by lh on 2017/8/25.
@@ -31,8 +40,65 @@ public class OrderPayPresenter implements OrderPayContract.Presenter {
     }
 
     @Override
-    public void payOrder(int orderId, double money) {
+    public void payOrder(int orderId, String money) {
         mView.showLoading();
+        disposables.add(mCommonApi.payAlipay(orderId, money)
+                .debounce(800, TimeUnit.MILLISECONDS)
+                .flatMap(new Function<HttpResult<PayAlipayEntity>, ObservableSource<PayAlipayEntity>>() {
+                    @Override
+                    public ObservableSource<PayAlipayEntity> apply(@io.reactivex.annotations.NonNull HttpResult<PayAlipayEntity> payAlipayEntityHttpResult) throws Exception {
+                        return CommonApi.flatResponse(payAlipayEntityHttpResult);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        mView.hideLoading(0);
+                    }
+                }).subscribe(new Consumer<PayAlipayEntity>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull PayAlipayEntity payAlipayEntity) throws Exception {
+                        mView.payOrderResult(payAlipayEntity);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading(0);
+                    }
+                }));
+    }
+
+    @Override
+    public void payConfirm(String outTradeNo) {
+        mView.showLoading();
+        disposables.add(mCommonApi.payConfirm(outTradeNo)
+                .debounce(800, TimeUnit.MILLISECONDS)
+                .flatMap(new Function<HttpResult<String>, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(@io.reactivex.annotations.NonNull HttpResult<String> stringHttpResult) throws Exception {
+                        return CommonApi.flatResponse(stringHttpResult);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        mView.hideLoading(0);
+                    }
+                }).subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull String s) throws Exception {
+                        mView.payConfirmResult(s);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@io.reactivex.annotations.NonNull Throwable throwable) throws Exception {
+                        mView.onError(throwable);
+                        mView.hideLoading(0);
+                    }
+                }));
     }
 
     @Override
@@ -45,4 +111,5 @@ public class OrderPayPresenter implements OrderPayContract.Presenter {
         disposables.clear();
         mView = null;
     }
+
 }

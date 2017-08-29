@@ -47,25 +47,27 @@ public class UpdateAppEntity {
     }
 
     public static class ResultValueBean {
-        private int versionNo;
-        private int versionIosNo;
+        private int versionCode;
+        private String versionName;
         private String versionUrl;
-        private String versionIosUrl;
 
-        public int getVersionNo() {
-            return versionNo;
+        private String packageSize;
+        private String updateDetail;
+
+        public int getVersionCode() {
+            return versionCode;
         }
 
-        public void setVersionNo(int versionNo) {
-            this.versionNo = versionNo;
+        public void setVersionCode(int versionCode) {
+            this.versionCode = versionCode;
         }
 
-        public int getVersionIosNo() {
-            return versionIosNo;
+        public String getVersionName() {
+            return versionName;
         }
 
-        public void setVersionIosNo(int versionIosNo) {
-            this.versionIosNo = versionIosNo;
+        public void setVersionName(String versionName) {
+            this.versionName = versionName;
         }
 
         public String getVersionUrl() {
@@ -76,12 +78,20 @@ public class UpdateAppEntity {
             this.versionUrl = versionUrl;
         }
 
-        public String getVersionIosUrl() {
-            return versionIosUrl;
+        public String getPackageSize() {
+            return packageSize;
         }
 
-        public void setVersionIosUrl(String versionIosUrl) {
-            this.versionIosUrl = versionIosUrl;
+        public void setPackageSize(String packageSize) {
+            this.packageSize = packageSize;
+        }
+
+        public String getUpdateDetail() {
+            return updateDetail;
+        }
+
+        public void setUpdateDetail(String updateDetail) {
+            this.updateDetail = updateDetail;
         }
     }
 }

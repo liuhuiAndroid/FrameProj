@@ -1,6 +1,6 @@
 package com.xjgj.mall.ui.orderpay;
 
-import com.xjgj.mall.bean.PayOrderEntity;
+import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.ui.BasePresenter;
 import com.xjgj.mall.ui.BaseView;
 
@@ -15,14 +15,18 @@ public class OrderPayContract {
 
         void hideLoading(int type);
 
-        void payOrderResult(PayOrderEntity payOrderEntity);
+        void payOrderResult(PayAlipayEntity payAlipayEntity);
+
+        void payConfirmResult(String s);
 
         void onError(Throwable throwable);
     }
 
     interface Presenter extends BasePresenter<OrderPayContract.View> {
 
-        void payOrder(int orderId,double money);
+        void payOrder(int orderId, String money);
+
+        void payConfirm(String outTradeNo);
 
     }
 
