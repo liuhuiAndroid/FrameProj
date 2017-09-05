@@ -27,7 +27,7 @@
     <string name="phone_login">手机号快捷登录</string>
     <string name="phone_register">手机号快捷注册</string>
     <string name="phone">手机号</string>
-    <string name="phone_hint">11位手机号</string>
+    <string name="phone_hint">请输入11位手机号</string>
     <string name="nick_name">姓\u0020\u0020\u0020\u0020名</string>
     <string name="nick_name_hint">请输入姓名</string>
     <string name="next">下一步</string>

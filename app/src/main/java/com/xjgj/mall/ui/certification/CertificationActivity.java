@@ -130,8 +130,8 @@ public class CertificationActivity extends BaseActivity implements Certification
         mEditName.setText(realNameEntity.getRealName());
         mEditIdCard.setText(realNameEntity.getIdentityNo());
 
-        ImageLoaderUtil.getInstance().loadImage(realNameEntity.getAfterIdentityPath(),mImageViewFront);
-        ImageLoaderUtil.getInstance().loadImage(realNameEntity.getFrontIdentityPath(),mImageViewProis);
+        ImageLoaderUtil.getInstance().loadImage(realNameEntity.getAfterIdentityPath(),mImageViewProis);
+        ImageLoaderUtil.getInstance().loadImage(realNameEntity.getFrontIdentityPath(),mImageViewFront);
     }
 
     @Override

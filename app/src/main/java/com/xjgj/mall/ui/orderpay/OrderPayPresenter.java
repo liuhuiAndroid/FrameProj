@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.squareup.otto.Bus;
 import com.xjgj.mall.api.common.CommonApi;
+import com.xjgj.mall.bean.CouponEntity;
 import com.xjgj.mall.bean.HttpResult;
 import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.components.storage.UserStorage;
@@ -40,9 +41,9 @@ public class OrderPayPresenter implements OrderPayContract.Presenter {
     }
 
     @Override
-    public void payOrder(int orderId, String money) {
+    public void payOrder(int orderId, String money, int couponId) {
         mView.showLoading();
-        disposables.add(mCommonApi.payAlipay(orderId, money)
+        disposables.add(mCommonApi.payAlipay(orderId, money,couponId)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<PayAlipayEntity>, ObservableSource<PayAlipayEntity>>() {
                     @Override
@@ -75,10 +76,10 @@ public class OrderPayPresenter implements OrderPayContract.Presenter {
         mView.showLoading();
         disposables.add(mCommonApi.payConfirm(outTradeNo)
                 .debounce(800, TimeUnit.MILLISECONDS)
-                .flatMap(new Function<HttpResult<String>, ObservableSource<String>>() {
+                .flatMap(new Function<HttpResult<CouponEntity>, ObservableSource<CouponEntity>>() {
                     @Override
-                    public ObservableSource<String> apply(@io.reactivex.annotations.NonNull HttpResult<String> stringHttpResult) throws Exception {
-                        return CommonApi.flatResponse(stringHttpResult);
+                    public ObservableSource<CouponEntity> apply(@io.reactivex.annotations.NonNull HttpResult<CouponEntity> couponEntityHttpResult) throws Exception {
+                        return CommonApi.flatResponse(couponEntityHttpResult);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -87,10 +88,10 @@ public class OrderPayPresenter implements OrderPayContract.Presenter {
                     public void run() throws Exception {
                         mView.hideLoading(0);
                     }
-                }).subscribe(new Consumer<String>() {
+                }).subscribe(new Consumer<CouponEntity>() {
                     @Override
-                    public void accept(@io.reactivex.annotations.NonNull String s) throws Exception {
-                        mView.payConfirmResult(s);
+                    public void accept(@io.reactivex.annotations.NonNull CouponEntity couponEntity) throws Exception {
+                        mView.payConfirmResult(couponEntity);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

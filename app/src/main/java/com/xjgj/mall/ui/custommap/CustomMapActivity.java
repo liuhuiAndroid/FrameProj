@@ -4,12 +4,23 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.frameproj.library.adapter.CommonAdapter;
+import com.android.frameproj.library.adapter.MultiItemTypeAdapter;
+import com.android.frameproj.library.adapter.base.ViewHolder;
+import com.android.frameproj.library.util.CommonUtils;
+import com.android.frameproj.library.widget.CustomSearchView;
 import com.ls.widgets.map.MapWidget;
 import com.ls.widgets.map.config.GPSConfig;
 import com.ls.widgets.map.config.MapGraphicsConfig;
@@ -23,19 +34,36 @@ import com.ls.widgets.map.interfaces.OnMapScrollListener;
 import com.ls.widgets.map.interfaces.OnMapTouchListener;
 import com.ls.widgets.map.model.MapObject;
 import com.xjgj.mall.R;
+import com.xjgj.mall.bean.CustomMapSearchItem;
+import com.xjgj.mall.bean.SearchItem;
+import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.util.popup.TextPopup;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
  * Created by lh on 2017/8/28.
  */
 
-public class CustomMapActivity extends AppCompatActivity implements OnMapTouchListener, MapEventsListener {
+public class CustomMapActivity extends BaseActivity implements OnMapTouchListener, MapEventsListener {
 
     private static final Integer LAYER1_ID = 0; // 图层1
     private static final Integer LAYER2_ID = 1; // 图层2
+    @BindView(R.id.shadeView)
+    View mShadeView;
+    @BindView(R.id.searchView)
+    CustomSearchView mSearchView;
+    @BindView(R.id.btn_common)
+    Button mBtnCommon;
+    @BindView(R.id.list_result)
+    RecyclerView mListResult;
+    @BindView(R.id.ll_search_result)
+    LinearLayout mLlSearchResult;
 
     private RelativeLayout mRelativeLayout;
     //下一个对象的Id
@@ -48,7 +76,6 @@ public class CustomMapActivity extends AppCompatActivity implements OnMapTouchLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_custom_map);
 
         nextObjectId = 0;
         initMap(savedInstanceState);
@@ -56,6 +83,48 @@ public class CustomMapActivity extends AppCompatActivity implements OnMapTouchLi
         initMapObjects();
         initMapEventsListener();
         mMapWidget.centerMap();
+    }
+
+    @Override
+    public int initContentView() {
+        return R.layout.activity_custom_map;
+    }
+
+    @Override
+    public void initInjector() {
+
+    }
+
+    @Override
+    public void initUiAndListener() {
+        mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
+            @Override
+            public void onBackButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void onEditTextClicked() {
+                mSearchView.editTextRequestFocus();
+            }
+
+            @Override
+            public void onRightButtonClicked() {
+                CommonUtils.hideSoftInput(CustomMapActivity.this);
+            }
+
+            @Override
+            public void onQueryChanged(String paramString, int paramInt1, int paramInt2, int paramInt3) {
+                mLlSearchResult.setVisibility(View.VISIBLE);
+                setSearchItem();
+            }
+
+
+
+            @Override
+            public void afterTextChanged(Editable paramEditable) {
+            }
+        });
     }
 
     @Override
@@ -72,7 +141,7 @@ public class CustomMapActivity extends AppCompatActivity implements OnMapTouchLi
     private void initMap(Bundle savedInstanceState) {
         mMapWidget = new MapWidget(savedInstanceState, this,
                 "map",// root name of the map under assets folder.
-                10); // initial zoom level
+                13); // initial zoom level
 
         OfflineMapConfig config = mMapWidget.getConfig();
         config.setPinchZoomEnabled(true); // 设置缩放手势
@@ -240,5 +309,103 @@ public class CustomMapActivity extends AppCompatActivity implements OnMapTouchLi
         }
     }
 
+
+    // ========================================== 搜索相关
+
+    private void setSearchItem() {
+        mCustomMapSearchItems.add(new CustomMapSearchItem("蔬菜1",1,1));
+        showResultPage();
+    }
+
+    private CommonAdapter mCommonAdapterSearch;
+    private List<CustomMapSearchItem> mCustomMapSearchItems = new ArrayList<>();
+
+    private void showResultPage() {
+
+        showShade();
+        if (mCommonAdapterSearch == null) {
+            mListResult.setLayoutManager(new LinearLayoutManager(CustomMapActivity.this));
+            mCommonAdapterSearch = new CommonAdapter<CustomMapSearchItem>(CustomMapActivity.this, R.layout.location_search_listitem, mCustomMapSearchItems) {
+                @Override
+                protected void convert(ViewHolder holder, final CustomMapSearchItem customMapSearchItem, int position) {
+                    holder.setText(R.id.textview_formmatted_address_head, customMapSearchItem.getName());
+                    holder.setText(R.id.textview_formmatted_address, customMapSearchItem.getName());
+                }
+            };
+            mCommonAdapterSearch.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    List<SearchItem> datas = mCommonAdapterSearch.getDatas();
+                    if (datas != null) {
+                        if (datas != null && datas.size() > position) {
+//                            setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
+//                                    .putExtra("name", datas.get(position).getName())
+//                                    .putExtra("addr", datas.get(position).getAddress())
+//                                    .putExtra("longitude", datas.get(position).getLng())
+//                                    .putExtra("latitude", datas.get(position).getLat())
+//                                    .putExtra("check_point", mCheck_point));
+
+                            android.location.Location location = new Location("");
+                            location.setLatitude(31.144247);
+                            location.setLongitude(121.605669);
+                            mMapWidget.scrollMapTo(location);
+                            dismissShade();
+                            mListResult.setVisibility(View.GONE);
+                            CommonUtils.hideSoftInput(CustomMapActivity.this);
+
+                        }
+                    }
+//                    finish();
+                }
+
+                @Override
+                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                    return false;
+                }
+            });
+            mListResult.setAdapter(mCommonAdapterSearch);
+            mListResult.setItemAnimator(new DefaultItemAnimator());
+        } else {
+            mCommonAdapterSearch.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 点击阴影隐藏搜索布局
+     */
+    @OnClick(R.id.shadeView)
+    public void mShadeView() {
+        mSearchView.clearQueryContent();
+        mSearchView.setEditTextFocus(false);
+        mLlSearchResult.setVisibility(View.GONE);
+        dismissShade();
+        CommonUtils.hideSoftInput(CustomMapActivity.this);
+    }
+
+    private AlphaAnimation animation;
+
+    /**
+     * 隐藏阴影
+     */
+    private void dismissShade() {
+        if (this.animation != null)
+            this.animation.cancel();
+        mShadeView.setVisibility(View.GONE);
+        mShadeView.setClickable(false);
+    }
+
+    /**
+     * 显示阴影
+     */
+    private void showShade() {
+        if (mShadeView.getVisibility() == View.VISIBLE)
+            return;
+        this.animation = new AlphaAnimation(0.0F, 0.7F);
+        this.animation.setDuration(500L);
+        this.animation.setFillAfter(true);
+        mShadeView.startAnimation(this.animation);
+        mShadeView.setVisibility(View.VISIBLE);
+        mShadeView.setClickable(true);
+    }
 
 }

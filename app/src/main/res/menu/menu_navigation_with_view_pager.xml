@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/i_choose"
         android:checked="true"
         android:icon="@drawable/mainmenu_find_over"
         android:title="找车" /><!--ic_news_24dp-->
+
     <item
         android:id="@+id/i_order"
         android:icon="@drawable/mainmenu_order_over"
         android:title="订单" /><!--ic_photo_24dp-->
+
     <item
         android:id="@+id/i_mine"
         android:icon="@drawable/mainmenu_personal_over"
         android:title="我" /><!--ic_video_24dp-->
+
 </menu>

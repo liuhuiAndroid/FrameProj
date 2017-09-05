@@ -28,6 +28,7 @@ import com.xjgj.mall.components.storage.UserStorage;
 import com.xjgj.mall.db.DaoSession;
 import com.xjgj.mall.db.DestinationDao;
 import com.xjgj.mall.ui.BaseActivity;
+import com.xjgj.mall.ui.custommap.CustomMapActivity;
 import com.xjgj.mall.ui.location.ChooseLocationActivity;
 
 import java.util.ArrayList;
@@ -36,10 +37,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.xjgj.mall.Constants.REQUEST_CHOOSE_LOCATION_CODE;
+import static com.xjgj.mall.Constants.REQUEST_CHOOSE_LOCATION_CODE_CUSTOM_MAP;
 import static com.xjgj.mall.Constants.RESULT_CHOOSE_LOCATION_CODE;
 import static com.xjgj.mall.Constants.RESULT_DELIVERY_INFO_CODE;
 import static com.xjgj.mall.R.id.textContactPhone;
@@ -95,7 +96,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     @Inject
     DestinationDao mDestinationDao;
 
-    private static final String SQL_DISTINCT_ENAME = "SELECT DISTINCT "+DestinationDao.Properties.Termini.columnName+" FROM "+DestinationDao.TABLENAME
+    private static final String SQL_DISTINCT_ENAME = "SELECT DISTINCT " + DestinationDao.Properties.Termini.columnName + " FROM " + DestinationDao.TABLENAME
             + " ORDER BY _id DESC LIMIT 0,3";
 
     @Override
@@ -126,16 +127,16 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         //        mTextHandle.setVisibility(View.VISIBLE);
 
         mType = getIntent().getIntExtra("type", -1);
-        if (mType == 0) {
-            mLlSearch.setVisibility(View.VISIBLE);
-        } else if (mType == 1) {
-            mLlSearch.setVisibility(View.GONE);
-        }
+        //        if (mType == 0) {
+        //            mLlSearch.setVisibility(View.VISIBLE);
+        //        } else if (mType == 1) {
+        //            mLlSearch.setVisibility(View.GONE);
+        //        }
 
-        if(mType == 1){
+        if (mType == 1) {
             final List<String> result = new ArrayList<String>();
             Cursor c = mDaoSession.getDatabase().rawQuery(SQL_DISTINCT_ENAME, null);
-            try{
+            try {
                 if (c.moveToFirst()) {
                     do {
                         result.add(c.getString(0));
@@ -175,7 +176,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             } else {
                 mListResult.setVisibility(View.GONE);
             }
-        }else{
+        } else {
             mListResult.setVisibility(View.GONE);
         }
 
@@ -346,16 +347,17 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
      */
     @OnClick(R.id.textAddress)
     public void mTextAddress() {
-        Intent localIntent = new Intent(DeliveryInfoActivity.this, ChooseLocationActivity.class);
-        //如果之前有定位需要先定位在之前的位置上,暂时不做吧
-        localIntent.putExtra("searchString", mTextAddress.getText().toString().trim());
-        startActivityForResult(localIntent, REQUEST_CHOOSE_LOCATION_CODE);
+
+        if (mType == 0) {
+            Intent localIntent = new Intent(DeliveryInfoActivity.this, ChooseLocationActivity.class);
+            //如果之前有定位需要先定位在之前的位置上,暂时不做吧
+            localIntent.putExtra("searchString", mTextAddress.getText().toString().trim());
+            startActivityForResult(localIntent, REQUEST_CHOOSE_LOCATION_CODE);
+        } else if (mType == 1) {
+            Intent intent = new Intent(DeliveryInfoActivity.this, CustomMapActivity.class);
+            startActivityForResult(intent,REQUEST_CHOOSE_LOCATION_CODE_CUSTOM_MAP);
+        }
+
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

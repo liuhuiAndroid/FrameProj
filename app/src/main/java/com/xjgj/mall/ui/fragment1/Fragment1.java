@@ -406,6 +406,8 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
             setEmptyText("暂无已评价订单");
         } else if (currentType == 6) {
             setEmptyText("暂无申诉中订单");
+        } else if (currentType == 7) {
+            setEmptyText("暂无已过期订单");
         }
         showEmpty(true);
     }

@@ -3,6 +3,7 @@ package com.xjgj.mall.api.common;
 
 import com.xjgj.mall.bean.CarAddressEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.CouponEntity;
 import com.xjgj.mall.bean.DictionaryEntity;
 import com.xjgj.mall.bean.DriverAddressEntity;
 import com.xjgj.mall.bean.HomepageEntity;
@@ -180,8 +181,12 @@ public interface CommonService {
     //支付确认
     @FormUrlEncoded
     @POST("pay/confirm")
-    Observable<HttpResult<String>> payConfirm(@Header("timestamp") long timestamp, @Header("sign") String sign,
+    Observable<HttpResult<CouponEntity>> payConfirm(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                       @Header("token") String token, @FieldMap Map<String, Object> params);
 
+    //优惠券
+    @POST("mall/coupon/list")
+    Observable<HttpResult<List<CouponEntity>>> couponList(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                          @Header("token") String token);
 
 }

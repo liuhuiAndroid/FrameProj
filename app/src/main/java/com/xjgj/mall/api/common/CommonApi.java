@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.xjgj.mall.Constants;
 import com.xjgj.mall.bean.CarAddressEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
+import com.xjgj.mall.bean.CouponEntity;
 import com.xjgj.mall.bean.DictionaryEntity;
 import com.xjgj.mall.bean.DriverAddressEntity;
 import com.xjgj.mall.bean.HomepageEntity;
@@ -515,24 +516,37 @@ public class CommonApi {
     /**
      * 支付宝支付
      */
-    public Observable<HttpResult<PayAlipayEntity>> payAlipay(int orderId, String amount) {
+    public Observable<HttpResult<PayAlipayEntity>> payAlipay(int orderId, String amount, int couponId) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("orderId", orderId);
         params.put("amount", amount);
+        if (couponId != -1) {
+            params.put("couponId", couponId);
+        }
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
-        return mCommonService.payAlipay(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
+        return mCommonService.payAlipay(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
     }
 
     /**
      * 支付确认
      */
-    public Observable<HttpResult<String>> payConfirm(String outTradeNo) {
+    public Observable<HttpResult<CouponEntity>> payConfirm(String outTradeNo) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("outTradeNo", outTradeNo);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
-        return mCommonService.payConfirm(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
+        return mCommonService.payConfirm(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 优惠券
+     */
+    public Observable<HttpResult<List<CouponEntity>>> couponList() {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.couponList(currentTimeMillis, sign, mUserStorage.getToken()).subscribeOn(Schedulers.io());
     }
 
 }

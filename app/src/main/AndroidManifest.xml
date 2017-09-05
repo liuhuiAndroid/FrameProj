@@ -134,6 +134,10 @@
         <activity
             android:name=".ui.custommap.CustomMapActivity"
             android:screenOrientation="portrait"/>
+        <!-- 选择优惠券 -->
+        <activity
+            android:name=".ui.coupon.ChooseCouponActivity"
+            android:screenOrientation="portrait"/>
 
 
         <!-- 将Bitmap的格式改为ARGB_8888 -->

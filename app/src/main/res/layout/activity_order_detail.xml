@@ -516,7 +516,8 @@
                     android:id="@+id/btnCustomMap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="自定义地图"/>
+                    android:text="自定义地图"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

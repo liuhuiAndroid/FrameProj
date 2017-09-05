@@ -1,5 +1,6 @@
 package com.xjgj.mall.ui.orderpay;
 
+import com.xjgj.mall.bean.CouponEntity;
 import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.ui.BasePresenter;
 import com.xjgj.mall.ui.BaseView;
@@ -17,14 +18,14 @@ public class OrderPayContract {
 
         void payOrderResult(PayAlipayEntity payAlipayEntity);
 
-        void payConfirmResult(String s);
+        void payConfirmResult(CouponEntity couponEntity);
 
         void onError(Throwable throwable);
     }
 
     interface Presenter extends BasePresenter<OrderPayContract.View> {
 
-        void payOrder(int orderId, String money);
+        void payOrder(int orderId, String money, int couponId);
 
         void payConfirm(String outTradeNo);
 

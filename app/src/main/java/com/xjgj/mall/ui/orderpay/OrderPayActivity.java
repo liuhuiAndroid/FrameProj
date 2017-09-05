@@ -2,6 +2,7 @@ package com.xjgj.mall.ui.orderpay;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -18,16 +19,17 @@ import com.alipay.sdk.app.PayTask;
 import com.android.frameproj.library.util.DialogManager;
 import com.android.frameproj.library.util.ToastUtil;
 import com.xjgj.mall.R;
+import com.xjgj.mall.bean.CouponEntity;
 import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.bean.PayResult;
 import com.xjgj.mall.ui.BaseActivity;
-
+import com.xjgj.mall.ui.coupon.ChooseCouponActivity;
 import java.util.Map;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.OnClick;
+import static com.xjgj.mall.Constants.REQUEST_CHOOSE_COUPON;
+import static com.xjgj.mall.Constants.RESULT_CHOOSE_COUPON;
 
 /**
  * Created by lh on 2017/8/25.
@@ -56,6 +58,9 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
 
     @Inject
     OrderPayPresenter mOrderPayPresenter;
+
+    @BindView(R.id.tv_coupon)
+    TextView mTvCoupon;
     private Dialog mLoadingDialog;
     private int mOrderId;
     private String mOutTradeNo;
@@ -92,9 +97,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
         mTextTitle.setText("订单支付");
 
         mPayType.check(mAliPay.getId());
-
     }
-
 
     /**
      * 支付
@@ -106,7 +109,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
             ToastUtil.showToast("请填写支付金额");
             return;
         }
-        mOrderPayPresenter.payOrder(mOrderId, trim);
+        mOrderPayPresenter.payOrder(mOrderId, trim, mCouponId);
     }
 
     @Override
@@ -147,8 +150,12 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
     }
 
     @Override
-    public void payConfirmResult(String s) {
-        ToastUtil.showToast(s);
+    public void payConfirmResult(CouponEntity couponEntity) {
+        if (couponEntity == null) {
+            ToastUtil.showToast("支付成功");
+        } else {
+            ToastUtil.showToast("支付成功，恭喜获取一个优惠券");
+        }
         finish();
     }
 
@@ -184,6 +191,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
 
     /**
      * 确认支付
+     *
      * @param outTradeNo
      */
     private void payConfirm(String outTradeNo) {
@@ -201,5 +209,26 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
         mOrderPayPresenter.detachView();
     }
 
+    /**
+     * 选择优惠券
+     */
+    @OnClick(R.id.ll_coupon)
+    public void mLlCoupon() {
+        Intent intent_coupon = new Intent(OrderPayActivity.this, ChooseCouponActivity.class);
+        startActivityForResult(intent_coupon, REQUEST_CHOOSE_COUPON);
+    }
+
+
+    private int mCouponId = -1;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CHOOSE_COUPON && resultCode == RESULT_CHOOSE_COUPON) {
+            mCouponId = data.getIntExtra("couponId", -1);
+            int amount = data.getIntExtra("amount", -1);
+            mTvCoupon.setText("-￥"+amount);
+        }
+    }
 
 }

@@ -164,7 +164,7 @@ public class PersonalProfileActivity extends BaseActivity implements PersonalPro
 
     @Override
     public void onError(Throwable throwable) {
-
+        loadError(throwable);
     }
 
     @Override
