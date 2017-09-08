@@ -24,10 +24,14 @@ import com.xjgj.mall.bean.PayAlipayEntity;
 import com.xjgj.mall.bean.PayResult;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.ui.coupon.ChooseCouponActivity;
+
 import java.util.Map;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+
 import static com.xjgj.mall.Constants.REQUEST_CHOOSE_COUPON;
 import static com.xjgj.mall.Constants.RESULT_CHOOSE_COUPON;
 
@@ -151,7 +155,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
 
     @Override
     public void payConfirmResult(CouponEntity couponEntity) {
-        if (couponEntity == null) {
+        if (couponEntity == null || couponEntity.getAmount() == 0) {
             ToastUtil.showToast("支付成功");
         } else {
             ToastUtil.showToast("支付成功，恭喜获取一个优惠券");
@@ -227,7 +231,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
         if (requestCode == REQUEST_CHOOSE_COUPON && resultCode == RESULT_CHOOSE_COUPON) {
             mCouponId = data.getIntExtra("couponId", -1);
             int amount = data.getIntExtra("amount", -1);
-            mTvCoupon.setText("-￥"+amount);
+            mTvCoupon.setText("-￥" + amount);
         }
     }
 

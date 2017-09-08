@@ -27,6 +27,15 @@ public class OrderEntity {
 
     private float starLevel;
     private int flgSite;
+    private int payStatus;
+
+    public int getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(int payStatus) {
+        this.payStatus = payStatus;
+    }
 
     public int getFlgSite() {
         return flgSite;

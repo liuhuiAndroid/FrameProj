@@ -250,7 +250,11 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                     } else if (orderEntity.getStatus() == 3) {
                         holder.setText(R.id.textState, "已完成");
                         holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
-                        holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
+                        if (orderEntity.getPayStatus() != 3) {
+                            holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
+                        } else {
+                            holder.getView(R.id.textShengShu).setVisibility(View.GONE);
+                        }
                         holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
                         holder.setText(R.id.textDicuss, getResources().getString(R.string.want_discusses));
                         holder.setText(R.id.textShengShu, "我要支付");
@@ -331,7 +335,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
             mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    if (datas != null && datas.size() > position && position!=-1) {
+                    if (datas != null && datas.size() > position && position != -1) {
                         OrderEntity orderEntity = datas.get(position);
                         Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
                         intent.putExtra("orderId", orderEntity.getOrderId());

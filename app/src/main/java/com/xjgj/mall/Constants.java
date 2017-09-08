@@ -54,5 +54,9 @@ public class Constants {
     public static final int RESULT_CERTIFICATION_CODE = 117;
     public static final int REQUEST_IMPROVE_ORDER_CODE_FROM_DETAIL = 118;
     public static final int RESULT_IMPROVE_ORDER_CODE_FROM_DETAIL = 119;
+    public static final int REQUEST_CHOOSE_LOCATION_CODE_CUSTOM_MAP = 120;
+    public static final int RESULT_CHOOSE_LOCATION_CODE_CUSTOM_MAP = 121;
+    public static final int REQUEST_CHOOSE_COUPON = 123;
+    public static final int RESULT_CHOOSE_COUPON = 124;
 
 }

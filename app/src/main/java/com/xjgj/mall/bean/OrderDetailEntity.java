@@ -34,6 +34,16 @@ public class OrderDetailEntity {
     private List<AddressListBean> addressList;
     private List<CarAddressBean> carAddress;
 
+    private int payStatus;
+
+    public int getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(int payStatus) {
+        this.payStatus = payStatus;
+    }
+
     public List<CarAddressBean> getCarAddress() {
         return carAddress;
     }

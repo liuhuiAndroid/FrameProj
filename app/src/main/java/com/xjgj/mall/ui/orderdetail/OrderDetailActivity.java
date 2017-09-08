@@ -308,7 +308,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 mLinearOrderAgain.setVisibility(View.GONE);
             }
 
-            if (orderDetailEntity.getStatus() == 3) {
+            if (orderDetailEntity.getStatus() == 3 && orderDetailEntity.getPayStatus() != 3) {
                 mLlPay.setVisibility(View.VISIBLE);
             } else {
                 mLlPay.setVisibility(View.GONE);
