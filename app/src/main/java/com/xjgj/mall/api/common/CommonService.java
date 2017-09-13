@@ -1,6 +1,7 @@
 package com.xjgj.mall.api.common;
 
 
+import com.xjgj.mall.bean.AddressEntity;
 import com.xjgj.mall.bean.CarAddressEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.CouponEntity;
@@ -189,4 +190,9 @@ public interface CommonService {
     Observable<HttpResult<List<CouponEntity>>> couponList(@Header("timestamp") long timestamp, @Header("sign") String sign,
                                                           @Header("token") String token);
 
+    //地图商家地址
+    @FormUrlEncoded
+    @POST("mall/address/list")
+    Observable<HttpResult<List<AddressEntity>>> addressList(@Header("timestamp") long timestamp, @Header("sign") String sign,
+                                                            @Header("token") String token, @FieldMap Map<String, Object> params);
 }

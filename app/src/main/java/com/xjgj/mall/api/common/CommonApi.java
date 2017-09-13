@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.xjgj.mall.Constants;
+import com.xjgj.mall.bean.AddressEntity;
 import com.xjgj.mall.bean.CarAddressEntity;
 import com.xjgj.mall.bean.CarTypeEntity;
 import com.xjgj.mall.bean.CouponEntity;
@@ -547,6 +548,17 @@ public class CommonApi {
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.couponList(currentTimeMillis, sign, mUserStorage.getToken()).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 地图商家地址
+     */
+    public Observable<HttpResult<List<AddressEntity>>> addressList(String address) {
+        long currentTimeMillis = System.currentTimeMillis();
+        Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
+        params.put("address", address);
+        String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
+        return mCommonService.addressList(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.xjgj.mall.ui.coupon;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,6 +58,7 @@ public class ChooseCouponActivity extends BaseActivity implements ChooseCouponCo
 
     private CommonAdapter mCommonAdapter;
     private List<CouponEntity> mCouponEntities = new ArrayList<>();
+    private double mAmount;
 
 
     @Override
@@ -85,6 +87,7 @@ public class ChooseCouponActivity extends BaseActivity implements ChooseCouponCo
             }
         });
         mTextTitle.setText("选择优惠券");
+        mAmount = getIntent().getDoubleExtra("amount", 0);
         mCouponPresenter.couponList();
     }
 
@@ -123,7 +126,13 @@ public class ChooseCouponActivity extends BaseActivity implements ChooseCouponCo
             mCommonAdapter = new CommonAdapter<CouponEntity>(ChooseCouponActivity.this, R.layout.coupon_listitem, mCouponEntities) {
                 @Override
                 protected void convert(ViewHolder holder, final CouponEntity couponEntity, int position) {
-                    holder.setText(R.id.tv_title, couponEntity.getCouponTitle());
+                    if (mAmount < couponEntity.getMinAmount()) {
+                        holder.getView(R.id.couponBgView).setBackgroundColor(Color.parseColor("#bdbdbd"));
+                        holder.setText(R.id.tv_title, couponEntity.getCouponTitle()+"(不可用)");
+                    } else {
+                        holder.getView(R.id.couponBgView).setBackgroundColor(Color.parseColor("#47BDBD"));
+                        holder.setText(R.id.tv_title, couponEntity.getCouponTitle());
+                    }
                     holder.setText(R.id.tv_detail, couponEntity.getCouponDescribe());
                     holder.setText(R.id.tv_count, "￥" + couponEntity.getAmount());
                     holder.setText(R.id.tv_time, "有效期：" + couponEntity.getValidStartTime() + "至" + couponEntity.getValidEndTime());
@@ -133,11 +142,13 @@ public class ChooseCouponActivity extends BaseActivity implements ChooseCouponCo
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                     CouponEntity couponEntity = mCouponEntities.get(position);
-                    setResult(RESULT_CHOOSE_COUPON,
-                            new Intent()
-                                    .putExtra("couponId", couponEntity.getCouponId())
-                                    .putExtra("amount", couponEntity.getAmount()));
-                    ChooseCouponActivity.this.finish();
+                    if (couponEntity.getMinAmount() <= mAmount) {
+                        setResult(RESULT_CHOOSE_COUPON,
+                                new Intent()
+                                        .putExtra("couponId", couponEntity.getCouponId())
+                                        .putExtra("amount", couponEntity.getAmount()));
+                        ChooseCouponActivity.this.finish();
+                    }
                 }
 
                 @Override

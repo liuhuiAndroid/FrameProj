@@ -218,7 +218,15 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
      */
     @OnClick(R.id.ll_coupon)
     public void mLlCoupon() {
+        String trim = mEtPriceOldOCI.getText().toString().trim();
+        double amount = 0;
+        if(trim == null ||TextUtils.isEmpty(trim)){
+            amount = 0;
+        }else{
+            amount = Double.parseDouble(trim);
+        }
         Intent intent_coupon = new Intent(OrderPayActivity.this, ChooseCouponActivity.class);
+        intent_coupon.putExtra("amount",amount);
         startActivityForResult(intent_coupon, REQUEST_CHOOSE_COUPON);
     }
 
@@ -230,7 +238,7 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CHOOSE_COUPON && resultCode == RESULT_CHOOSE_COUPON) {
             mCouponId = data.getIntExtra("couponId", -1);
-            int amount = data.getIntExtra("amount", -1);
+            double amount = data.getDoubleExtra("amount", -1);
             mTvCoupon.setText("-￥" + amount);
         }
     }

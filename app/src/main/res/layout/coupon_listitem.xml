@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.xjgj.mall.ui.widget.CouponBgView
+    android:id="@+id/couponBgView"
     xmlns:coupon="http://schemas.android.com/apk/res-auto"
     coupon:horizontal_style="circle"
     coupon:vertical_style="circle"
@@ -50,6 +51,7 @@
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
             android:textSize="15sp"/>
+
     </LinearLayout>
 
     <!--<ImageView

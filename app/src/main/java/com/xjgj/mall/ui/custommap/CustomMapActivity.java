@@ -1,5 +1,6 @@
 package com.xjgj.mall.ui.custommap;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -8,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -34,23 +36,27 @@ import com.ls.widgets.map.interfaces.OnMapScrollListener;
 import com.ls.widgets.map.interfaces.OnMapTouchListener;
 import com.ls.widgets.map.model.MapObject;
 import com.xjgj.mall.R;
-import com.xjgj.mall.bean.CustomMapSearchItem;
-import com.xjgj.mall.bean.SearchItem;
+import com.xjgj.mall.bean.AddressEntity;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.util.popup.TextPopup;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.xjgj.mall.Constants.RESULT_CHOOSE_LOCATION_CODE_CUSTOM_MAP;
 
 
 /**
  * Created by lh on 2017/8/28.
  */
 
-public class CustomMapActivity extends BaseActivity implements OnMapTouchListener, MapEventsListener {
+public class CustomMapActivity extends BaseActivity implements OnMapTouchListener,
+        MapEventsListener, CustomMapContract.View {
 
     private static final Integer LAYER1_ID = 0; // 图层1
     private static final Integer LAYER2_ID = 1; // 图层2
@@ -73,6 +79,9 @@ public class CustomMapActivity extends BaseActivity implements OnMapTouchListene
     //弹框
     private TextPopup mapObjectInfoPopup;
 
+    @Inject
+    CustomMapPresenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +101,16 @@ public class CustomMapActivity extends BaseActivity implements OnMapTouchListene
 
     @Override
     public void initInjector() {
-
+        DaggerCustomMapComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build()
+                .inject(this);
     }
 
     @Override
     public void initUiAndListener() {
+        mPresenter.attachView(this);
         mSearchView.setListener(new CustomSearchView.CustomSearchViewListener() {
             @Override
             public void onBackButtonClicked() {
@@ -115,10 +129,10 @@ public class CustomMapActivity extends BaseActivity implements OnMapTouchListene
 
             @Override
             public void onQueryChanged(String paramString, int paramInt1, int paramInt2, int paramInt3) {
-                mLlSearchResult.setVisibility(View.VISIBLE);
-                setSearchItem();
+                if (paramString != null && !TextUtils.isEmpty(paramString.trim())) {
+                    mPresenter.addressList(paramString);
+                }
             }
-
 
 
             @Override
@@ -312,64 +326,6 @@ public class CustomMapActivity extends BaseActivity implements OnMapTouchListene
 
     // ========================================== 搜索相关
 
-    private void setSearchItem() {
-        mCustomMapSearchItems.add(new CustomMapSearchItem("蔬菜1",1,1));
-        showResultPage();
-    }
-
-    private CommonAdapter mCommonAdapterSearch;
-    private List<CustomMapSearchItem> mCustomMapSearchItems = new ArrayList<>();
-
-    private void showResultPage() {
-
-        showShade();
-        if (mCommonAdapterSearch == null) {
-            mListResult.setLayoutManager(new LinearLayoutManager(CustomMapActivity.this));
-            mCommonAdapterSearch = new CommonAdapter<CustomMapSearchItem>(CustomMapActivity.this, R.layout.location_search_listitem, mCustomMapSearchItems) {
-                @Override
-                protected void convert(ViewHolder holder, final CustomMapSearchItem customMapSearchItem, int position) {
-                    holder.setText(R.id.textview_formmatted_address_head, customMapSearchItem.getName());
-                    holder.setText(R.id.textview_formmatted_address, customMapSearchItem.getName());
-                }
-            };
-            mCommonAdapterSearch.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    List<SearchItem> datas = mCommonAdapterSearch.getDatas();
-                    if (datas != null) {
-                        if (datas != null && datas.size() > position) {
-//                            setResult(RESULT_CHOOSE_LOCATION_CODE, new Intent()
-//                                    .putExtra("name", datas.get(position).getName())
-//                                    .putExtra("addr", datas.get(position).getAddress())
-//                                    .putExtra("longitude", datas.get(position).getLng())
-//                                    .putExtra("latitude", datas.get(position).getLat())
-//                                    .putExtra("check_point", mCheck_point));
-
-                            android.location.Location location = new Location("");
-                            location.setLatitude(31.144247);
-                            location.setLongitude(121.605669);
-                            mMapWidget.scrollMapTo(location);
-                            dismissShade();
-                            mListResult.setVisibility(View.GONE);
-                            CommonUtils.hideSoftInput(CustomMapActivity.this);
-
-                        }
-                    }
-//                    finish();
-                }
-
-                @Override
-                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    return false;
-                }
-            });
-            mListResult.setAdapter(mCommonAdapterSearch);
-            mListResult.setItemAnimator(new DefaultItemAnimator());
-        } else {
-            mCommonAdapterSearch.notifyDataSetChanged();
-        }
-    }
-
     /**
      * 点击阴影隐藏搜索布局
      */
@@ -408,4 +364,84 @@ public class CustomMapActivity extends BaseActivity implements OnMapTouchListene
         mShadeView.setClickable(true);
     }
 
+    private List<AddressEntity> mSearchItems = new ArrayList<>();
+
+    @Override
+    public void addressListResultSuccess(List<AddressEntity> addressEntities) {
+        if (addressEntities != null) {
+            mLlSearchResult.setVisibility(View.VISIBLE);
+            mSearchItems.clear();
+            mSearchItems.addAll(addressEntities);
+            showShade();
+            if (mSearchItems.size() > 0) {
+                if (mCommonAdapterSearch == null) {
+                    mListResult.setLayoutManager(new LinearLayoutManager(CustomMapActivity.this));
+                    mCommonAdapterSearch = new CommonAdapter<AddressEntity>(CustomMapActivity.this, R.layout.location_search_listitem, mSearchItems) {
+                        @Override
+                        protected void convert(ViewHolder holder, final AddressEntity addressEntity, int position) {
+                            holder.setText(R.id.textview_formmatted_address_head, addressEntity.getMerchantName());
+                            holder.setText(R.id.textview_formmatted_address, addressEntity.getAddress());
+                        }
+                    };
+                    mCommonAdapterSearch.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                            List<AddressEntity> datas = mCommonAdapterSearch.getDatas();
+                            if (datas != null) {
+                                if (datas != null && datas.size() > position) {
+                                    setResult(RESULT_CHOOSE_LOCATION_CODE_CUSTOM_MAP, new Intent()
+                                            .putExtra("name", datas.get(position).getMerchantName())
+                                            .putExtra("addr", datas.get(position).getAddress())
+                                            .putExtra("longitude", datas.get(position).getLongitude())
+                                            .putExtra("latitude", datas.get(position).getLatitude()));
+                                    finish();
+
+                                    //                                android.location.Location location = new Location("");
+                                    //                                location.setLatitude(31.144247);
+                                    //                                location.setLongitude(121.605669);
+                                    //                                mMapWidget.scrollMapTo(location);
+                                    dismissShade();
+                                    mListResult.setVisibility(View.GONE);
+                                    CommonUtils.hideSoftInput(CustomMapActivity.this);
+
+                                }
+                            }
+                            //                    finish();
+                        }
+
+                        @Override
+                        public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                            return false;
+                        }
+                    });
+                    mListResult.setAdapter(mCommonAdapterSearch);
+                    mListResult.setItemAnimator(new DefaultItemAnimator());
+                } else {
+                    mCommonAdapterSearch.notifyDataSetChanged();
+                }
+
+                mListResult.setVisibility(View.VISIBLE);
+            } else {
+
+                mListResult.setVisibility(View.GONE);
+
+            }
+
+        }
+
+    }
+
+    private CommonAdapter mCommonAdapterSearch;
+
+
+    @Override
+    public void onError(Throwable throwable) {
+        loadError(throwable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
+    }
 }

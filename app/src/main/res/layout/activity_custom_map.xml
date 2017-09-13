@@ -17,15 +17,6 @@
         android:background="@color/black_50_percent"
         android:visibility="gone"/>
 
-    <com.android.frameproj.library.widget.CustomSearchView
-        android:id="@+id/searchView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        android:gravity="center"
-        android:orientation="vertical"/>
-
     <LinearLayout
         android:id="@+id/ll_search_result"
         android:layout_width="fill_parent"
@@ -58,5 +49,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8.0dip"/>
     </LinearLayout>
+
+    <com.android.frameproj.library.widget.CustomSearchView
+        android:id="@+id/searchView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>

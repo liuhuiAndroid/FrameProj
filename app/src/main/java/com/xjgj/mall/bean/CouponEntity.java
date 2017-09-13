@@ -6,7 +6,7 @@ package com.xjgj.mall.bean;
 
 public class CouponEntity {
 
-    private int amount;
+    private double amount;
     private String validStartTime;
     private String validEndTime;
     private int couponId;
@@ -14,11 +14,21 @@ public class CouponEntity {
     private String couponDescribe;
     private int status;
 
-    public int getAmount() {
+    private double minAmount;
+
+    public double getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(double minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

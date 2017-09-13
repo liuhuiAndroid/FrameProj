@@ -42,6 +42,7 @@ import butterknife.OnClick;
 import static com.xjgj.mall.Constants.REQUEST_CHOOSE_LOCATION_CODE;
 import static com.xjgj.mall.Constants.REQUEST_CHOOSE_LOCATION_CODE_CUSTOM_MAP;
 import static com.xjgj.mall.Constants.RESULT_CHOOSE_LOCATION_CODE;
+import static com.xjgj.mall.Constants.RESULT_CHOOSE_LOCATION_CODE_CUSTOM_MAP;
 import static com.xjgj.mall.Constants.RESULT_DELIVERY_INFO_CODE;
 import static com.xjgj.mall.R.id.textContactPhone;
 import static com.xjgj.mall.R.id.textDetailsAddress;
@@ -268,6 +269,13 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             if (!mTextAddress.getText().toString().trim().equals(name)) {
                 mTextDetailsAddress.setText(addr);
             }
+            mTextAddress.setText(name);
+        } else if(requestCode == REQUEST_CHOOSE_LOCATION_CODE_CUSTOM_MAP && resultCode == RESULT_CHOOSE_LOCATION_CODE_CUSTOM_MAP){
+            String name = data.getStringExtra("name");
+            String addr = data.getStringExtra("addr");
+            longitude = data.getDoubleExtra("longitude", 0.0);
+            latitude = data.getDoubleExtra("latitude", 0.0);
+            mTextDetailsAddress.setText(addr);
             mTextAddress.setText(name);
         }
     }
