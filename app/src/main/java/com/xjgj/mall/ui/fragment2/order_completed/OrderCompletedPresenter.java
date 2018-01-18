@@ -44,7 +44,7 @@ public class OrderCompletedPresenter implements OrderCompletedContract.Presenter
 
     @Override
     public void onOrderWaitingAcceptListReceive() {
-        disposables.add(mCommonApi.mallOrderList(page, 3)
+        disposables.add(mCommonApi.mallOrderList(page, 3, -1)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
                     @Override

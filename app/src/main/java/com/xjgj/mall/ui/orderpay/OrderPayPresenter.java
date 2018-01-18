@@ -41,9 +41,9 @@ public class OrderPayPresenter implements OrderPayContract.Presenter {
     }
 
     @Override
-    public void payOrder(int orderId, String money, int couponId) {
+    public void payOrder(int orderId, String money, int couponId, boolean b) {
         mView.showLoading();
-        disposables.add(mCommonApi.payAlipay(orderId, money,couponId)
+        disposables.add(mCommonApi.payAlipay(orderId, money,couponId,b)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<PayAlipayEntity>, ObservableSource<PayAlipayEntity>>() {
                     @Override

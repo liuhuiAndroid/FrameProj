@@ -32,6 +32,7 @@ public class Fragment1Presenter implements Fragment1Contract.Presenter {
     private int page = 1;
 
     private List<OrderEntity> mOrderListPublicEntities = new ArrayList<>();
+    private int mAddrType = -1;
 
     @Inject
     public Fragment1Presenter(CommonApi commonApi) {
@@ -40,7 +41,7 @@ public class Fragment1Presenter implements Fragment1Contract.Presenter {
 
     @Override
     public void onThreadReceive() {
-        disposables.add(mCommonApi.mallOrderList(page,currentType)
+        disposables.add(mCommonApi.mallOrderList(page,currentType,mAddrType)
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .switchMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
                     @Override
@@ -103,7 +104,8 @@ public class Fragment1Presenter implements Fragment1Contract.Presenter {
 
     private int currentType = -1;
     @Override
-    public void onRefresh(int type) {
+    public void onRefresh(int type,int addrType) {
+        mAddrType = addrType;
         page = 1;
         currentType = type;
         onThreadReceive();

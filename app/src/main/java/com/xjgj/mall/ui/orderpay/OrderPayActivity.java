@@ -65,6 +65,8 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
 
     @BindView(R.id.tv_coupon)
     TextView mTvCoupon;
+    @BindView(R.id.cash)
+    RadioButton mCash;
     private Dialog mLoadingDialog;
     private int mOrderId;
     private String mOutTradeNo;
@@ -113,7 +115,17 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
             ToastUtil.showToast("请填写支付金额");
             return;
         }
-        mOrderPayPresenter.payOrder(mOrderId, trim, mCouponId);
+
+        if (mAliPay.isChecked()) {
+            //支付宝支付
+            mOrderPayPresenter.payOrder(mOrderId, trim, mCouponId, true);
+        } else if (mCash.isChecked()) {
+            //现金支付
+            mOrderPayPresenter.payOrder(mOrderId, trim, mCouponId, false);
+        } else {
+            ToastUtil.showToast("请选择支付方式");
+        }
+
     }
 
     @Override
@@ -220,13 +232,13 @@ public class OrderPayActivity extends BaseActivity implements OrderPayContract.V
     public void mLlCoupon() {
         String trim = mEtPriceOldOCI.getText().toString().trim();
         double amount = 0;
-        if(trim == null ||TextUtils.isEmpty(trim)){
+        if (trim == null || TextUtils.isEmpty(trim)) {
             amount = 0;
-        }else{
+        } else {
             amount = Double.parseDouble(trim);
         }
         Intent intent_coupon = new Intent(OrderPayActivity.this, ChooseCouponActivity.class);
-        intent_coupon.putExtra("amount",amount);
+        intent_coupon.putExtra("amount", amount);
         startActivityForResult(intent_coupon, REQUEST_CHOOSE_COUPON);
     }
 

@@ -100,4 +100,5 @@ dependencies {
     compile 'com.qianwen:update-app:3.3.6'
     //okhttputil
     compile 'com.qianwen:okhttp-utils:3.8.0'
+    compile files('libs/dom4j-1.6.1.jar')
 }

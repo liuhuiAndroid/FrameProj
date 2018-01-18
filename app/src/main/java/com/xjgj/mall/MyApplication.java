@@ -89,4 +89,5 @@ public class MyApplication extends MultiDexApplication {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
 }

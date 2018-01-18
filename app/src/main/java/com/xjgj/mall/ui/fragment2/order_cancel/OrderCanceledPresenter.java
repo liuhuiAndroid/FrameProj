@@ -44,7 +44,7 @@ public class OrderCanceledPresenter implements OrderCanceledContract.Presenter {
 
     @Override
     public void onOrderWaitingAcceptListReceive() {
-        disposables.add(mCommonApi.mallOrderList(page, 4)
+        disposables.add(mCommonApi.mallOrderList(page, 4, -1)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
                     @Override

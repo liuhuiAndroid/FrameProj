@@ -293,13 +293,16 @@ public class CommonApi {
     /**
      * 商户-我的订单
      */
-    public Observable<HttpResult<List<OrderEntity>>> mallOrderList(int page, int type) {
+    public Observable<HttpResult<List<OrderEntity>>> mallOrderList(int page, int type, int addrType) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("page", page);
         params.put("pageSize", 10);
         if (type != -1) {
             params.put("type", type);
+        }
+        if (addrType != -1) {
+            params.put("areaId", addrType);
         }
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.mallOrderList(currentTimeMillis, sign, params, mUserStorage.getToken()).subscribeOn(Schedulers.io());
@@ -517,14 +520,15 @@ public class CommonApi {
     /**
      * 支付宝支付
      */
-    public Observable<HttpResult<PayAlipayEntity>> payAlipay(int orderId, String amount, int couponId) {
+    public Observable<HttpResult<PayAlipayEntity>> payAlipay(int orderId, String amount, int couponId, boolean b) {
         long currentTimeMillis = System.currentTimeMillis();
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("orderId", orderId);
-        params.put("amount", amount);
         if (couponId != -1) {
             params.put("couponId", couponId);
         }
+        params.put("payType", b ? 1 : 2);
+        params.put("amount", amount);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
         return mCommonService.payAlipay(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
     }
@@ -558,7 +562,7 @@ public class CommonApi {
         Map<String, Object> params = mRequestHelper.getHttpRequestMap(currentTimeMillis);
         params.put("address", address);
         String sign = mRequestHelper.getRequestSign(params, currentTimeMillis);
-        return mCommonService.addressList(currentTimeMillis, sign, mUserStorage.getToken(),params).subscribeOn(Schedulers.io());
+        return mCommonService.addressList(currentTimeMillis, sign, mUserStorage.getToken(), params).subscribeOn(Schedulers.io());
     }
 
 }

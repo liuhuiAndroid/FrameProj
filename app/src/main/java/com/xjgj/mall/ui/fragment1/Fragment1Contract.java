@@ -32,11 +32,12 @@ public interface Fragment1Contract {
 
         void onThreadReceive();
 
-        void onRefresh(int type);
+        void onRefresh(int type,int addrType);
 
         void onLoadMore();
 
         void orderConfirm(int orderId);
+
 
     }
 

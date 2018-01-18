@@ -136,7 +136,7 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
     public void layoutPostDelayed() {
 
         if (mPtrLayout != null && mPtrLayout.isRefreshing()) {
-            mFragment1Presenter.onRefresh(currentType);
+            mFragment1Presenter.onRefresh(currentType, currentAddressType);
         } else {
             mPtrLayout.postDelayed(new Runnable() {
                 @Override
@@ -311,6 +311,45 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
                         holder.getView(R.id.textShengShu).setVisibility(View.GONE);
                         holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
 
+                        // TODO 8 现在不对
+                    } else if (orderEntity.getStatus() == 8) {
+                        holder.setText(R.id.textState, "已完成");
+                        holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
+                        if (orderEntity.getPayStatus() != 3) {
+                            holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
+                        } else {
+                            holder.getView(R.id.textShengShu).setVisibility(View.GONE);
+                        }
+                        holder.getView(R.id.textOrderAgain).setVisibility(View.GONE);
+                        holder.setText(R.id.textDicuss, getResources().getString(R.string.want_discusses));
+                        holder.setText(R.id.textShengShu, "我要支付");
+
+                        //我要评价
+                        holder.getView(R.id.textDicuss).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), OrderEvaluateActivity.class);
+                                intent.putExtra("orderId", orderEntity.getOrderId());
+                                intent.putExtra("contactName", orderEntity.getContactName());
+                                intent.putExtra("contactMobile", orderEntity.getContactMobile());
+                                intent.putExtra("avatarUrl", orderEntity.getAvatarUrl());
+                                intent.putExtra("carNo", orderEntity.getCarNo());
+                                intent.putExtra("starLevel", orderEntity.getStarLevel());
+
+                                startActivity(intent);
+                            }
+                        });
+
+                        //订单支付
+                        holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), OrderPayActivity.class);
+                                intent.putExtra("orderId", orderEntity.getOrderId());
+                                startActivity(intent);
+                            }
+                        });
+
                     }
 
                     holder.setText(R.id.textStart, orderEntity.getStartAddress());
@@ -445,11 +484,12 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
     @Override
     public void onRefreshBegin(PtrFrameLayout frame) {
         Logger.i("test 请求onRefresh");
-        mFragment1Presenter.onRefresh(currentType);
+        mFragment1Presenter.onRefresh(currentType, currentAddressType);
     }
 
 
     private int currentType = -1;
+    private int currentAddressType = -1;
 
     @Override
     public void onDestroy() {
@@ -465,9 +505,16 @@ public class Fragment1 extends BaseFragment implements Fragment1Contract.View, L
         layoutPostDelayed();
     }
 
+    @Subscribe
+    public void addressTypeChangeEvent(CommonEvent.AddressTypeChangeEvent orderTypeChangeEvent) {
+        Logger.i("test addressTypeChangeEvent，currentType = " + currentType);
+        currentAddressType = orderTypeChangeEvent.getType();
+        layoutPostDelayed();
+    }
+
     @Override
     public void onReloadClicked() {
-        mFragment1Presenter.onRefresh(currentType);
+        mFragment1Presenter.onRefresh(currentType, currentAddressType);
     }
 
 }

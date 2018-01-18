@@ -46,184 +46,184 @@ public class OrderWorkingFragement extends BaseFragment implements OrderWorkingC
     }
 
     @Inject
-    OrderWorkingPresenter mPresenter;
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.ptr_layout)
-    MyPtrClassicFrameLayout mPtrLayout;
+        OrderWorkingPresenter mPresenter;
+        @BindView(R.id.recyclerView)
+        RecyclerView mRecyclerView;
+        @BindView(R.id.ptr_layout)
+        MyPtrClassicFrameLayout mPtrLayout;
 
-    @Override
-    public void initInjector() {
-        getComponent(MainComponent.class).inject(this);
-    }
+        @Override
+        public void initInjector() {
+            getComponent(MainComponent.class).inject(this);
+        }
 
-    @Override
-    public int initContentView() {
-        return R.layout.fragment_order_waiting_accept;
-    }
+        @Override
+        public int initContentView() {
+            return R.layout.fragment_order_waiting_accept;
+        }
 
-    @Override
-    public void getBundle(Bundle bundle) {
-    }
+        @Override
+        public void getBundle(Bundle bundle) {
+        }
 
-    private LinearLayoutManager mLinearLayoutManager;
-    private CommonAdapter mCommonAdapter;
-    private LoadMoreWrapper mLoadMoreWrapper;
+        private LinearLayoutManager mLinearLayoutManager;
+        private CommonAdapter mCommonAdapter;
+        private LoadMoreWrapper mLoadMoreWrapper;
 
-    @Override
-    public void initUI(View view) {
-        mPresenter.attachView(this);
+        @Override
+        public void initUI(View view) {
+            mPresenter.attachView(this);
 
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+            mLinearLayoutManager = new LinearLayoutManager(getActivity());
+            mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mPtrLayout.setPtrHandler(this);
-        //显示时间
-        mPtrLayout.setLastUpdateTimeRelateObject(this);
-        //viewpager滑动时禁用下拉
-        mPtrLayout.disableWhenHorizontalMove(true);
-    }
+            mPtrLayout.setPtrHandler(this);
+            //显示时间
+            mPtrLayout.setLastUpdateTimeRelateObject(this);
+            //viewpager滑动时禁用下拉
+            mPtrLayout.disableWhenHorizontalMove(true);
+        }
 
-    @Override
-    public void initData() {
-    }
+        @Override
+        public void initData() {
+        }
 
-    private boolean isFirst = true;
-    /**
-     * 判断fragment是否是被用户可见
-     * @param isVisibleToUser
-     */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser) {
-            if (!isFirst) {
-                layoutPostDelayed();
-            } else {
-                isFirst = false;
+        private boolean isFirst = true;
+        /**
+         * 判断fragment是否是被用户可见
+         * @param isVisibleToUser
+         */
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+            if(isVisibleToUser) {
+                if (!isFirst) {
+                    layoutPostDelayed();
+                } else {
+                    isFirst = false;
+                }
             }
         }
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        layoutPostDelayed();
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-        Logger.i("test hideLoading");
-        showContent(true);
-    }
-
-    /**
-     * 得到数据，刷新RecyclerView
-     */
-    @Override
-    public void renderOrderList(final List<OrderEntity> orderEntities) {
-        Logger.i("得到数据，刷新RecyclerView");
-        if (mCommonAdapter == null) {
-            mCommonAdapter = new CommonAdapter<OrderEntity>(getActivity(), R.layout.item_order, orderEntities) {
-                @Override
-                protected void convert(ViewHolder holder, final OrderEntity orderEntity, int position) {
-                    holder.setText(R.id.textTime, orderEntity.getCreateTime().concat("  (").concat(orderEntity.getCarType()).concat(")"));
-                    holder.setText(R.id.textState, "服务中");
-                    holder.setText(R.id.textStart, orderEntity.getStartAddress());
-                    holder.setText(R.id.textEnd,  orderEntity.getGoalAddress());
-
-                    holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
-                    holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
-                    holder.getView(R.id.textOrderAgain).setVisibility(View.VISIBLE);
-                    holder.setText(R.id.textShengShu, getResources().getString(R.string.cancle_order));
-                    holder.setText(R.id.textOrderAgain, getResources().getString(R.string.order_again));
-                    holder.setText(R.id.textDicuss, getResources().getString(R.string.order_confirm));
-
-                    //取消订单
-                    holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), CancelOrderActivity.class);
-                            intent.putExtra("orderId",orderEntity.getOrderId());
-                            startActivity(intent);
-                        }
-                    });
-
-                    //确认完成
-                    holder.getView(R.id.textDicuss).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            new MaterialDialog.Builder(getActivity())
-                                    .title("提示")
-                                    .content("是否确认完成订单？")
-                                    .positiveText("确定")
-                                    .negativeText("取消")
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            mPresenter.orderConfirm(orderEntity.getOrderId());
-                                        }
-                                    })
-                                    .show();
-                        }
-                    });
-                }
-            };
-            mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-                    intent.putExtra("orderId", orderEntities.get(position).getOrderId());
-                    startActivity(intent);
-                }
-
-                @Override
-                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    return false;
-                }
-            });
-            mLoadMoreWrapper = new LoadMoreWrapper(mCommonAdapter);
-            mLoadMoreWrapper.setLoadMoreView(LayoutInflater.from(getActivity()).inflate(R.layout.footer_view_load_more, mRecyclerView, false));
-            mLoadMoreWrapper.setOnLoadMoreListener(this);
-            mRecyclerView.setAdapter(mLoadMoreWrapper);
-            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 0));
-        } else {
-            mCommonAdapter.setDatas(orderEntities);
-            mLoadMoreWrapper.notifyDataSetChanged();
+        @Override
+        public void onResume() {
+            super.onResume();
+            layoutPostDelayed();
         }
-    }
 
-    @Override
-    public void onRefreshCompleted() {
-        if (mPtrLayout != null && mPtrLayout.isShown()) {
-            mPtrLayout.refreshComplete();
+        @Override
+        public void showLoading() {
+
         }
-    }
 
-    @Override
-    public void onLoadCompleted(boolean isLoadAll) {
-        mLoadMoreWrapper.setLoadAll(isLoadAll);
-    }
+        @Override
+        public void hideLoading() {
+            Logger.i("test hideLoading");
+            showContent(true);
+        }
 
-    @Override
-    public void onError(Throwable throwable) {
-        showError(true);
-        loadError(throwable);
-    }
+        /**
+         * 得到数据，刷新RecyclerView
+         */
+        @Override
+        public void renderOrderList(final List<OrderEntity> orderEntities) {
+            Logger.i("得到数据，刷新RecyclerView");
+            if (mCommonAdapter == null) {
+                mCommonAdapter = new CommonAdapter<OrderEntity>(getActivity(), R.layout.item_order, orderEntities) {
+                    @Override
+                    protected void convert(ViewHolder holder, final OrderEntity orderEntity, int position) {
+                        holder.setText(R.id.textTime, orderEntity.getCreateTime().concat("  (").concat(orderEntity.getCarType()).concat(")"));
+                        holder.setText(R.id.textState, "服务中");
+                        holder.setText(R.id.textStart, orderEntity.getStartAddress());
+                        holder.setText(R.id.textEnd,  orderEntity.getGoalAddress());
 
-    @Override
-    public void onRefresh() {
-        layoutPostDelayed();
-    }
+                        holder.getView(R.id.textDicuss).setVisibility(View.VISIBLE);
+                        holder.getView(R.id.textShengShu).setVisibility(View.VISIBLE);
+                        holder.getView(R.id.textOrderAgain).setVisibility(View.VISIBLE);
+                        holder.setText(R.id.textShengShu, getResources().getString(R.string.cancle_order));
+                        holder.setText(R.id.textOrderAgain, getResources().getString(R.string.order_again));
+                        holder.setText(R.id.textDicuss, getResources().getString(R.string.order_confirm));
 
-    @Override
-    public void onEmpty() {
+                        //取消订单
+                        holder.getView(R.id.textShengShu).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), CancelOrderActivity.class);
+                                intent.putExtra("orderId",orderEntity.getOrderId());
+                                startActivity(intent);
+                            }
+                        });
+
+                        //确认完成
+                        holder.getView(R.id.textDicuss).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                new MaterialDialog.Builder(getActivity())
+                                        .title("提示")
+                                        .content("是否确认完成订单？")
+                                        .positiveText("确定")
+                                        .negativeText("取消")
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                mPresenter.orderConfirm(orderEntity.getOrderId());
+                                            }
+                                        })
+                                        .show();
+                            }
+                        });
+                    }
+                };
+                mCommonAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                        Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                        intent.putExtra("orderId", orderEntities.get(position).getOrderId());
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                        return false;
+                    }
+                });
+                mLoadMoreWrapper = new LoadMoreWrapper(mCommonAdapter);
+                mLoadMoreWrapper.setLoadMoreView(LayoutInflater.from(getActivity()).inflate(R.layout.footer_view_load_more, mRecyclerView, false));
+                mLoadMoreWrapper.setOnLoadMoreListener(this);
+                mRecyclerView.setAdapter(mLoadMoreWrapper);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.addItemDecoration(new DividerGridItemDecoration(getActivity(), 0));
+            } else {
+                mCommonAdapter.setDatas(orderEntities);
+                mLoadMoreWrapper.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onRefreshCompleted() {
+            if (mPtrLayout != null && mPtrLayout.isShown()) {
+                mPtrLayout.refreshComplete();
+            }
+        }
+
+        @Override
+        public void onLoadCompleted(boolean isLoadAll) {
+            mLoadMoreWrapper.setLoadAll(isLoadAll);
+        }
+
+        @Override
+        public void onError(Throwable throwable) {
+            showError(true);
+            loadError(throwable);
+        }
+
+        @Override
+        public void onRefresh() {
+            layoutPostDelayed();
+        }
+
+        @Override
+        public void onEmpty() {
         setEmptyText("暂无服务中订单");
         showEmpty(true);
     }

@@ -25,7 +25,7 @@ public class OrderPayContract {
 
     interface Presenter extends BasePresenter<OrderPayContract.View> {
 
-        void payOrder(int orderId, String money, int couponId);
+        void payOrder(int orderId, String money, int couponId, boolean b);
 
         void payConfirm(String outTradeNo);
 

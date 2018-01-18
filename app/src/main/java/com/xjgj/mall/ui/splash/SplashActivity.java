@@ -78,5 +78,4 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         finish();
     }
 
-
 }

@@ -101,7 +101,8 @@
                 android:gravity="left"
                 android:orientation="vertical"
                 android:paddingLeft="10.0dip"
-                android:paddingRight="10.0dip">
+                android:paddingRight="10.0dip"
+                >
 
                 <RadioButton
                     android:id="@+id/aliPay"
@@ -118,7 +119,26 @@
                     android:text="   支付宝"
                     android:textColor="@drawable/mycheck_color_selector"
                     android:textSize="16.0sp"/>
+
+
+                <RadioButton
+                    android:id="@+id/cash"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48.0dip"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/transparent"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableLeft="@drawable/alipay_selection"
+                    android:drawableRight="@drawable/selector_radio_button"
+                    android:text="   现金"
+                    android:textColor="@drawable/mycheck_color_selector"
+                    android:textSize="16.0sp"/>
+
             </RadioGroup>
+
         </LinearLayout>
 
         <LinearLayout

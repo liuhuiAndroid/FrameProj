@@ -45,7 +45,7 @@ public class OrderWaitingAcceptPresenter implements OrderWaitingAcceptContract.P
 
     @Override
     public void onOrderWaitingAcceptListReceive() {
-        disposables.add(mCommonApi.mallOrderList(page, 0)
+        disposables.add(mCommonApi.mallOrderList(page, 0, -1)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
                     @Override

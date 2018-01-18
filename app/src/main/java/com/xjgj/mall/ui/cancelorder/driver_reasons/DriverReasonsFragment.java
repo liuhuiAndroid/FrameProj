@@ -81,7 +81,6 @@ public class DriverReasonsFragment extends BaseFragment implements DriverReasons
         return driverReasonsFragment;
     }
 
-
     @Override
     public void initInjector() {
         getComponent(CancelOrderComponent.class).inject(this);

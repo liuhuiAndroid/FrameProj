@@ -45,7 +45,7 @@ public class OrderWorkingPresenter implements OrderWorkingContract.Presenter {
 
     @Override
     public void onOrderWaitingAcceptListReceive() {
-        disposables.add(mCommonApi.mallOrderList(page, 2)
+        disposables.add(mCommonApi.mallOrderList(page, 2, -1)
                 .debounce(800, TimeUnit.MILLISECONDS)
                 .flatMap(new Function<HttpResult<List<OrderEntity>>, ObservableSource<List<OrderEntity>>>() {
                     @Override

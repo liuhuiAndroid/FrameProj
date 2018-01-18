@@ -2,6 +2,7 @@ package com.xjgj.mall.ui.main;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -32,11 +33,17 @@ import com.xjgj.mall.Constants;
 import com.xjgj.mall.MyApplication;
 import com.xjgj.mall.R;
 import com.xjgj.mall.api.common.CommonApi;
+import com.xjgj.mall.bean.DictionaryEntity;
 import com.xjgj.mall.bean.UpdateAppEntity;
 import com.xjgj.mall.injector.HasComponent;
 import com.xjgj.mall.ui.BaseActivity;
 import com.xjgj.mall.util.CommonEvent;
 import com.xjgj.mall.util.UpdateAppHttpUtil;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -78,6 +85,8 @@ public class MainActivity extends BaseActivity implements MainContract.View
 
     @Inject
     Bus mBus;
+    @BindView(R.id.text_handle_left)
+    TextView mTextHandleLeft;
 
     private MainComponent mMainComponent;
     private long firstTime = 0;
@@ -111,14 +120,22 @@ public class MainActivity extends BaseActivity implements MainContract.View
 
     @Override
     public void initUiAndListener() {
+        mPresenter.attachView(this);
         ButterKnife.bind(this);
         mBus.register(this);
 
+        mPresenter.dictionaryQuery();
         mTextHandle.setText("全部订单");
         mTextHandle.setTextSize(14);
         mTextHandle.setTextColor(getResources().getColor(R.color.z5b5b5b));
         mTextHandle.setClickable(true);
         mTextHandle.setVisibility(View.VISIBLE);
+
+        mTextHandleLeft.setText("全部市场");
+        mTextHandleLeft.setTextSize(14);
+        mTextHandleLeft.setTextColor(getResources().getColor(R.color.z5b5b5b));
+        mTextHandleLeft.setClickable(true);
+        mTextHandleLeft.setVisibility(View.VISIBLE);
 
         // 禁止所有动画效果
         mBottomNavigationViewEx.enableAnimation(false);
@@ -145,7 +162,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
             }
         });
 
-        mPresenter.attachView(this);
+
         mPresenter.initFragment();
     }
 
@@ -154,8 +171,10 @@ public class MainActivity extends BaseActivity implements MainContract.View
         mTextTitle.setText(title);
         if (position == 1) {
             mTextHandle.setVisibility(View.VISIBLE);
+            mTextHandleLeft.setVisibility(View.VISIBLE);
         } else {
             mTextHandle.setVisibility(View.GONE);
+            mTextHandleLeft.setVisibility(View.GONE);
         }
     }
 
@@ -179,10 +198,48 @@ public class MainActivity extends BaseActivity implements MainContract.View
     }
 
     @Override
+    public void dictionaryQuerySuccess(List<DictionaryEntity> dictionaryEntitieList) {
+        final DictionaryEntity dictionaryEntity = dictionaryEntitieList.get(0);
+        final List<Type> typeList = new ArrayList<>();
+        for (int i = 0; i < dictionaryEntity.getData().size(); i++) {
+            DictionaryEntity.DataBean dataBean = dictionaryEntity.getData().get(i);
+            typeList.add(new Type(dataBean.getDictionaryId(), dataBean.getDictionaryName()));
+        }
+        if (dictionaryEntity.getData().size() > 0) {
+            //第一条一定是全部订单
+            mBus.post(new CommonEvent().new AddressTypeChangeEvent(dictionaryEntity.getData().get(0).getDictionaryId(),
+                    dictionaryEntity.getData().get(0).getDictionaryName()));
+            mTextHandleLeft.setText(dictionaryEntity.getData().get(0).getDictionaryName());
+        }
+        mTextHandleLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(MainActivity.this)
+                        .title("地址选择")
+                        .items(typeList)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                DictionaryEntity.DataBean dataBean = dictionaryEntity.getData().get(which);
+                                mBus.post(new CommonEvent().new AddressTypeChangeEvent(dataBean.getDictionaryId(), dataBean.getDictionaryName()));
+                                mTextHandleLeft.setText(dataBean.getDictionaryName());
+                            }
+                        })
+                        .show();
+            }
+        });
+
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        loadError(throwable);
+    }
+
+    @Override
     public MainComponent getComponent() {
         return mMainComponent;
     }
-
 
     @OnClick(R.id.text_handle)
     public void mTextHandle() {
@@ -284,6 +341,22 @@ public class MainActivity extends BaseActivity implements MainContract.View
                 .checkNewApp(new UpdateCallback() {
                     @Override
                     protected UpdateAppBean parseJson(String json) {
+                        SAXReader saxReader = new SAXReader();
+
+                        Document document = null;
+                        try {
+                            document = saxReader.read(json);
+                            // 获取根元素
+                            Element root = document.getRootElement();
+                            System.out.println("Root: " + root.getName());
+                            // 获取所有子元素
+                            List<Element> childList = root.elements();
+                            System.out.println("total child count: " + childList.size());
+                        } catch (DocumentException e) {
+                            e.printStackTrace();
+                        }
+
+
                         UpdateAppBean updateAppBean = new UpdateAppBean();
                         try {
                             UpdateAppEntity appBean = new Gson().fromJson(json, UpdateAppEntity.class);
@@ -342,7 +415,7 @@ public class MainActivity extends BaseActivity implements MainContract.View
                                 fin.close();
 
                                 mCommonApi.uploadErrorFiles(MainActivity.this.getPackageName(), "android",
-                                        android.os.Build.VERSION.RELEASE, android.os.Build.MODEL, res)
+                                        Build.VERSION.RELEASE, Build.MODEL, res)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Consumer<ResponseBody>() {
                                             @Override
